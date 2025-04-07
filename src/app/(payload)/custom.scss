@@ -1,0 +1,13 @@
+@use '@payloadcms/next/css';
+
+// Admin-panel login styles
+.login-icon-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  & p {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+}
