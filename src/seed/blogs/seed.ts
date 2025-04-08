@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
 import { Tag, User } from '@payload-types'
-import { Ora } from 'ora'
 import { getPayload } from 'payload'
+import { Ora } from 'ora'
 
 import { blogListData, styleGuideBlogData } from './data'
 
@@ -43,7 +43,7 @@ const createStyleGuideBlog = async ({
     filePath: contentURL,
   })
 
-  const styleGuideContent = content(String(contentImage.id))
+  const styleGuideContent = content(contentImage.id)
 
   const styleGuideAuthors = authorsList
     .map(authorSlug => {
@@ -57,7 +57,7 @@ const createStyleGuideBlog = async ({
       }
     })
     .filter(
-      (author): author is { relationTo: 'users'; value: number } => !!author,
+      (author): author is { relationTo: 'users'; value: string } => !!author,
     )
 
   const styleGuideTags = tagsList
@@ -71,7 +71,7 @@ const createStyleGuideBlog = async ({
         }
       }
     })
-    .filter((tag): tag is { relationTo: 'tags'; value: number } => !!tag)
+    .filter((tag): tag is { relationTo: 'tags'; value: string } => !!tag)
 
   await payload.create({
     collection: 'blogs',
@@ -138,7 +138,7 @@ const seed = async ({
           }
         })
         .filter(
-          (author): author is { relationTo: 'users'; value: number } =>
+          (author): author is { relationTo: 'users'; value: string } =>
             !!author,
         )
 
@@ -153,7 +153,7 @@ const seed = async ({
             }
           }
         })
-        .filter((tag): tag is { relationTo: 'tags'; value: number } => !!tag)
+        .filter((tag): tag is { relationTo: 'tags'; value: string } => !!tag)
 
       await payload.create({
         collection: 'blogs',

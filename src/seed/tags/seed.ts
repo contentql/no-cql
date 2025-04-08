@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
 import { Tag } from '@payload-types'
-import { Ora } from 'ora'
 import { getPayload } from 'payload'
+import { Ora } from 'ora'
 
 import { tagsData, tagsImagesData } from './data'
 
@@ -25,7 +25,7 @@ const seed = async (spinner: Ora) => {
           filePath: imageURL,
         })
 
-        tagImages.push({ id: String(tagImage.id), name })
+        tagImages.push({ id: tagImage.id, name })
       } catch (error) {
         spinner.fail(`Failed tp upload tags images...`)
         throw error
@@ -45,11 +45,11 @@ const seed = async (spinner: Ora) => {
           collection: 'tags',
           data: {
             ...details,
-            tagImage: Number(imageId?.id),
+            tagImage: imageId?.id ?? '',
             meta: {
               title: details.title,
               description: details.description,
-              image: Number(imageId?.id),
+              image: imageId?.id,
             },
           },
           overrideAccess: true,

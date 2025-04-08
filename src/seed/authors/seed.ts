@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
 import { User } from '@payload-types'
-import { Ora } from 'ora'
 import { getPayload } from 'payload'
+import { Ora } from 'ora'
 
 import { authorsData, authorsImageList } from './data'
 
@@ -11,7 +11,7 @@ const seed = async (spinner: Ora) => {
   try {
     spinner.start(`Started uploading author images...`)
 
-    const authorsImages: { id: number; name: string }[] = []
+    const authorsImages: { id: string; name: string }[] = []
     const usersList: User[] = []
 
     // looping through images list uploading to media collection & pushing the result to authorsImages array
@@ -47,7 +47,7 @@ const seed = async (spinner: Ora) => {
           collection: 'users',
           data: {
             ...details,
-            imageUrl: imageId?.id ?? null,
+            imageUrl: imageId?.id ?? '',
           },
           locale: undefined,
           fallbackLocale: undefined,

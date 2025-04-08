@@ -94,7 +94,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {
     'site-settings': SiteSetting;
@@ -134,13 +134,13 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   displayName?: string | null;
   /**
    * Contains only lowercase letters, numbers, and dashes.
    */
   username: string;
-  imageUrl?: (number | null) | Media;
+  imageUrl?: (string | null) | Media;
   role: ('admin' | 'author' | 'user')[];
   emailVerified?: string | null;
   socialLinks?:
@@ -185,7 +185,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -230,7 +230,7 @@ export interface Media {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: number;
+  id: string;
   title: string;
   layout?: (HeroType | DetailsType | ListType | FormType | DisqusCommentsType)[] | null;
   meta?: {
@@ -239,7 +239,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   /**
    * Check to covert page as Home Page
@@ -262,10 +262,10 @@ export interface Page {
    */
   pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
-  parent?: (number | null) | Page;
+  parent?: (string | null) | Page;
   breadcrumbs?:
     | {
-        doc?: (number | null) | Page;
+        doc?: (string | null) | Page;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -315,7 +315,7 @@ export interface FormType {
   title: string;
   form: {
     relationTo: 'forms';
-    value: number | Form;
+    value: string | Form;
   };
   id?: string | null;
   blockName?: string | null;
@@ -326,7 +326,7 @@ export interface FormType {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: number;
+  id: string;
   title: string;
   fields?:
     | (
@@ -492,11 +492,11 @@ export interface DisqusCommentsType {
  * via the `definition` "blogs".
  */
 export interface Blog {
-  id: number;
+  id: string;
   /**
    * Upload blog image
    */
-  blogImage: number | Media;
+  blogImage: string | Media;
   title: string;
   /**
    * Add the summary of the blog post
@@ -505,13 +505,13 @@ export interface Blog {
   tags?:
     | {
         relationTo: 'tags';
-        value: number | Tag;
+        value: string | Tag;
       }[]
     | null;
   author?:
     | {
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       }[]
     | null;
   /**
@@ -526,7 +526,7 @@ export interface Blog {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   /**
    * Contains only lowercase letters, numbers, and dashes.
@@ -545,11 +545,11 @@ export interface Blog {
  * via the `definition` "tags".
  */
 export interface Tag {
-  id: number;
+  id: string;
   /**
    * Upload tag image
    */
-  tagImage: number | Media;
+  tagImage: string | Media;
   title: string;
   description: string;
   color?: ('blue' | 'gray' | 'red' | 'green' | 'yellow' | 'indigo' | 'purple' | 'pink') | null;
@@ -559,7 +559,7 @@ export interface Tag {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
   };
   /**
    * Contains only lowercase letters, numbers, and dashes.
@@ -574,13 +574,13 @@ export interface Tag {
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: number;
-  form: number | Form;
+  id: string;
+  form: string | Form;
   submissionData?:
     | {
         field: string;
         value: string;
-        file?: (number | Media)[] | null;
+        file?: (string | Media)[] | null;
         id?: string | null;
       }[]
     | null;
@@ -594,21 +594,21 @@ export interface FormSubmission {
  * via the `definition` "search".
  */
 export interface Search {
-  id: number;
+  id: string;
   title?: string | null;
   priority?: number | null;
   doc:
     | {
         relationTo: 'blogs';
-        value: number | Blog;
+        value: string | Blog;
       }
     | {
         relationTo: 'tags';
-        value: number | Tag;
+        value: string | Tag;
       }
     | {
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       };
   updatedAt: string;
   createdAt: string;
@@ -618,44 +618,44 @@ export interface Search {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'pages';
-        value: number | Page;
+        value: string | Page;
       } | null)
     | ({
         relationTo: 'blogs';
-        value: number | Blog;
+        value: string | Blog;
       } | null)
     | ({
         relationTo: 'tags';
-        value: number | Tag;
+        value: string | Tag;
       } | null)
     | ({
         relationTo: 'forms';
-        value: number | Form;
+        value: string | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: number | FormSubmission;
+        value: string | FormSubmission;
       } | null)
     | ({
         relationTo: 'search';
-        value: number | Search;
+        value: string | Search;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -665,10 +665,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -688,7 +688,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1110,18 +1110,18 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
-  id: number;
+  id: string;
   general: {
     title: string;
     description: string;
     /**
      * We recommend a maximum size of 256 * 256 pixels
      */
-    faviconUrl: number | Media;
+    faviconUrl: string | Media;
     /**
      * We recommend a maximum size of 1200 * 630 pixels
      */
-    ogImageUrl: number | Media;
+    ogImageUrl: string | Media;
     keywords?: string[] | null;
     /**
      * This field is used to format currency values & used as default currency for ecommerce-theme
@@ -1162,11 +1162,11 @@ export interface SiteSetting {
             /**
              * Upload an svg or logo to be displayed with link
              */
-            icon?: (number | null) | Media;
+            icon?: (string | null) | Media;
             label: string;
             page?: {
               relationTo: 'pages';
-              value: number | Page;
+              value: string | Page;
             } | null;
             url?: string | null;
             id?: string | null;
@@ -1180,11 +1180,11 @@ export interface SiteSetting {
                   /**
                    * Upload an svg or logo to be displayed with link
                    */
-                  icon?: (number | null) | Media;
+                  icon?: (string | null) | Media;
                   label: string;
                   page?: {
                     relationTo: 'pages';
-                    value: number | Page;
+                    value: string | Page;
                   } | null;
                   url?: string | null;
                   id?: string | null;
@@ -1209,11 +1209,11 @@ export interface SiteSetting {
             /**
              * Upload an svg or logo to be displayed with link
              */
-            icon?: (number | null) | Media;
+            icon?: (string | null) | Media;
             label: string;
             page?: {
               relationTo: 'pages';
-              value: number | Page;
+              value: string | Page;
             } | null;
             url?: string | null;
             id?: string | null;
@@ -1227,11 +1227,11 @@ export interface SiteSetting {
                   /**
                    * Upload an svg or logo to be displayed with link
                    */
-                  icon?: (number | null) | Media;
+                  icon?: (string | null) | Media;
                   label: string;
                   page?: {
                     relationTo: 'pages';
-                    value: number | Page;
+                    value: string | Page;
                   } | null;
                   url?: string | null;
                   id?: string | null;
@@ -1273,28 +1273,28 @@ export interface SiteSetting {
      */
     blogLink?: {
       relationTo: 'pages';
-      value: number | Page;
+      value: string | Page;
     } | null;
     /**
      * This redirect to a product details page
      */
     productLink?: {
       relationTo: 'pages';
-      value: number | Page;
+      value: string | Page;
     } | null;
     /**
      * This redirects to a author details page
      */
     authorLink?: {
       relationTo: 'pages';
-      value: number | Page;
+      value: string | Page;
     } | null;
     /**
      * This redirects to a tag details page
      */
     tagLink?: {
       relationTo: 'pages';
-      value: number | Page;
+      value: string | Page;
     } | null;
   };
   monetization?: {
@@ -1353,13 +1353,13 @@ export interface SiteSetting {
     fonts: {
       display: {
         type: 'customFont' | 'googleFont';
-        customFont?: (number | null) | Media;
+        customFont?: (string | null) | Media;
         remoteFont?: string | null;
         fontName?: string | null;
       };
       body: {
         type: 'customFont' | 'googleFont';
-        customFont?: (number | null) | Media;
+        customFont?: (string | null) | Media;
         remoteFont?: string | null;
         fontName?: string | null;
       };
@@ -1374,7 +1374,7 @@ export interface SiteSetting {
  * via the `definition` "BrandLogo".
  */
 export interface BrandLogo {
-  imageUrl: number | Media;
+  imageUrl: string | Media;
   /**
    * Adjust to the height of the logo
    */
