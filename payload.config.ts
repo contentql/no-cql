@@ -15,6 +15,9 @@ import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
 import { Tags } from '@/payload/collections/tags'
 import { Users } from '@/payload/collections/users'
+import { Categories } from '@/payload/collections/categories'
+
+
 import { siteSettings } from '@/payload/globals/siteSettings'
 import { disqusCommentsPlugin } from '@/payload/plugins/disqus-comments'
 import { scheduleDocPublishPlugin } from '@/payload/plugins/schedule-doc-publish-plugin'
@@ -161,7 +164,7 @@ export default buildConfig({
       titleSuffix: '- ContentQL',
     },
   },
-  collections: [Users, Media, Pages, Blogs, Tags],
+  collections: [Users, Media, Pages, Blogs, Tags, Categories],
   globals: [siteSettings],
   db: db({
     databaseURI: env.DATABASE_URI,

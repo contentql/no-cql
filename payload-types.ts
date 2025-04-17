@@ -72,6 +72,7 @@ export interface Config {
     pages: Page;
     blogs: Blog;
     tags: Tag;
+    categories: Category;
     forms: Form;
     'form-submissions': FormSubmission;
     search: Search;
@@ -79,13 +80,18 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    categories: {
+      subcategories: 'categories';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -94,7 +100,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {
     'site-settings': SiteSetting;
@@ -134,13 +140,13 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   displayName?: string | null;
   /**
    * Contains only lowercase letters, numbers, and dashes.
    */
   username: string;
-  imageUrl?: (string | null) | Media;
+  imageUrl?: (number | null) | Media;
   role: ('admin' | 'author' | 'user')[];
   emailVerified?: string | null;
   socialLinks?:
@@ -185,7 +191,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -230,7 +236,7 @@ export interface Media {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title: string;
   layout?: (HeroType | DetailsType | ListType | FormType | DisqusCommentsType)[] | null;
   meta?: {
@@ -239,7 +245,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   /**
    * Check to covert page as Home Page
@@ -262,10 +268,10 @@ export interface Page {
    */
   pathMode?: ('generate' | 'custom') | null;
   path?: string | null;
-  parent?: (string | null) | Page;
+  parent?: (number | null) | Page;
   breadcrumbs?:
     | {
-        doc?: (string | null) | Page;
+        doc?: (number | null) | Page;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -315,7 +321,7 @@ export interface FormType {
   title: string;
   form: {
     relationTo: 'forms';
-    value: string | Form;
+    value: number | Form;
   };
   id?: string | null;
   blockName?: string | null;
@@ -326,7 +332,7 @@ export interface FormType {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: string;
+  id: number;
   title: string;
   fields?:
     | (
@@ -492,11 +498,11 @@ export interface DisqusCommentsType {
  * via the `definition` "blogs".
  */
 export interface Blog {
-  id: string;
+  id: number;
   /**
    * Upload blog image
    */
-  blogImage: string | Media;
+  blogImage: number | Media;
   title: string;
   /**
    * Add the summary of the blog post
@@ -505,13 +511,13 @@ export interface Blog {
   tags?:
     | {
         relationTo: 'tags';
-        value: string | Tag;
+        value: number | Tag;
       }[]
     | null;
   author?:
     | {
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       }[]
     | null;
   /**
@@ -526,7 +532,7 @@ export interface Blog {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   /**
    * Contains only lowercase letters, numbers, and dashes.
@@ -545,11 +551,11 @@ export interface Blog {
  * via the `definition` "tags".
  */
 export interface Tag {
-  id: string;
+  id: number;
   /**
    * Upload tag image
    */
-  tagImage: string | Media;
+  tagImage: number | Media;
   title: string;
   description: string;
   color?: ('blue' | 'gray' | 'red' | 'green' | 'yellow' | 'indigo' | 'purple' | 'pink') | null;
@@ -559,7 +565,7 @@ export interface Tag {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   /**
    * Contains only lowercase letters, numbers, and dashes.
@@ -571,16 +577,34 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  color?: string | null;
+  parent?: (number | null) | Category;
+  subcategories?: {
+    docs?: (number | Category)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: string;
-  form: string | Form;
+  id: number;
+  form: number | Form;
   submissionData?:
     | {
         field: string;
         value: string;
-        file?: (string | Media)[] | null;
+        file?: (number | Media)[] | null;
         id?: string | null;
       }[]
     | null;
@@ -594,21 +618,21 @@ export interface FormSubmission {
  * via the `definition` "search".
  */
 export interface Search {
-  id: string;
+  id: number;
   title?: string | null;
   priority?: number | null;
   doc:
     | {
         relationTo: 'blogs';
-        value: string | Blog;
+        value: number | Blog;
       }
     | {
         relationTo: 'tags';
-        value: string | Tag;
+        value: number | Tag;
       }
     | {
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       };
   updatedAt: string;
   createdAt: string;
@@ -618,44 +642,48 @@ export interface Search {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'pages';
-        value: string | Page;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'blogs';
-        value: string | Blog;
+        value: number | Blog;
       } | null)
     | ({
         relationTo: 'tags';
-        value: string | Tag;
+        value: number | Tag;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
       } | null)
     | ({
         relationTo: 'forms';
-        value: string | Form;
+        value: number | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: string | FormSubmission;
+        value: number | FormSubmission;
       } | null)
     | ({
         relationTo: 'search';
-        value: string | Search;
+        value: number | Search;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -665,10 +693,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -688,7 +716,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -912,6 +940,19 @@ export interface TagsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  color?: T;
+  parent?: T;
+  subcategories?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
@@ -1110,18 +1151,18 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
-  id: string;
+  id: number;
   general: {
     title: string;
     description: string;
     /**
      * We recommend a maximum size of 256 * 256 pixels
      */
-    faviconUrl: string | Media;
+    faviconUrl: number | Media;
     /**
      * We recommend a maximum size of 1200 * 630 pixels
      */
-    ogImageUrl: string | Media;
+    ogImageUrl: number | Media;
     keywords?: string[] | null;
     /**
      * This field is used to format currency values & used as default currency for ecommerce-theme
@@ -1162,11 +1203,11 @@ export interface SiteSetting {
             /**
              * Upload an svg or logo to be displayed with link
              */
-            icon?: (string | null) | Media;
+            icon?: (number | null) | Media;
             label: string;
             page?: {
               relationTo: 'pages';
-              value: string | Page;
+              value: number | Page;
             } | null;
             url?: string | null;
             id?: string | null;
@@ -1180,11 +1221,11 @@ export interface SiteSetting {
                   /**
                    * Upload an svg or logo to be displayed with link
                    */
-                  icon?: (string | null) | Media;
+                  icon?: (number | null) | Media;
                   label: string;
                   page?: {
                     relationTo: 'pages';
-                    value: string | Page;
+                    value: number | Page;
                   } | null;
                   url?: string | null;
                   id?: string | null;
@@ -1209,11 +1250,11 @@ export interface SiteSetting {
             /**
              * Upload an svg or logo to be displayed with link
              */
-            icon?: (string | null) | Media;
+            icon?: (number | null) | Media;
             label: string;
             page?: {
               relationTo: 'pages';
-              value: string | Page;
+              value: number | Page;
             } | null;
             url?: string | null;
             id?: string | null;
@@ -1227,11 +1268,11 @@ export interface SiteSetting {
                   /**
                    * Upload an svg or logo to be displayed with link
                    */
-                  icon?: (string | null) | Media;
+                  icon?: (number | null) | Media;
                   label: string;
                   page?: {
                     relationTo: 'pages';
-                    value: string | Page;
+                    value: number | Page;
                   } | null;
                   url?: string | null;
                   id?: string | null;
@@ -1273,28 +1314,28 @@ export interface SiteSetting {
      */
     blogLink?: {
       relationTo: 'pages';
-      value: string | Page;
+      value: number | Page;
     } | null;
     /**
      * This redirect to a product details page
      */
     productLink?: {
       relationTo: 'pages';
-      value: string | Page;
+      value: number | Page;
     } | null;
     /**
      * This redirects to a author details page
      */
     authorLink?: {
       relationTo: 'pages';
-      value: string | Page;
+      value: number | Page;
     } | null;
     /**
      * This redirects to a tag details page
      */
     tagLink?: {
       relationTo: 'pages';
-      value: string | Page;
+      value: number | Page;
     } | null;
   };
   monetization?: {
@@ -1353,13 +1394,13 @@ export interface SiteSetting {
     fonts: {
       display: {
         type: 'customFont' | 'googleFont';
-        customFont?: (string | null) | Media;
+        customFont?: (number | null) | Media;
         remoteFont?: string | null;
         fontName?: string | null;
       };
       body: {
         type: 'customFont' | 'googleFont';
-        customFont?: (string | null) | Media;
+        customFont?: (number | null) | Media;
         remoteFont?: string | null;
         fontName?: string | null;
       };
@@ -1374,7 +1415,7 @@ export interface SiteSetting {
  * via the `definition` "BrandLogo".
  */
 export interface BrandLogo {
-  imageUrl: string | Media;
+  imageUrl: number | Media;
   /**
    * Adjust to the height of the logo
    */
