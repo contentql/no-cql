@@ -6,8 +6,9 @@ export default async function page() {
     config: configPromise,
   })
 
-  const data = await payload.find({
+  const categories = await payload.find({
     collection: 'categories',
+    depth: 1,
     where: {
       parent: {
         exists: false,
@@ -15,9 +16,17 @@ export default async function page() {
     },
   })
 
+  const products = await payload.find({
+    collection: 'products',
+    depth:1,
+  })
+  
   return (
     <div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <h1>Categories :</h1>
+      <pre>{JSON.stringify(categories, null, 2)}</pre>
+      <h1>Products :</h1>
+      <pre>{JSON.stringify(products,null,2)}</pre>
     </div>
   )
 }
