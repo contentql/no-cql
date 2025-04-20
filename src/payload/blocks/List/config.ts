@@ -30,6 +30,14 @@ const ListConfig: Block = {
           label: 'Authors',
           value: 'users',
         },
+        {
+          label: 'Categories',
+          value: 'categories',
+        },
+        {
+          label: 'Products',
+          value: 'products',
+        },
       ],
     },
   ],

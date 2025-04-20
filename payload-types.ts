@@ -72,6 +72,9 @@ export interface Config {
     pages: Page;
     blogs: Blog;
     tags: Tag;
+    brands: Brand;
+    categories: Category;
+    products: Product;
     forms: Form;
     'form-submissions': FormSubmission;
     search: Search;
@@ -86,6 +89,9 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    brands: BrandsSelect<false> | BrandsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -291,7 +297,7 @@ export interface HeroType {
  * via the `definition` "DetailsType".
  */
 export interface DetailsType {
-  collectionSlug?: ('blogs' | 'tags' | 'users') | null;
+  collectionSlug?: ('blogs' | 'tags' | 'users' | 'Categories' | 'Products') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'DetailsBlock';
@@ -302,7 +308,7 @@ export interface DetailsType {
  */
 export interface ListType {
   title?: string | null;
-  collectionSlug?: ('blogs' | 'tags' | 'users') | null;
+  collectionSlug?: ('blogs' | 'tags' | 'users' | 'Categories' | 'Products') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'ListBlock';
@@ -571,6 +577,219 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "brands".
+ */
+export interface Brand {
+  id: string;
+  /**
+   * The name of the brand. This will be displayed across the application.
+   */
+  name: string;
+  /**
+   * SEO-friendly URL for this brand.
+   */
+  slug: string;
+  /**
+   * Provide a rich text description to explain this brand.
+   */
+  description?: string | null;
+  /**
+   * Upload an image that represents this brand.
+   */
+  image?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  /**
+   * The name of the category. This will be displayed across the application.
+   */
+  name: string;
+  /**
+   * SEO-friendly URL for this category.
+   */
+  slug: string;
+  /**
+   * Provide a rich text description to explain this category.
+   */
+  description?: string | null;
+  /**
+   * Select the parent category if this category belongs to a hierarchy.
+   */
+  parentCategory?: (string | null) | Category;
+  /**
+   * Mark this category as featured to highlight it on the homepage or special sections.
+   */
+  isFeatured?: boolean | null;
+  /**
+   * Upload an image that represents this category.
+   */
+  image: string | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  /**
+   * The name of the product that will be displayed.
+   */
+  name: string;
+  /**
+   * SEO-friendly URL for this category.
+   */
+  slug: string;
+  /**
+   * Provide a rich text description for the product.
+   */
+  description?: string | null;
+  /**
+   * The manufacturer or brand of the product.
+   */
+  brand: string | Brand;
+  /**
+   * The price of the product before any discounts.
+   */
+  price: number;
+  /**
+   * Provide details about any discounts available.
+   */
+  discount?: {
+    /**
+     * Discount percentage to be applied.
+     */
+    percentage?: number | null;
+    /**
+     * The date when the discount becomes active.
+     */
+    startDate?: string | null;
+    /**
+     * The date when the discount ends.
+     */
+    endDate?: string | null;
+  };
+  /**
+   * The final price of the product after applying discounts.
+   */
+  finalPrice?: number | null;
+  /**
+   * The category this product belongs to.
+   */
+  category: string | Category;
+  /**
+   * Add tags to help categorize the product.
+   */
+  tags?:
+    | {
+        /**
+         * A single tag for the product.
+         */
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add key-value pairs to describe product attributes such as Color, Size, Material.
+   */
+  attributes?:
+    | {
+        /**
+         * The name of the attribute (e.g., Color, Size). For example, use "Size" to define size options.
+         */
+        key: string;
+        value: {
+          /**
+           * Choose the value type for this attribute. Use "Select" for predefined options like sizes.
+           */
+          type: 'text' | 'select';
+          /**
+           * The value of the attribute if it is a simple text.
+           */
+          textValue?: string | null;
+          /**
+           * Define the selectable options for this attribute (e.g., S, M, L, XL, XXL for Size).
+           */
+          selectOptions?:
+            | {
+                /**
+                 * One of the selectable options for this attribute.
+                 */
+                option: string;
+                /**
+                 * Additional price for this option, if applicable.
+                 */
+                extraPrice?: number | null;
+                /**
+                 * Available stock for this specific option.
+                 */
+                stock?: number | null;
+                id?: string | null;
+              }[]
+            | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Upload product images.
+   */
+  images: (string | Media)[];
+  /**
+   * Mark this product as a best seller to highlight it prominently.
+   */
+  isFeatured?: boolean | null;
+  /**
+   * Mark this product as a new arrival to indicate its recent addition.
+   */
+  isNewArrival?: boolean | null;
+  /**
+   * Mark this product as part of a special offer or promotion.
+   */
+  isSpecialOffer?: boolean | null;
+  /**
+   * Add flexible sections for additional information such as Product Details, Size & Fit, Material & Care, etc.
+   */
+  additionalInformationSections?:
+    | {
+        /**
+         * The title of the section (e.g., Product Details, Size & Fit). This will be displayed as the header for each additional information section.
+         */
+        sectionTitle: string;
+        /**
+         * Add attribute-value pairs to describe each section (e.g., Product Dimensions, Material, etc.). This content will provide further details under each section.
+         */
+        sectionContent?:
+          | {
+              /**
+               * The name of the attribute in this section (e.g., Material, Height). This could describe key characteristics of the product.
+               */
+              attributeName: string;
+              /**
+               * The value corresponding to the attribute in this section (e.g., Cotton, 12 inches). This will provide specific details for the attribute.
+               */
+              attributeValue: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -639,6 +858,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tags';
         value: string | Tag;
+      } | null)
+    | ({
+        relationTo: 'brands';
+        value: string | Brand;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
       } | null)
     | ({
         relationTo: 'forms';
@@ -906,6 +1137,100 @@ export interface TagsSelect<T extends boolean = true> {
         image?: T;
       };
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "brands_select".
+ */
+export interface BrandsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  parentCategory?: T;
+  isFeatured?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  brand?: T;
+  price?: T;
+  discount?:
+    | T
+    | {
+        percentage?: T;
+        startDate?: T;
+        endDate?: T;
+      };
+  finalPrice?: T;
+  category?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  attributes?:
+    | T
+    | {
+        key?: T;
+        value?:
+          | T
+          | {
+              type?: T;
+              textValue?: T;
+              selectOptions?:
+                | T
+                | {
+                    option?: T;
+                    extraPrice?: T;
+                    stock?: T;
+                    id?: T;
+                  };
+            };
+        id?: T;
+      };
+  images?: T;
+  isFeatured?: T;
+  isNewArrival?: T;
+  isSpecialOffer?: T;
+  additionalInformationSections?:
+    | T
+    | {
+        sectionTitle?: T;
+        sectionContent?:
+          | T
+          | {
+              attributeName?: T;
+              attributeValue?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

@@ -11,8 +11,11 @@ import sharp from 'sharp'
 
 import { isAdmin } from '@/payload/access/isAdmin'
 import { Blogs } from '@/payload/collections/blogs'
+import { Brands } from '@/payload/collections/brands'
+import { Categories } from '@/payload/collections/categories'
 import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
+import { Products } from '@/payload/collections/products'
 import { Tags } from '@/payload/collections/tags'
 import { Users } from '@/payload/collections/users'
 import { siteSettings } from '@/payload/globals/siteSettings'
@@ -161,7 +164,7 @@ export default buildConfig({
       titleSuffix: '- ContentQL',
     },
   },
-  collections: [Users, Media, Pages, Blogs, Tags],
+  collections: [Users, Media, Pages, Blogs, Tags, Brands, Categories, Products],
   globals: [siteSettings],
   db: db({
     databaseURI: env.DATABASE_URI,

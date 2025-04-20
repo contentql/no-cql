@@ -25,6 +25,14 @@ const DetailsConfig: Block = {
           label: 'Authors',
           value: 'users',
         },
+        {
+          label: 'Categories',
+          value: 'categories',
+        },
+        {
+          label: 'Products',
+          value: 'products',
+        },
       ],
     },
   ],
