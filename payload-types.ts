@@ -297,7 +297,7 @@ export interface HeroType {
  * via the `definition` "DetailsType".
  */
 export interface DetailsType {
-  collectionSlug?: ('blogs' | 'tags' | 'users' | 'Categories' | 'Products') | null;
+  collectionSlug?: ('blogs' | 'tags' | 'users' | 'categories' | 'products') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'DetailsBlock';
@@ -308,7 +308,7 @@ export interface DetailsType {
  */
 export interface ListType {
   title?: string | null;
-  collectionSlug?: ('blogs' | 'tags' | 'users' | 'Categories' | 'Products') | null;
+  collectionSlug?: ('blogs' | 'tags' | 'users' | 'categories' | 'products') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'ListBlock';

@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
 import { Tag } from '@payload-types'
-import { getPayload } from 'payload'
 import { Ora } from 'ora'
+import { getPayload } from 'payload'
 
 import { tagsData, tagsImagesData } from './data'
 
@@ -27,7 +27,7 @@ const seed = async (spinner: Ora) => {
 
         tagImages.push({ id: tagImage.id, name })
       } catch (error) {
-        spinner.fail(`Failed tp upload tags images...`)
+        spinner.fail(`Failed to upload tags images...`)
         throw error
       }
     }
