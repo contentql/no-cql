@@ -5,7 +5,10 @@ import { pageRouter } from '@/trpc/routers/page'
 import { siteSettingsRouter } from '@/trpc/routers/site-settings'
 import { tagRouter } from '@/trpc/routers/tag'
 
+import { brandRouter } from './brand'
+import { categoryRouter } from './category'
 import { formRouter } from './form'
+import { productRouter } from './product'
 import { searchRouter } from './search'
 import { seedRouter } from './seed'
 
@@ -18,6 +21,9 @@ export const appRouter = router({
   seed: seedRouter,
   search: searchRouter,
   form: formRouter,
+  brand: brandRouter,
+  category: categoryRouter,
+  product: productRouter,
 })
 
 export type AppRouter = typeof appRouter
