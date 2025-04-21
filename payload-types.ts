@@ -597,6 +597,14 @@ export interface Brand {
    * Upload an image that represents this brand.
    */
   image?: (string | null) | Media;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -631,6 +639,14 @@ export interface Category {
    * Upload an image that represents this category.
    */
   image: string | Media;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -784,6 +800,14 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1150,6 +1174,13 @@ export interface BrandsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   image?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1165,6 +1196,13 @@ export interface CategoriesSelect<T extends boolean = true> {
   parentCategory?: T;
   isFeatured?: T;
   image?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1230,6 +1268,13 @@ export interface ProductsSelect<T extends boolean = true> {
               id?: T;
             };
         id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;

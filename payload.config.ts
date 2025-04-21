@@ -189,7 +189,14 @@ export default buildConfig({
       enabled: true,
     }),
     seoPlugin({
-      collections: ['pages', 'blogs', 'tags'],
+      collections: [
+        'pages',
+        'blogs',
+        'tags',
+        'categories',
+        'products',
+        'brands',
+      ],
       uploadsCollection: 'media',
       tabbedUI: true,
       generateURL: data =>

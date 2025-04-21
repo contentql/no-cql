@@ -20,6 +20,7 @@
   "dependencies": {
     "@clack/prompts": "^0.7.0",
     "@hookform/resolvers": "^3.10.0",
+    "@libsql/client": "^0.15.4",
     "@payloadcms/db-mongodb": "^3.32.0",
     "@payloadcms/db-postgres": "^3.32.0",
     "@payloadcms/db-sqlite": "^3.32.0",
@@ -69,6 +70,7 @@
     "graphql": "^16.8.2",
     "immer": "^10.1.1",
     "isomorphic-dompurify": "^2.16.0",
+    "libsql": "^0.5.7",
     "lucide-react": "^0.453.0",
     "mongodb": "^6.8.0",
     "next": "^15.1.3",
