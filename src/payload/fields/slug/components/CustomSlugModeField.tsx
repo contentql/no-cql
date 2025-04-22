@@ -4,9 +4,7 @@ import { RadioGroupField, useFormFields } from '@payloadcms/ui'
 import { RadioFieldClientProps } from 'payload'
 import React, { useEffect } from 'react'
 
-export const CustomSlugModeField: React.FC<RadioFieldClientProps> = ({
-  ...props
-}) => {
+const CustomSlugModeField: React.FC<RadioFieldClientProps> = ({ ...props }) => {
   const { fields, dispatch } = useFormFields(([fields, dispatch]) => ({
     fields,
     dispatch,
@@ -30,3 +28,5 @@ export const CustomSlugModeField: React.FC<RadioFieldClientProps> = ({
 
   return <RadioGroupField {...props} readOnly={readOnly} />
 }
+
+export default CustomSlugModeField

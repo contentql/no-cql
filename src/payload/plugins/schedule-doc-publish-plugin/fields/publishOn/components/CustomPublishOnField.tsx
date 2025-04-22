@@ -4,7 +4,7 @@ import { DateTimeField, useFormFields, useFormModified } from '@payloadcms/ui'
 import { DateFieldClientProps } from 'payload'
 import React from 'react'
 
-export const CustomPublishOnField: React.FC<DateFieldClientProps> = props => {
+const CustomPublishOnField: React.FC<DateFieldClientProps> = props => {
   const { fields, dispatch } = useFormFields(([fields, dispatch]) => ({
     fields,
     dispatch,
@@ -21,3 +21,4 @@ export const CustomPublishOnField: React.FC<DateFieldClientProps> = props => {
     />
   )
 }
+export default CustomPublishOnField

@@ -9,9 +9,10 @@ interface CustomClientProps {
   fieldToUse: string
 }
 
-export const CustomSlugField: React.FC<
-  TextFieldClientProps & CustomClientProps
-> = ({ fieldToUse, ...props }) => {
+const CustomSlugField: React.FC<TextFieldClientProps & CustomClientProps> = ({
+  fieldToUse,
+  ...props
+}) => {
   const { fields, dispatch } = useFormFields(([fields, dispatch]) => ({
     fields,
     dispatch,
@@ -52,3 +53,5 @@ export const CustomSlugField: React.FC<
 
   return <TextField {...props} readOnly={readOnly} />
 }
+
+export default CustomSlugField
