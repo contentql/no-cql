@@ -51,6 +51,7 @@ import { UploadElement as UploadElement_0b388c087d9de8c4f011dd323a130cfb } from 
 import { WithUpload as WithUpload_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { default as default_98c0f4abadca2c088b1f10febe84908a } from '@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnFieldLabel'
 import { default as default_695e6fdd1491837f16025ec4015b207f } from '@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnField'
+import { default as default_848875f9f9747a27a545e092e33fa3a0 } from 'src/payload/collections/dynamic-products/custom/RenderFields.tsx'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { default as default_530a4a40d073f63a62d20ecc1c48a28a } from '@/payload/fields/common/theme/ColorField'
@@ -113,6 +114,7 @@ export const importMap = {
   "@payloadcms/richtext-slate/client#WithUpload": WithUpload_0b388c087d9de8c4f011dd323a130cfb,
   "@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnFieldLabel#default": default_98c0f4abadca2c088b1f10febe84908a,
   "@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnField#default": default_695e6fdd1491837f16025ec4015b207f,
+  "src/payload/collections/dynamic-products/custom/RenderFields.tsx#default": default_848875f9f9747a27a545e092e33fa3a0,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@/payload/fields/common/theme/ColorField#default": default_530a4a40d073f63a62d20ecc1c48a28a,

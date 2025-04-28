@@ -75,6 +75,8 @@ export interface Config {
     brands: Brand;
     categories: Category;
     products: Product;
+    'product-templates': ProductTemplate;
+    'dynamic-products': DynamicProduct;
     forms: Form;
     'form-submissions': FormSubmission;
     search: Search;
@@ -92,6 +94,8 @@ export interface Config {
     brands: BrandsSelect<false> | BrandsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    'product-templates': ProductTemplatesSelect<false> | ProductTemplatesSelect<true>;
+    'dynamic-products': DynamicProductsSelect<false> | DynamicProductsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -673,6 +677,19 @@ export interface Product {
    * The manufacturer or brand of the product.
    */
   brand: string | Brand;
+  template: string | ProductTemplate;
+  /**
+   * Fields will appear based on selected template
+   */
+  dynamicFields?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   /**
    * The price of the product before any discounts.
    */
@@ -814,6 +831,63 @@ export interface Product {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-templates".
+ */
+export interface ProductTemplate {
+  id: string;
+  name: string;
+  fields?:
+    | (
+        | {
+            name: string;
+            label?: string | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'text-field';
+          }
+        | {
+            name: string;
+            label?: string | null;
+            required?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'number-field';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dynamic-products".
+ */
+export interface DynamicProduct {
+  id: string;
+  template:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  product?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -894,6 +968,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'product-templates';
+        value: string | ProductTemplate;
+      } | null)
+    | ({
+        relationTo: 'dynamic-products';
+        value: string | DynamicProduct;
       } | null)
     | ({
         relationTo: 'forms';
@@ -1216,6 +1298,8 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   brand?: T;
+  template?: T;
+  dynamicFields?: T;
   price?: T;
   discount?:
     | T
@@ -1279,6 +1363,47 @@ export interface ProductsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-templates_select".
+ */
+export interface ProductTemplatesSelect<T extends boolean = true> {
+  name?: T;
+  fields?:
+    | T
+    | {
+        'text-field'?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'number-field'?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              required?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dynamic-products_select".
+ */
+export interface DynamicProductsSelect<T extends boolean = true> {
+  template?: T;
+  product?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
