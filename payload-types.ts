@@ -77,6 +77,7 @@ export interface Config {
     products: Product;
     'product-templates': ProductTemplate;
     'dynamic-products': DynamicProduct;
+    'static-products': StaticProduct;
     forms: Form;
     'form-submissions': FormSubmission;
     search: Search;
@@ -96,6 +97,7 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     'product-templates': ProductTemplatesSelect<false> | ProductTemplatesSelect<true>;
     'dynamic-products': DynamicProductsSelect<false> | DynamicProductsSelect<true>;
+    'static-products': StaticProductsSelect<false> | StaticProductsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -913,6 +915,28 @@ export interface DynamicProduct {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "static-products".
+ */
+export interface StaticProduct {
+  id: string;
+  name: string;
+  type: 'car' | 'bike';
+  brand?: string | null;
+  price?: number | null;
+  available?: boolean | null;
+  carModel?: string | null;
+  carSeats?: number | null;
+  fuelType?: ('Petrol' | 'Diesel' | 'Electric' | 'Hybrid') | null;
+  transmission?: ('Manual' | 'Automatic') | null;
+  bikeType?: ('Cruiser' | 'Sport' | 'Commuter' | 'Electric') | null;
+  engineCC?: number | null;
+  hasCarrier?: boolean | null;
+  electricStart?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1001,6 +1025,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'dynamic-products';
         value: string | DynamicProduct;
+      } | null)
+    | ({
+        relationTo: 'static-products';
+        value: string | StaticProduct;
       } | null)
     | ({
         relationTo: 'forms';
@@ -1475,6 +1503,27 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
 export interface DynamicProductsSelect<T extends boolean = true> {
   productTemplate?: T;
   product?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "static-products_select".
+ */
+export interface StaticProductsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  brand?: T;
+  price?: T;
+  available?: T;
+  carModel?: T;
+  carSeats?: T;
+  fuelType?: T;
+  transmission?: T;
+  bikeType?: T;
+  engineCC?: T;
+  hasCarrier?: T;
+  electricStart?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -18,6 +18,7 @@ import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
 import ProductTemplates from '@/payload/collections/product-templates'
 import { Products } from '@/payload/collections/products'
+import StaticProducts from '@/payload/collections/static-products'
 import { Tags } from '@/payload/collections/tags'
 import { Users } from '@/payload/collections/users'
 import { siteSettings } from '@/payload/globals/siteSettings'
@@ -177,6 +178,7 @@ export default buildConfig({
     Products,
     ProductTemplates,
     DynamicProducts,
+    StaticProducts,
   ],
   globals: [siteSettings],
   db: db({
