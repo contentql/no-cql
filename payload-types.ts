@@ -677,19 +677,6 @@ export interface Product {
    * The manufacturer or brand of the product.
    */
   brand: string | Brand;
-  template: string | ProductTemplate;
-  /**
-   * Fields will appear based on selected template
-   */
-  dynamicFields?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
   /**
    * The price of the product before any discounts.
    */
@@ -840,19 +827,65 @@ export interface ProductTemplate {
     | (
         | {
             name: string;
-            label?: string | null;
-            required?: boolean | null;
+            label: string;
+            required: boolean;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'text-field';
+            blockType: 'text';
           }
         | {
             name: string;
-            label?: string | null;
-            required?: boolean | null;
+            label: string;
+            required: boolean;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'number-field';
+            blockType: 'number';
+          }
+        | {
+            name: string;
+            label: string;
+            required: boolean;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'checkbox';
+          }
+        | {
+            name: string;
+            label: string;
+            options?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            required: boolean;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'radio';
+          }
+        | {
+            name: string;
+            label: string;
+            options?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            required: boolean;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'select';
+          }
+        | {
+            name: string;
+            label: string;
+            required: boolean;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textarea';
           }
       )[]
     | null;
@@ -865,15 +898,7 @@ export interface ProductTemplate {
  */
 export interface DynamicProduct {
   id: string;
-  template:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  productTemplate?: (string | null) | ProductTemplate;
   product?:
     | {
         [k: string]: unknown;
@@ -1298,8 +1323,6 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   brand?: T;
-  template?: T;
-  dynamicFields?: T;
   price?: T;
   discount?:
     | T
@@ -1373,7 +1396,7 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
   fields?:
     | T
     | {
-        'text-field'?:
+        text?:
           | T
           | {
               name?: T;
@@ -1382,7 +1405,57 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        'number-field'?:
+        number?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        checkbox?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        radio?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              options?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        select?:
+          | T
+          | {
+              name?: T;
+              label?: T;
+              options?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              required?: T;
+              id?: T;
+              blockName?: T;
+            };
+        textarea?:
           | T
           | {
               name?: T;
@@ -1400,7 +1473,7 @@ export interface ProductTemplatesSelect<T extends boolean = true> {
  * via the `definition` "dynamic-products_select".
  */
 export interface DynamicProductsSelect<T extends boolean = true> {
-  template?: T;
+  productTemplate?: T;
   product?: T;
   updatedAt?: T;
   createdAt?: T;

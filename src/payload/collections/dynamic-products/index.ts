@@ -4,10 +4,10 @@ const DynamicProducts: CollectionConfig = {
   slug: 'dynamic-products',
   fields: [
     {
-      name: 'template',
-      type: 'json',
-      label: 'Template',
-      required: true,
+      name: 'productTemplate',
+      label: 'Product Template',
+      type: 'relationship',
+      relationTo: 'product-templates',
     },
     {
       name: 'product',

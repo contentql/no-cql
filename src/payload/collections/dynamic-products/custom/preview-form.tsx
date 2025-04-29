@@ -1,10 +1,11 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useField } from '@payloadcms/ui'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
   Form,
@@ -30,6 +31,7 @@ import { type FormConfig, type FormField as IFormField } from './types'
 
 interface PreviewFormProps {
   config: FormConfig
+  path: string
 }
 
 const widthClasses = {
@@ -38,7 +40,9 @@ const widthClasses = {
   third: 'col-span-12 sm:col-span-4',
 } as const
 
-export function PreviewForm({ config }: PreviewFormProps) {
+export function PreviewForm({ config, path }: PreviewFormProps) {
+  const { value, setValue } = useField({ path })
+
   const { fields, layout } = config
 
   const formSchema = z.object(
@@ -57,12 +61,23 @@ export function PreviewForm({ config }: PreviewFormProps) {
 
   type FormValues = z.infer<typeof formSchema>
 
+  // Initialize form with existing values
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    defaultValues: value || {},
   })
 
+  // Watch for form changes and update the value
+  useEffect(() => {
+    const subscription = form.watch(formData => {
+      setValue(formData)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [form, setValue])
+
   function onSubmit(values: FormValues) {
-    console.log(values)
+    setValue(values)
   }
 
   const renderField = (field: IFormField) => {
@@ -106,7 +121,9 @@ export function PreviewForm({ config }: PreviewFormProps) {
                     case 'select':
                       return (
                         <Select
-                          onValueChange={formField.onChange}
+                          onValueChange={val => {
+                            formField.onChange(val)
+                          }}
                           value={formField.value}>
                           <SelectTrigger className='text-sm sm:text-base'>
                             <SelectValue placeholder={field.placeholder} />
@@ -127,8 +144,13 @@ export function PreviewForm({ config }: PreviewFormProps) {
                       return (
                         <div className='flex items-center space-x-2'>
                           <Checkbox
-                            checked={formField.value}
-                            onCheckedChange={formField.onChange}
+                            checked={
+                              formField.value === 'true' ||
+                              formField.value === true
+                            }
+                            onCheckedChange={checked => {
+                              formField.onChange(checked)
+                            }}
                           />
                           <span className='text-sm sm:text-base'>
                             {field.label}
@@ -138,7 +160,9 @@ export function PreviewForm({ config }: PreviewFormProps) {
                     case 'radio':
                       return (
                         <RadioGroup
-                          onValueChange={formField.onChange}
+                          onValueChange={val => {
+                            formField.onChange(val)
+                          }}
                           value={formField.value}
                           className='space-y-2'>
                           {field.options?.map(opt => (
@@ -187,15 +211,6 @@ export function PreviewForm({ config }: PreviewFormProps) {
             layout !== 'inline' && 'grid-cols-1',
           )}>
           {fields.map(renderField)}
-        </div>
-        <div
-          className={cn(
-            'flex justify-start px-2',
-            layout === 'horizontal' && 'sm:ml-[33.333333%] sm:pl-4',
-          )}>
-          <Button type='submit' className='w-full sm:w-auto'>
-            Submit
-          </Button>
         </div>
       </form>
     </Form>
