@@ -115,7 +115,7 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
                         <Textarea
                           placeholder={field.placeholder}
                           {...formField}
-                          className='min-h-[100px] resize-y text-sm sm:text-base'
+                          className='min-h-[100px] resize-y rounded-none text-sm sm:text-base'
                         />
                       )
                     case 'select':
@@ -125,15 +125,15 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
                             formField.onChange(val)
                           }}
                           value={formField.value}>
-                          <SelectTrigger className='text-sm sm:text-base'>
+                          <SelectTrigger className='h-10 rounded-none px-4 py-2 text-sm sm:text-base'>
                             <SelectValue placeholder={field.placeholder} />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className='rounded-none'>
                             {field.options?.map(opt => (
                               <SelectItem
                                 key={opt.value}
                                 value={opt.value}
-                                className='text-sm sm:text-base'>
+                                className='rounded-none text-sm sm:text-base'>
                                 {opt.label}
                               </SelectItem>
                             ))}
@@ -144,6 +144,7 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
                       return (
                         <div className='flex items-center space-x-2'>
                           <Checkbox
+                            className='h-5 w-5 rounded-none'
                             checked={
                               formField.value === 'true' ||
                               formField.value === true
@@ -169,7 +170,10 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
                             <div
                               key={opt.value}
                               className='flex items-center space-x-2'>
-                              <RadioGroupItem value={opt.value} />
+                              <RadioGroupItem
+                                className='h-5 w-5'
+                                value={opt.value}
+                              />
                               <span className='text-sm sm:text-base'>
                                 {opt.label}
                               </span>
@@ -183,7 +187,7 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
                           type={field.type}
                           placeholder={field.placeholder}
                           {...formField}
-                          className='text-sm sm:text-base'
+                          className='h-10 rounded-none px-4 py-2 text-sm sm:text-base'
                         />
                       )
                   }
