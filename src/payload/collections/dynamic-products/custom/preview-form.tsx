@@ -187,6 +187,7 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
                           type={field.type}
                           placeholder={field.placeholder}
                           {...formField}
+                          value={formField.value ?? ''} // <-- force controlled
                           className='h-10 rounded-none px-4 py-2 text-sm sm:text-base'
                         />
                       )
@@ -208,7 +209,7 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+      <div onSubmitCapture={form.handleSubmit(onSubmit)} className='space-y-6'>
         <div
           className={cn(
             '-mx-2 grid grid-cols-12 gap-4',
@@ -216,7 +217,7 @@ export function PreviewForm({ config, path }: PreviewFormProps) {
           )}>
           {fields.map(renderField)}
         </div>
-      </form>
+      </div>
     </Form>
   )
 }
