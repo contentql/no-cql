@@ -8,6 +8,7 @@ import {
   revalidateProductsAfterChange,
   revalidateProductsAfterDelete,
 } from './hooks/revalidateProducts'
+import { productTemplates } from './product-templates'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -84,6 +85,26 @@ export const Products: CollectionConfig = {
                 description: 'The manufacturer or brand of the product.',
               },
             },
+            {
+              name: 'template',
+              label: 'Product Template',
+              type: 'select',
+              options: productTemplates.map(t => ({
+                label: t.label,
+                value: t.value,
+              })),
+            },
+            // Add each template's fields at the root level with condition
+            ...productTemplates.map(template => ({
+              name: `${template.value}Fields`,
+              type: 'group' as const,
+              label: `${template.label} Fields`,
+              admin: {
+                condition: (_: any, siblingData: any) =>
+                  siblingData.template === template.value,
+              },
+              fields: template.fields,
+            })),
           ],
         },
         {

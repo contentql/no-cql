@@ -679,6 +679,463 @@ export interface Product {
    * The manufacturer or brand of the product.
    */
   brand: string | Brand;
+  template?: ('mobile' | 'car') | null;
+  mobileFields?: {
+    keySpecifications?: {
+      /**
+       * Processor model used in the device (e.g., Snapdragon 8 Gen 3)
+       */
+      processor?: string | null;
+      /**
+       * Main display features like size and type (e.g., 6.7" AMOLED)
+       */
+      display?: string | null;
+      /**
+       * Main rear camera setup (e.g., 50MP + 12MP + 10MP)
+       */
+      rearCamera?: string | null;
+      /**
+       * Front-facing camera details (e.g., 32MP)
+       */
+      frontCamera?: string | null;
+      /**
+       * RAM and internal storage combo (e.g., 8GB | 128GB)
+       */
+      ramStorage?: string | null;
+      /**
+       * Battery capacity and charging info (e.g., 5000mAh, 67W Charging)
+       */
+      battery?: string | null;
+      /**
+       * Network support details (e.g., 5G, 4G LTE)
+       */
+      network?: string | null;
+      /**
+       * Operating system version (e.g., Android 14)
+       */
+      os?: string | null;
+    };
+    performance?: {
+      /**
+       * Processor chipset used (e.g., MediaTek Dimensity 9300)
+       */
+      chipset?: string | null;
+      /**
+       * CPU configuration and clock speed (e.g., Octa-core 3.2GHz)
+       */
+      cpu?: string | null;
+      /**
+       * Processor architecture (e.g., 64-bit)
+       */
+      architecture?: string | null;
+      /**
+       * Fabrication process used (e.g., 4nm)
+       */
+      fabrication?: string | null;
+      /**
+       * Installed RAM (e.g., 8GB)
+       */
+      ram?: string | null;
+      /**
+       * Type of RAM used (e.g., LPDDR5X)
+       */
+      ramType?: string | null;
+      /**
+       * Graphics processor unit (e.g., Adreno 740)
+       */
+      graphics?: string | null;
+    };
+    design?: {
+      /**
+       * Height in mm (e.g., 162.3 mm)
+       */
+      height?: string | null;
+      /**
+       * Width in mm (e.g., 75.6 mm)
+       */
+      width?: string | null;
+      /**
+       * Thickness in mm (e.g., 8.9 mm)
+       */
+      thickness?: string | null;
+      /**
+       * Weight in grams (e.g., 196g)
+       */
+      weight?: string | null;
+      /**
+       * Build material (e.g., Glass back, Plastic frame)
+       */
+      build?: string | null;
+      /**
+       * Water resistance rating (e.g., IP68)
+       */
+      waterResistant?: string | null;
+      /**
+       * Rugged protection features (e.g., MIL-STD-810G)
+       */
+      ruggedness?: string | null;
+      /**
+       * Unlock methods supported (e.g., Face Unlock, Fingerprint)
+       */
+      unlockMethods?: string | null;
+      /**
+       * Available color variants (e.g., Black, Blue, Red)
+       */
+      colors?: string | null;
+    };
+    display?: {
+      /**
+       * Screen resolution (e.g., 2400 x 1080 pixels)
+       */
+      resolution?: string | null;
+      /**
+       * Aspect ratio (e.g., 20:9)
+       */
+      aspectRatio?: string | null;
+      /**
+       * Panel type (e.g., AMOLED, IPS LCD)
+       */
+      type?: string | null;
+      /**
+       * Screen size in inches (e.g., 6.7")
+       */
+      size?: string | null;
+      /**
+       * Whether the display is bezel-less (Yes/No)
+       */
+      bezelLess?: string | null;
+      /**
+       * Pixel density in PPI (e.g., 395 PPI)
+       */
+      pixelDensity?: string | null;
+      /**
+       * Display protection type (e.g., Gorilla Glass Victus)
+       */
+      protection?: string | null;
+      /**
+       * Touchscreen type (e.g., Capacitive)
+       */
+      touchScreen?: string | null;
+      /**
+       * Color gamut support (e.g., 1B colors, DCI-P3)
+       */
+      colorReproduction?: string | null;
+      /**
+       * Screen refresh rate in Hz (e.g., 120Hz)
+       */
+      refreshRate?: string | null;
+    };
+    camera?: {
+      /**
+       * Details about the rear camera modules and arrangement
+       */
+      rearSetup?: string | null;
+      /**
+       * Tech specs like aperture, sensor size, etc.
+       */
+      rearSpecs?: string | null;
+      /**
+       * Front camera configuration details
+       */
+      frontSetup?: string | null;
+      /**
+       * Specs like aperture and sensor size of front camera
+       */
+      frontSpecs?: string | null;
+      /**
+       * Max video resolution rear camera supports (e.g., 4K@60fps)
+       */
+      videoRear?: string | null;
+      /**
+       * Max video resolution front camera supports (e.g., 1080p@30fps)
+       */
+      videoFront?: string | null;
+      /**
+       * Video recording features (e.g., Slow Motion, HDR)
+       */
+      videoFeatures?: string | null;
+      /**
+       * Additional camera features (e.g., Night Mode, AI Scene Detection)
+       */
+      cameraFeatures?: string | null;
+      /**
+       * Supported photo modes (e.g., Portrait, Panorama)
+       */
+      shootingModes?: string | null;
+      /**
+       * Optical Image Stabilization availability (Yes/No)
+       */
+      ois?: string | null;
+    };
+    battery?: {
+      /**
+       * Battery capacity (e.g., 5000mAh)
+       */
+      capacity?: string | null;
+      /**
+       * Battery type (e.g., Li-Po)
+       */
+      type?: string | null;
+      /**
+       * Wireless charging supported (Yes/No)
+       */
+      wirelessCharging?: string | null;
+      /**
+       * Supports reverse charging (Yes/No)
+       */
+      reverseCharging?: string | null;
+      /**
+       * Fast charging support (Yes/No)
+       */
+      fastCharging?: string | null;
+      /**
+       * Is battery removable (Yes/No)
+       */
+      removable?: string | null;
+      /**
+       * Wattage of charging (e.g., 67W)
+       */
+      chargingSpeed?: string | null;
+    };
+    storage?: {
+      /**
+       * Built-in storage (e.g., 256GB)
+       */
+      internalMemory?: string | null;
+      /**
+       * Storage type (e.g., UFS 4.0)
+       */
+      memoryType?: string | null;
+      /**
+       * Support for SD card (Yes/No)
+       */
+      expandable?: string | null;
+    };
+    software?: {
+      /**
+       * OS version (e.g., Android 14)
+       */
+      os?: string | null;
+      /**
+       * Custom UI on top of OS (e.g., One UI 6)
+       */
+      customUI?: string | null;
+    };
+    connectivity?: {
+      /**
+       * SIM type and configuration (e.g., Dual SIM, Nano-SIM)
+       */
+      sim?: string | null;
+      /**
+       * Network bands supported by SIM 1
+       */
+      sim1Bands?: string | null;
+      /**
+       * Network bands supported by SIM 2
+       */
+      sim2Bands?: string | null;
+      /**
+       * VoLTE supported (Yes/No)
+       */
+      volte?: string | null;
+      /**
+       * Wi-Fi version supported (e.g., Wi-Fi 6E)
+       */
+      wifi?: string | null;
+      /**
+       * Advanced Wi-Fi features (e.g., Wi-Fi Direct, Hotspot)
+       */
+      wifiFeatures?: string | null;
+      /**
+       * Bluetooth version (e.g., v5.3)
+       */
+      bluetooth?: string | null;
+      /**
+       * USB port type (e.g., USB Type-C)
+       */
+      usb?: string | null;
+      /**
+       * OTG supported (Yes/No)
+       */
+      otg?: string | null;
+      /**
+       * NFC support (Yes/No)
+       */
+      nfc?: string | null;
+      /**
+       * Infrared blaster available (Yes/No)
+       */
+      infrared?: string | null;
+      /**
+       * GPS support and tech (e.g., A-GPS, GLONASS)
+       */
+      gps?: string | null;
+    };
+    sensors?: {
+      /**
+       * Fingerprint sensor type (e.g., In-display, Side-mounted)
+       */
+      fingerprint?: string | null;
+      /**
+       * Face unlock supported (Yes/No)
+       */
+      faceUnlock?: string | null;
+      /**
+       * Additional sensors (e.g., Accelerometer, Gyroscope, Compass)
+       */
+      others?: string | null;
+    };
+  };
+  carFields?: {
+    keySpecifications?: {
+      /**
+       * Type and capacity of the engine (e.g., 1.5L Turbo Petrol)
+       */
+      engine?: string | null;
+      /**
+       * Type of gearbox (e.g., 6-Speed Manual, CVT)
+       */
+      transmission?: string | null;
+      /**
+       * Fuel efficiency (e.g., 18 km/l)
+       */
+      mileage?: string | null;
+      /**
+       * Type of fuel the car uses (e.g., Petrol, Diesel, Electric)
+       */
+      fuelType?: string | null;
+      /**
+       * Number of seats in the car
+       */
+      seatingCapacity?: string | null;
+      /**
+       * Type of car (e.g., SUV, Sedan, Hatchback)
+       */
+      bodyType?: string | null;
+    };
+    enginePerformance?: {
+      /**
+       * Engine size in cc (e.g., 1498 cc)
+       */
+      engineDisplacement?: string | null;
+      /**
+       * Maximum power output (e.g., 115 bhp @ 6600 rpm)
+       */
+      power?: string | null;
+      /**
+       * Maximum torque output (e.g., 145 Nm @ 4600 rpm)
+       */
+      torque?: string | null;
+      /**
+       * Number of engine cylinders
+       */
+      cylinders?: string | null;
+      /**
+       * Transmission gear count and type
+       */
+      gearbox?: string | null;
+      /**
+       * FWD, RWD, or AWD
+       */
+      driveType?: string | null;
+    };
+    dimensions?: {
+      /**
+       * Overall length of the car in mm
+       */
+      length?: string | null;
+      /**
+       * Overall width of the car in mm
+       */
+      width?: string | null;
+      /**
+       * Overall height of the car in mm
+       */
+      height?: string | null;
+      /**
+       * Distance between front and rear axles
+       */
+      wheelbase?: string | null;
+      /**
+       * Trunk space in liters
+       */
+      bootSpace?: string | null;
+      /**
+       * Distance from ground to chassis
+       */
+      groundClearance?: string | null;
+    };
+    features?: {
+      /**
+       * Type of sunroof (e.g., Panoramic, Electric)
+       */
+      sunroof?: string | null;
+      /**
+       * Type of AC (e.g., Manual, Auto Climate Control)
+       */
+      climateControl?: string | null;
+      /**
+       * Electrically or manually adjustable seats
+       */
+      adjustableSeats?: string | null;
+      /**
+       * Availability of cruise control
+       */
+      cruiseControl?: string | null;
+      /**
+       * Keyless push start/stop
+       */
+      keylessEntry?: string | null;
+      /**
+       * Power or manual steering
+       */
+      steeringType?: string | null;
+    };
+    infotainment?: {
+      /**
+       * Touchscreen size and type
+       */
+      touchscreen?: string | null;
+      /**
+       * Support for Android Auto and Apple CarPlay
+       */
+      androidAutoAppleCarplay?: string | null;
+      /**
+       * Number of speakers and audio quality
+       */
+      speakers?: string | null;
+      /**
+       * Bluetooth, USB, AUX, Wi-Fi, etc.
+       */
+      connectivity?: string | null;
+    };
+    safety?: {
+      /**
+       * No. and placement of airbags
+       */
+      airbags?: string | null;
+      /**
+       * Availability of Anti-lock Braking System
+       */
+      abs?: string | null;
+      /**
+       * Traction control system availability
+       */
+      tractionControl?: string | null;
+      /**
+       * Parking camera availability
+       */
+      rearCamera?: string | null;
+      /**
+       * Front and rear parking sensors
+       */
+      parkingSensors?: string | null;
+      /**
+       * Availability of ISOFIX child mounts
+       */
+      isofix?: string | null;
+    };
+  };
   /**
    * The price of the product before any discounts.
    */
@@ -1351,6 +1808,184 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   brand?: T;
+  template?: T;
+  mobileFields?:
+    | T
+    | {
+        keySpecifications?:
+          | T
+          | {
+              processor?: T;
+              display?: T;
+              rearCamera?: T;
+              frontCamera?: T;
+              ramStorage?: T;
+              battery?: T;
+              network?: T;
+              os?: T;
+            };
+        performance?:
+          | T
+          | {
+              chipset?: T;
+              cpu?: T;
+              architecture?: T;
+              fabrication?: T;
+              ram?: T;
+              ramType?: T;
+              graphics?: T;
+            };
+        design?:
+          | T
+          | {
+              height?: T;
+              width?: T;
+              thickness?: T;
+              weight?: T;
+              build?: T;
+              waterResistant?: T;
+              ruggedness?: T;
+              unlockMethods?: T;
+              colors?: T;
+            };
+        display?:
+          | T
+          | {
+              resolution?: T;
+              aspectRatio?: T;
+              type?: T;
+              size?: T;
+              bezelLess?: T;
+              pixelDensity?: T;
+              protection?: T;
+              touchScreen?: T;
+              colorReproduction?: T;
+              refreshRate?: T;
+            };
+        camera?:
+          | T
+          | {
+              rearSetup?: T;
+              rearSpecs?: T;
+              frontSetup?: T;
+              frontSpecs?: T;
+              videoRear?: T;
+              videoFront?: T;
+              videoFeatures?: T;
+              cameraFeatures?: T;
+              shootingModes?: T;
+              ois?: T;
+            };
+        battery?:
+          | T
+          | {
+              capacity?: T;
+              type?: T;
+              wirelessCharging?: T;
+              reverseCharging?: T;
+              fastCharging?: T;
+              removable?: T;
+              chargingSpeed?: T;
+            };
+        storage?:
+          | T
+          | {
+              internalMemory?: T;
+              memoryType?: T;
+              expandable?: T;
+            };
+        software?:
+          | T
+          | {
+              os?: T;
+              customUI?: T;
+            };
+        connectivity?:
+          | T
+          | {
+              sim?: T;
+              sim1Bands?: T;
+              sim2Bands?: T;
+              volte?: T;
+              wifi?: T;
+              wifiFeatures?: T;
+              bluetooth?: T;
+              usb?: T;
+              otg?: T;
+              nfc?: T;
+              infrared?: T;
+              gps?: T;
+            };
+        sensors?:
+          | T
+          | {
+              fingerprint?: T;
+              faceUnlock?: T;
+              others?: T;
+            };
+      };
+  carFields?:
+    | T
+    | {
+        keySpecifications?:
+          | T
+          | {
+              engine?: T;
+              transmission?: T;
+              mileage?: T;
+              fuelType?: T;
+              seatingCapacity?: T;
+              bodyType?: T;
+            };
+        enginePerformance?:
+          | T
+          | {
+              engineDisplacement?: T;
+              power?: T;
+              torque?: T;
+              cylinders?: T;
+              gearbox?: T;
+              driveType?: T;
+            };
+        dimensions?:
+          | T
+          | {
+              length?: T;
+              width?: T;
+              height?: T;
+              wheelbase?: T;
+              bootSpace?: T;
+              groundClearance?: T;
+            };
+        features?:
+          | T
+          | {
+              sunroof?: T;
+              climateControl?: T;
+              adjustableSeats?: T;
+              cruiseControl?: T;
+              keylessEntry?: T;
+              steeringType?: T;
+            };
+        infotainment?:
+          | T
+          | {
+              touchscreen?: T;
+              androidAutoAppleCarplay?: T;
+              speakers?: T;
+              connectivity?: T;
+            };
+        safety?:
+          | T
+          | {
+              airbags?: T;
+              abs?: T;
+              tractionControl?: T;
+              rearCamera?: T;
+              parkingSensors?: T;
+              isofix?: T;
+            };
+      };
   price?: T;
   discount?:
     | T
