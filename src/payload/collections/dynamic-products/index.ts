@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 const DynamicProducts: CollectionConfig = {
   slug: 'dynamic-products',
+  admin: {
+    hidden: true,
+  },
   fields: [
     {
       name: 'productTemplate',

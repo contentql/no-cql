@@ -4,6 +4,7 @@ const StaticProducts: CollectionConfig = {
   slug: 'static-products',
   admin: {
     useAsTitle: 'name',
+    hidden: true,
   },
   fields: [
     {

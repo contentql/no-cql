@@ -6,6 +6,7 @@ const ProductTemplates: CollectionConfig = {
   slug: 'product-templates',
   admin: {
     useAsTitle: 'name',
+    hidden: true,
   },
   fields: [
     {
