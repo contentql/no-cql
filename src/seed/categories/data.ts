@@ -30,6 +30,15 @@ export const CategoriesData: CategoryDataType[] = [
     image: '',
     _status: 'published',
   },
+  {
+    name: 'Mobile Phones',
+    slug: 'mobile-phones',
+    description:
+      'Latest smartphones with cutting-edge technology, sleek design, and powerful performance.',
+    isFeatured: true,
+    image: '',
+    _status: 'published',
+  },
 ]
 
 export const CategoriesImagesData = [
@@ -47,5 +56,10 @@ export const CategoriesImagesData = [
     alt: 'Monitors',
     imageURL: path.join(process.cwd(), '/public/images/seed/monitors.png'),
     name: 'monitors',
+  },
+  {
+    alt: 'Mobile Phones',
+    imageURL: path.join(process.cwd(), '/public/images/seed/mobile-phone.png'),
+    name: 'mobile-phones',
   },
 ]

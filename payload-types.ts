@@ -679,7 +679,198 @@ export interface Product {
    * The manufacturer or brand of the product.
    */
   brand: string | Brand;
-  template?: ('mobile' | 'car') | null;
+  /**
+   * The price of the product before any discounts.
+   */
+  price: number;
+  /**
+   * Provide details about any discounts available.
+   */
+  discount?: {
+    /**
+     * Discount percentage to be applied.
+     */
+    percentage?: number | null;
+    /**
+     * The date when the discount becomes active.
+     */
+    startDate?: string | null;
+    /**
+     * The date when the discount ends.
+     */
+    endDate?: string | null;
+  };
+  /**
+   * The final price of the product after applying discounts.
+   */
+  finalPrice?: number | null;
+  /**
+   * The category this product belongs to.
+   */
+  category: string | Category;
+  /**
+   * Add tags to help categorize the product.
+   */
+  tags?:
+    | {
+        /**
+         * A single tag for the product.
+         */
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  template?: ('car' | 'mobile') | null;
+  carFields?: {
+    keySpecifications?: {
+      /**
+       * Type and capacity of the engine (e.g., 1.5L Turbo Petrol)
+       */
+      engine?: string | null;
+      /**
+       * Type of gearbox (e.g., 6-Speed Manual, CVT)
+       */
+      transmission?: string | null;
+      /**
+       * Fuel efficiency (e.g., 18 km/l)
+       */
+      mileage?: string | null;
+      /**
+       * Type of fuel the car uses (e.g., Petrol, Diesel, Electric)
+       */
+      fuelType?: string | null;
+      /**
+       * Number of seats in the car
+       */
+      seatingCapacity?: string | null;
+      /**
+       * Type of car (e.g., SUV, Sedan, Hatchback)
+       */
+      bodyType?: string | null;
+    };
+    enginePerformance?: {
+      /**
+       * Engine size in cc (e.g., 1498 cc)
+       */
+      engineDisplacement?: string | null;
+      /**
+       * Maximum power output (e.g., 115 bhp @ 6600 rpm)
+       */
+      power?: string | null;
+      /**
+       * Maximum torque output (e.g., 145 Nm @ 4600 rpm)
+       */
+      torque?: string | null;
+      /**
+       * Number of engine cylinders
+       */
+      cylinders?: string | null;
+      /**
+       * Transmission gear count and type
+       */
+      gearbox?: string | null;
+      /**
+       * FWD, RWD, or AWD
+       */
+      driveType?: string | null;
+    };
+    dimensions?: {
+      /**
+       * Overall length of the car in mm
+       */
+      length?: string | null;
+      /**
+       * Overall width of the car in mm
+       */
+      width?: string | null;
+      /**
+       * Overall height of the car in mm
+       */
+      height?: string | null;
+      /**
+       * Distance between front and rear axles
+       */
+      wheelbase?: string | null;
+      /**
+       * Trunk space in liters
+       */
+      bootSpace?: string | null;
+      /**
+       * Distance from ground to chassis
+       */
+      groundClearance?: string | null;
+    };
+    features?: {
+      /**
+       * Type of sunroof (e.g., Panoramic, Electric)
+       */
+      sunroof?: string | null;
+      /**
+       * Type of AC (e.g., Manual, Auto Climate Control)
+       */
+      climateControl?: string | null;
+      /**
+       * Electrically or manually adjustable seats
+       */
+      adjustableSeats?: string | null;
+      /**
+       * Availability of cruise control
+       */
+      cruiseControl?: string | null;
+      /**
+       * Keyless push start/stop
+       */
+      keylessEntry?: string | null;
+      /**
+       * Power or manual steering
+       */
+      steeringType?: string | null;
+    };
+    infotainment?: {
+      /**
+       * Touchscreen size and type
+       */
+      touchscreen?: string | null;
+      /**
+       * Support for Android Auto and Apple CarPlay
+       */
+      androidAutoAppleCarplay?: string | null;
+      /**
+       * Number of speakers and audio quality
+       */
+      speakers?: string | null;
+      /**
+       * Bluetooth, USB, AUX, Wi-Fi, etc.
+       */
+      connectivity?: string | null;
+    };
+    safety?: {
+      /**
+       * No. and placement of airbags
+       */
+      airbags?: string | null;
+      /**
+       * Availability of Anti-lock Braking System
+       */
+      abs?: string | null;
+      /**
+       * Traction control system availability
+       */
+      tractionControl?: string | null;
+      /**
+       * Parking camera availability
+       */
+      rearCamera?: string | null;
+      /**
+       * Front and rear parking sensors
+       */
+      parkingSensors?: string | null;
+      /**
+       * Availability of ISOFIX child mounts
+       */
+      isofix?: string | null;
+    };
+  };
   mobileFields?: {
     keySpecifications?: {
       /**
@@ -986,239 +1177,6 @@ export interface Product {
       others?: string | null;
     };
   };
-  carFields?: {
-    keySpecifications?: {
-      /**
-       * Type and capacity of the engine (e.g., 1.5L Turbo Petrol)
-       */
-      engine?: string | null;
-      /**
-       * Type of gearbox (e.g., 6-Speed Manual, CVT)
-       */
-      transmission?: string | null;
-      /**
-       * Fuel efficiency (e.g., 18 km/l)
-       */
-      mileage?: string | null;
-      /**
-       * Type of fuel the car uses (e.g., Petrol, Diesel, Electric)
-       */
-      fuelType?: string | null;
-      /**
-       * Number of seats in the car
-       */
-      seatingCapacity?: string | null;
-      /**
-       * Type of car (e.g., SUV, Sedan, Hatchback)
-       */
-      bodyType?: string | null;
-    };
-    enginePerformance?: {
-      /**
-       * Engine size in cc (e.g., 1498 cc)
-       */
-      engineDisplacement?: string | null;
-      /**
-       * Maximum power output (e.g., 115 bhp @ 6600 rpm)
-       */
-      power?: string | null;
-      /**
-       * Maximum torque output (e.g., 145 Nm @ 4600 rpm)
-       */
-      torque?: string | null;
-      /**
-       * Number of engine cylinders
-       */
-      cylinders?: string | null;
-      /**
-       * Transmission gear count and type
-       */
-      gearbox?: string | null;
-      /**
-       * FWD, RWD, or AWD
-       */
-      driveType?: string | null;
-    };
-    dimensions?: {
-      /**
-       * Overall length of the car in mm
-       */
-      length?: string | null;
-      /**
-       * Overall width of the car in mm
-       */
-      width?: string | null;
-      /**
-       * Overall height of the car in mm
-       */
-      height?: string | null;
-      /**
-       * Distance between front and rear axles
-       */
-      wheelbase?: string | null;
-      /**
-       * Trunk space in liters
-       */
-      bootSpace?: string | null;
-      /**
-       * Distance from ground to chassis
-       */
-      groundClearance?: string | null;
-    };
-    features?: {
-      /**
-       * Type of sunroof (e.g., Panoramic, Electric)
-       */
-      sunroof?: string | null;
-      /**
-       * Type of AC (e.g., Manual, Auto Climate Control)
-       */
-      climateControl?: string | null;
-      /**
-       * Electrically or manually adjustable seats
-       */
-      adjustableSeats?: string | null;
-      /**
-       * Availability of cruise control
-       */
-      cruiseControl?: string | null;
-      /**
-       * Keyless push start/stop
-       */
-      keylessEntry?: string | null;
-      /**
-       * Power or manual steering
-       */
-      steeringType?: string | null;
-    };
-    infotainment?: {
-      /**
-       * Touchscreen size and type
-       */
-      touchscreen?: string | null;
-      /**
-       * Support for Android Auto and Apple CarPlay
-       */
-      androidAutoAppleCarplay?: string | null;
-      /**
-       * Number of speakers and audio quality
-       */
-      speakers?: string | null;
-      /**
-       * Bluetooth, USB, AUX, Wi-Fi, etc.
-       */
-      connectivity?: string | null;
-    };
-    safety?: {
-      /**
-       * No. and placement of airbags
-       */
-      airbags?: string | null;
-      /**
-       * Availability of Anti-lock Braking System
-       */
-      abs?: string | null;
-      /**
-       * Traction control system availability
-       */
-      tractionControl?: string | null;
-      /**
-       * Parking camera availability
-       */
-      rearCamera?: string | null;
-      /**
-       * Front and rear parking sensors
-       */
-      parkingSensors?: string | null;
-      /**
-       * Availability of ISOFIX child mounts
-       */
-      isofix?: string | null;
-    };
-  };
-  /**
-   * The price of the product before any discounts.
-   */
-  price: number;
-  /**
-   * Provide details about any discounts available.
-   */
-  discount?: {
-    /**
-     * Discount percentage to be applied.
-     */
-    percentage?: number | null;
-    /**
-     * The date when the discount becomes active.
-     */
-    startDate?: string | null;
-    /**
-     * The date when the discount ends.
-     */
-    endDate?: string | null;
-  };
-  /**
-   * The final price of the product after applying discounts.
-   */
-  finalPrice?: number | null;
-  /**
-   * The category this product belongs to.
-   */
-  category: string | Category;
-  /**
-   * Add tags to help categorize the product.
-   */
-  tags?:
-    | {
-        /**
-         * A single tag for the product.
-         */
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Add key-value pairs to describe product attributes such as Color, Size, Material.
-   */
-  attributes?:
-    | {
-        /**
-         * The name of the attribute (e.g., Color, Size). For example, use "Size" to define size options.
-         */
-        key: string;
-        value: {
-          /**
-           * Choose the value type for this attribute. Use "Select" for predefined options like sizes.
-           */
-          type: 'text' | 'select';
-          /**
-           * The value of the attribute if it is a simple text.
-           */
-          textValue?: string | null;
-          /**
-           * Define the selectable options for this attribute (e.g., S, M, L, XL, XXL for Size).
-           */
-          selectOptions?:
-            | {
-                /**
-                 * One of the selectable options for this attribute.
-                 */
-                option: string;
-                /**
-                 * Additional price for this option, if applicable.
-                 */
-                extraPrice?: number | null;
-                /**
-                 * Available stock for this specific option.
-                 */
-                stock?: number | null;
-                id?: string | null;
-              }[]
-            | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
   /**
    * Upload product images.
    */
@@ -1808,7 +1766,85 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   brand?: T;
+  price?: T;
+  discount?:
+    | T
+    | {
+        percentage?: T;
+        startDate?: T;
+        endDate?: T;
+      };
+  finalPrice?: T;
+  category?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
   template?: T;
+  carFields?:
+    | T
+    | {
+        keySpecifications?:
+          | T
+          | {
+              engine?: T;
+              transmission?: T;
+              mileage?: T;
+              fuelType?: T;
+              seatingCapacity?: T;
+              bodyType?: T;
+            };
+        enginePerformance?:
+          | T
+          | {
+              engineDisplacement?: T;
+              power?: T;
+              torque?: T;
+              cylinders?: T;
+              gearbox?: T;
+              driveType?: T;
+            };
+        dimensions?:
+          | T
+          | {
+              length?: T;
+              width?: T;
+              height?: T;
+              wheelbase?: T;
+              bootSpace?: T;
+              groundClearance?: T;
+            };
+        features?:
+          | T
+          | {
+              sunroof?: T;
+              climateControl?: T;
+              adjustableSeats?: T;
+              cruiseControl?: T;
+              keylessEntry?: T;
+              steeringType?: T;
+            };
+        infotainment?:
+          | T
+          | {
+              touchscreen?: T;
+              androidAutoAppleCarplay?: T;
+              speakers?: T;
+              connectivity?: T;
+            };
+        safety?:
+          | T
+          | {
+              airbags?: T;
+              abs?: T;
+              tractionControl?: T;
+              rearCamera?: T;
+              parkingSensors?: T;
+              isofix?: T;
+            };
+      };
   mobileFields?:
     | T
     | {
@@ -1923,104 +1959,6 @@ export interface ProductsSelect<T extends boolean = true> {
               faceUnlock?: T;
               others?: T;
             };
-      };
-  carFields?:
-    | T
-    | {
-        keySpecifications?:
-          | T
-          | {
-              engine?: T;
-              transmission?: T;
-              mileage?: T;
-              fuelType?: T;
-              seatingCapacity?: T;
-              bodyType?: T;
-            };
-        enginePerformance?:
-          | T
-          | {
-              engineDisplacement?: T;
-              power?: T;
-              torque?: T;
-              cylinders?: T;
-              gearbox?: T;
-              driveType?: T;
-            };
-        dimensions?:
-          | T
-          | {
-              length?: T;
-              width?: T;
-              height?: T;
-              wheelbase?: T;
-              bootSpace?: T;
-              groundClearance?: T;
-            };
-        features?:
-          | T
-          | {
-              sunroof?: T;
-              climateControl?: T;
-              adjustableSeats?: T;
-              cruiseControl?: T;
-              keylessEntry?: T;
-              steeringType?: T;
-            };
-        infotainment?:
-          | T
-          | {
-              touchscreen?: T;
-              androidAutoAppleCarplay?: T;
-              speakers?: T;
-              connectivity?: T;
-            };
-        safety?:
-          | T
-          | {
-              airbags?: T;
-              abs?: T;
-              tractionControl?: T;
-              rearCamera?: T;
-              parkingSensors?: T;
-              isofix?: T;
-            };
-      };
-  price?: T;
-  discount?:
-    | T
-    | {
-        percentage?: T;
-        startDate?: T;
-        endDate?: T;
-      };
-  finalPrice?: T;
-  category?: T;
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
-      };
-  attributes?:
-    | T
-    | {
-        key?: T;
-        value?:
-          | T
-          | {
-              type?: T;
-              textValue?: T;
-              selectOptions?:
-                | T
-                | {
-                    option?: T;
-                    extraPrice?: T;
-                    stock?: T;
-                    id?: T;
-                  };
-            };
-        id?: T;
       };
   images?: T;
   isFeatured?: T;

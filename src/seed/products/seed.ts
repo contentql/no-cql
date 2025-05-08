@@ -46,13 +46,13 @@ const seed = async (spinner: Ora) => {
 
       // Match or fallback to first brand
       const brandID =
-        brandsData.find(b => b.name.toLowerCase().includes('hp'))?.id ??
+        brandsData.find(b => b.name.toLowerCase().includes('samsung'))?.id ??
         brandsData.at(0)?.id ??
         ''
 
       // Match or fallback to first category
       const categoryID =
-        categoriesData.find(c => c.name.toLowerCase().includes('monitor'))
+        categoriesData.find(c => c.name.toLowerCase().includes('mobile-phones'))
           ?.id ??
         categoriesData.at(0)?.id ??
         ''
