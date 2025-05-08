@@ -8,8 +8,10 @@ import {
   revalidateProductsAfterChange,
   revalidateProductsAfterDelete,
 } from './hooks/revalidateProducts'
-import { productTemplates } from './product-templates'
+import carTemplate from './product-templates/car'
+import mobileTemplate from './product-templates/mobile'
 
+const productTemplates = [carTemplate, mobileTemplate]
 export const Products: CollectionConfig = {
   slug: 'products',
   labels: {
@@ -85,26 +87,6 @@ export const Products: CollectionConfig = {
                 description: 'The manufacturer or brand of the product.',
               },
             },
-            {
-              name: 'template',
-              label: 'Product Template',
-              type: 'select',
-              options: productTemplates.map(t => ({
-                label: t.label,
-                value: t.value,
-              })),
-            },
-            // Add each template's fields at the root level with condition
-            ...productTemplates.map(template => ({
-              name: `${template.value}Fields`,
-              type: 'group' as const,
-              label: `${template.label} Fields`,
-              admin: {
-                condition: (_: any, siblingData: any) =>
-                  siblingData.template === template.value,
-              },
-              fields: template.fields,
-            })),
           ],
         },
         {
@@ -243,126 +225,25 @@ export const Products: CollectionConfig = {
           label: 'Product Features',
           fields: [
             {
-              name: 'attributes',
-              type: 'array',
-              label: 'Product Attributes',
-              admin: {
-                description:
-                  'Add key-value pairs to describe product attributes such as Color, Size, Material.',
-              },
-              fields: [
-                {
-                  name: 'key',
-                  type: 'text',
-                  label: 'Attribute Name',
-                  required: true,
-                  admin: {
-                    placeholder: 'Enter attribute name (e.g., Color, Size)',
-                    description:
-                      'The name of the attribute (e.g., Color, Size). For example, use "Size" to define size options.',
-                  },
-                },
-                {
-                  name: 'value',
-                  type: 'group',
-                  label: 'Attribute Value',
-                  fields: [
-                    {
-                      name: 'type',
-                      type: 'select',
-                      label: 'Value Type',
-                      required: true,
-                      options: [
-                        { label: 'Text', value: 'text' },
-                        { label: 'Select', value: 'select' },
-                      ],
-                      admin: {
-                        description:
-                          'Choose the value type for this attribute. Use "Select" for predefined options like sizes.',
-                      },
-                    },
-                    {
-                      name: 'textValue',
-                      type: 'text',
-                      label: 'Text Value',
-                      required: true,
-                      admin: {
-                        condition: (_, siblingData) =>
-                          siblingData?.type === 'text',
-                        placeholder: 'Enter value (e.g., Red, Medium)',
-                        description:
-                          'The value of the attribute if it is a simple text.',
-                      },
-                    },
-                    {
-                      name: 'selectOptions',
-                      type: 'array',
-                      label: 'Select Options',
-                      required: true,
-                      admin: {
-                        condition: (_, siblingData) =>
-                          siblingData?.type === 'select',
-                        description:
-                          'Define the selectable options for this attribute (e.g., S, M, L, XL, XXL for Size).',
-                      },
-                      fields: [
-                        {
-                          name: 'option',
-                          type: 'text',
-                          label: 'Option',
-                          required: true,
-                          admin: {
-                            placeholder:
-                              'Enter option (e.g., S, M, L, XL, XXL)',
-                            description:
-                              'One of the selectable options for this attribute.',
-                          },
-                        },
-                        {
-                          name: 'extraPrice',
-                          type: 'number',
-                          label: 'Extra Price',
-                          validate: (
-                            value: number | null | undefined,
-                          ): string | true => {
-                            if (value != null && value < 0) {
-                              return 'Extra price must be a positive value.'
-                            }
-
-                            return true
-                          },
-                          admin: {
-                            placeholder:
-                              'Enter additional price for this option (if any)',
-                            description:
-                              'Additional price for this option, if applicable.',
-                          },
-                        },
-                        {
-                          name: 'stock',
-                          type: 'number',
-                          label: 'Stock',
-                          validate: (
-                            value: number | null | undefined,
-                          ): string | true => {
-                            if (value != null && value < 0) {
-                              return 'Stock cannot be negative.'
-                            }
-
-                            return true
-                          },
-                          admin: {
-                            placeholder: 'Enter stock for this option',
-                            description:
-                              'Available stock for this specific option.',
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
+              name: 'template',
+              label: 'Product Template',
+              type: 'select',
+              options: productTemplates.map(t => ({
+                label: t.label,
+                value: t.value,
+              })),
             },
+            // Add each template's fields at the root level with condition
+            ...productTemplates.map(template => ({
+              name: `${template.value}Fields`,
+              type: 'group' as const,
+              label: `${template.label} Fields`,
+              admin: {
+                condition: (_: any, siblingData: any) =>
+                  siblingData.template === template.value,
+              },
+              fields: template.fields,
+            })),
           ],
         },
         {
