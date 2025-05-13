@@ -721,7 +721,18 @@ export interface Product {
       }[]
     | null;
   template?:
-    | ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven' | 'laptop' | 'printer' | 'drilling-machine')
+    | (
+        | 'car'
+        | 'mobile'
+        | 'camera'
+        | 'vr'
+        | 'transformer'
+        | 'oven'
+        | 'laptop'
+        | 'printer'
+        | 'drilling-machine'
+        | 'hoverboard'
+      )
     | null;
   carFields?: {
     keySpecifications?: {
@@ -2223,6 +2234,74 @@ export interface Product {
       supplyAbility?: string | null;
     };
   };
+  hoverboardFields?: {
+    /**
+     * Name of the hoverboard model
+     */
+    productName: string;
+    specifications?: {
+      /**
+       * e.g., 10kg
+       */
+      weight?: string | null;
+      /**
+       * e.g., 10kg
+       */
+      netWeight?: string | null;
+      /**
+       * e.g., 36v, 4.4ah
+       */
+      battery?: string | null;
+      /**
+       * e.g., 250W x 2 Dual Motors
+       */
+      motor?: string | null;
+      /**
+       * e.g., 8 Inch Solid Rubber Tire
+       */
+      wheel?: string | null;
+      /**
+       * e.g., 3-4Hrs
+       */
+      chargingTime?: string | null;
+      /**
+       * e.g., 18km/h
+       */
+      maxSpeed?: string | null;
+      /**
+       * e.g., 100kg
+       */
+      maxWeight?: string | null;
+      /**
+       * e.g., 12kg
+       */
+      minWeight?: string | null;
+      /**
+       * e.g., 18 Degrees
+       */
+      gradeability?: string | null;
+      /**
+       * e.g., Internal Metal Frame + ABS Plastic Body Shell
+       */
+      material?: string | null;
+    };
+    features?: {
+      bluetoothSpeaker?: boolean | null;
+      ledWheels?: boolean | null;
+      wheelArchLed?: boolean | null;
+      frontLeds?: boolean | null;
+    };
+    deliveryAndWarranty?: {
+      /**
+       * e.g., Free Delivery & Same Day Dispatch
+       */
+      deliveryTime?: string | null;
+      /**
+       * e.g., 1 Year Warranty (refer to warranty section)
+       */
+      warranty?: string | null;
+    };
+  };
   /**
    * Upload product images.
    */
@@ -3492,6 +3571,40 @@ export interface ProductsSelect<T extends boolean = true> {
           | T
           | {
               supplyAbility?: T;
+            };
+      };
+  hoverboardFields?:
+    | T
+    | {
+        productName?: T;
+        specifications?:
+          | T
+          | {
+              weight?: T;
+              netWeight?: T;
+              battery?: T;
+              motor?: T;
+              wheel?: T;
+              chargingTime?: T;
+              maxSpeed?: T;
+              maxWeight?: T;
+              minWeight?: T;
+              gradeability?: T;
+              material?: T;
+            };
+        features?:
+          | T
+          | {
+              bluetoothSpeaker?: T;
+              ledWheels?: T;
+              wheelArchLed?: T;
+              frontLeds?: T;
+            };
+        deliveryAndWarranty?:
+          | T
+          | {
+              deliveryTime?: T;
+              warranty?: T;
             };
       };
   images?: T;
