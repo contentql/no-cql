@@ -11,8 +11,14 @@ import {
 import cameraTemplate from './product-templates/camera'
 import carTemplate from './product-templates/car'
 import mobileTemplate from './product-templates/mobile'
+import VRTemplate from './product-templates/vr'
 
-const productTemplates = [carTemplate, mobileTemplate, cameraTemplate]
+const productTemplates = [
+  carTemplate,
+  mobileTemplate,
+  cameraTemplate,
+  VRTemplate,
+]
 export const Products: CollectionConfig = {
   slug: 'products',
   labels: {

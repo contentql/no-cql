@@ -720,7 +720,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  template?: ('car' | 'mobile' | 'camera') | null;
+  template?: ('car' | 'mobile' | 'camera' | 'vr') | null;
   carFields?: {
     keySpecifications?: {
       /**
@@ -1393,6 +1393,280 @@ export interface Product {
        * Type of battery (e.g., Li-ion)
        */
       batteryType?: string | null;
+    };
+  };
+  vrFields?: {
+    info: {
+      /**
+       * Brand or company (e.g., Meta)
+       */
+      manufacturer: string;
+      /**
+       * Official website (e.g., https://meta.com)
+       */
+      website?: string | null;
+      /**
+       * Type of VR device (e.g., Standalone)
+       */
+      deviceType?: string | null;
+      /**
+       * Software platform (e.g., Meta Quest)
+       */
+      platform?: string | null;
+      /**
+       * Official announcement date
+       */
+      announced?: string | null;
+      /**
+       * Public release date
+       */
+      releaseDate?: string | null;
+      /**
+       * Pricing info (e.g., $499 with controllers)
+       */
+      retailPrice?: string | null;
+    };
+    optics?: {
+      /**
+       * Lens type (e.g., Pancake lenses)
+       */
+      lenses?: string | null;
+      /**
+       * Ocular setup (e.g., Binocular)
+       */
+      ocularity?: string | null;
+      /**
+       * Interpupillary distance range (e.g., 58–71 mm)
+       */
+      ipdRange?: string | null;
+      /**
+       * Prescription support (e.g., lens inserts)
+       */
+      adjustableDiopter?: string | null;
+      /**
+       * Camera passthrough quality (e.g., 18 PPD color)
+       */
+      passthrough?: string | null;
+    };
+    display?: {
+      /**
+       * Panel type (e.g., 2x LCD)
+       */
+      displayType?: string | null;
+      /**
+       * Pixel arrangement (e.g., RGB stripe)
+       */
+      subpixelLayout?: string | null;
+      /**
+       * Brightness level (if available)
+       */
+      peakBrightness?: string | null;
+      /**
+       * Per-eye resolution (e.g., 2064x2208)
+       */
+      resolution?: string | null;
+      /**
+       * Maximum refresh rate (e.g., 120Hz)
+       */
+      refreshRate?: string | null;
+      /**
+       * Field of View (e.g., 110° horizontal)
+       */
+      visibleFoV?: string | null;
+      /**
+       * Software-rendered FoV (if different)
+       */
+      renderedFoV?: string | null;
+      /**
+       * Overlap area between eyes (if known)
+       */
+      binocularOverlap?: string | null;
+      /**
+       * Average pixels per degree (if known)
+       */
+      averagePixelDensity?: string | null;
+      /**
+       * Peak pixels per degree (e.g., 25 PPD)
+       */
+      peakPixelDensity?: string | null;
+      /**
+       * Foveated rendering support
+       */
+      foveatedRendering?: string | null;
+    };
+    device?: {
+      /**
+       * Physical dimensions (if available)
+       */
+      dimensions?: string | null;
+      /**
+       * Weight with headstrap (e.g., 515g)
+       */
+      weight?: string | null;
+      /**
+       * Build materials (e.g., plastic, foam)
+       */
+      material?: string | null;
+      /**
+       * Type of headstrap (e.g., fabric)
+       */
+      headstrap?: string | null;
+      /**
+       * On-device haptics (if any)
+       */
+      haptics?: string | null;
+      /**
+       * Device color options
+       */
+      colors?: string | null;
+      /**
+       * Certifications (e.g., CE, FCC)
+       */
+      compliances?: string | null;
+    };
+    tracking?: {
+      /**
+       * 6DoF/inside-out tracking type
+       */
+      trackingType?: string | null;
+      /**
+       * Tracking update rate (if known)
+       */
+      trackingFrequency?: string | null;
+      /**
+       * External base stations required?
+       */
+      baseStations?: string | null;
+      /**
+       * Eye tracking supported?
+       */
+      eyeTracking?: string | null;
+      /**
+       * Face tracking supported?
+       */
+      faceTracking?: string | null;
+      /**
+       * Hand tracking supported?
+       */
+      handTracking?: string | null;
+      /**
+       * Body or leg tracking info
+       */
+      bodyTracking?: string | null;
+    };
+    controllers?: {
+      /**
+       * Type and quantity (e.g., 2x Touch Plus)
+       */
+      controllers?: string | null;
+      /**
+       * Weight of controller (if available)
+       */
+      controllerWeight?: string | null;
+      /**
+       * Buttons, triggers, sensors included
+       */
+      inputMethods?: string | null;
+      /**
+       * Finger/thumb tracking support
+       */
+      fingerTracking?: string | null;
+      /**
+       * Controller haptic feedback
+       */
+      controllerHaptics?: string | null;
+      /**
+       * Battery type (e.g., AA)
+       */
+      controllerBatteries?: string | null;
+    };
+    sound?: {
+      /**
+       * Speaker configuration (e.g., stereo)
+       */
+      speakers?: string | null;
+      /**
+       * Built-in microphone?
+       */
+      microphone?: string | null;
+      /**
+       * 3.5mm jack availability
+       */
+      audioJack?: string | null;
+    };
+    connectivity?: {
+      /**
+       * Physical ports (e.g., USB-C)
+       */
+      ports?: string | null;
+      /**
+       * Wired video support (e.g., USB-C)
+       */
+      wiredVideo?: string | null;
+      /**
+       * Oculus Link support?
+       */
+      oculusLink?: string | null;
+      /**
+       * Wireless streaming options (e.g., AirLink)
+       */
+      wirelessVideo?: string | null;
+      /**
+       * WiFi version (e.g., 6E)
+       */
+      wifi?: string | null;
+      /**
+       * Bluetooth support
+       */
+      bluetooth?: string | null;
+    };
+    system?: {
+      /**
+       * OS (e.g., Android)
+       */
+      operatingSystem?: string | null;
+      /**
+       * Chipset (e.g., Snapdragon XR2 Gen 2)
+       */
+      chipset?: string | null;
+      /**
+       * CPU details (e.g., Kryo octa-core)
+       */
+      cpu?: string | null;
+      /**
+       * GPU (e.g., Adreno 740)
+       */
+      gpu?: string | null;
+      /**
+       * RAM size (e.g., 8GB)
+       */
+      memory?: string | null;
+      /**
+       * Internal storage (e.g., 128GB)
+       */
+      storage?: string | null;
+      /**
+       * SD card support
+       */
+      sdCardSlot?: string | null;
+    };
+    battery?: {
+      /**
+       * Battery size (if available)
+       */
+      batteryCapacity?: string | null;
+      /**
+       * Expected usage time (e.g., 2.2 hours)
+       */
+      batteryLife?: string | null;
+      /**
+       * Full charge duration (e.g., 2.3 hours)
+       */
+      chargeTime?: string | null;
+      /**
+       * Charger spec (e.g., 18W adapter)
+       */
+      powerAdapter?: string | null;
     };
   };
   /**
@@ -2276,6 +2550,113 @@ export interface ProductsSelect<T extends boolean = true> {
               noOfShots?: T;
               battery?: T;
               batteryType?: T;
+            };
+      };
+  vrFields?:
+    | T
+    | {
+        info?:
+          | T
+          | {
+              manufacturer?: T;
+              website?: T;
+              deviceType?: T;
+              platform?: T;
+              announced?: T;
+              releaseDate?: T;
+              retailPrice?: T;
+            };
+        optics?:
+          | T
+          | {
+              lenses?: T;
+              ocularity?: T;
+              ipdRange?: T;
+              adjustableDiopter?: T;
+              passthrough?: T;
+            };
+        display?:
+          | T
+          | {
+              displayType?: T;
+              subpixelLayout?: T;
+              peakBrightness?: T;
+              resolution?: T;
+              refreshRate?: T;
+              visibleFoV?: T;
+              renderedFoV?: T;
+              binocularOverlap?: T;
+              averagePixelDensity?: T;
+              peakPixelDensity?: T;
+              foveatedRendering?: T;
+            };
+        device?:
+          | T
+          | {
+              dimensions?: T;
+              weight?: T;
+              material?: T;
+              headstrap?: T;
+              haptics?: T;
+              colors?: T;
+              compliances?: T;
+            };
+        tracking?:
+          | T
+          | {
+              trackingType?: T;
+              trackingFrequency?: T;
+              baseStations?: T;
+              eyeTracking?: T;
+              faceTracking?: T;
+              handTracking?: T;
+              bodyTracking?: T;
+            };
+        controllers?:
+          | T
+          | {
+              controllers?: T;
+              controllerWeight?: T;
+              inputMethods?: T;
+              fingerTracking?: T;
+              controllerHaptics?: T;
+              controllerBatteries?: T;
+            };
+        sound?:
+          | T
+          | {
+              speakers?: T;
+              microphone?: T;
+              audioJack?: T;
+            };
+        connectivity?:
+          | T
+          | {
+              ports?: T;
+              wiredVideo?: T;
+              oculusLink?: T;
+              wirelessVideo?: T;
+              wifi?: T;
+              bluetooth?: T;
+            };
+        system?:
+          | T
+          | {
+              operatingSystem?: T;
+              chipset?: T;
+              cpu?: T;
+              gpu?: T;
+              memory?: T;
+              storage?: T;
+              sdCardSlot?: T;
+            };
+        battery?:
+          | T
+          | {
+              batteryCapacity?: T;
+              batteryLife?: T;
+              chargeTime?: T;
+              powerAdapter?: T;
             };
       };
   images?: T;
