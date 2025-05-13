@@ -720,7 +720,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  template?: ('car' | 'mobile' | 'camera' | 'vr') | null;
+  template?: ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven') | null;
   carFields?: {
     keySpecifications?: {
       /**
@@ -1667,6 +1667,254 @@ export interface Product {
        * Charger spec (e.g., 18W adapter)
        */
       powerAdapter?: string | null;
+    };
+  };
+  transformerFields?: {
+    /**
+     * Brand name (e.g., SEN AND PANDIT ELECTRO SYSTEM)
+     */
+    brandName: string;
+    /**
+     * Type of transformer (e.g., Other)
+     */
+    productType?: string | null;
+    /**
+     * Primary material (e.g., Metal)
+     */
+    material?: string | null;
+    /**
+     * Voltage rating (e.g., 440 Volt)
+     */
+    voltage?: string | null;
+    /**
+     * Phase type (e.g., Three Phase)
+     */
+    phase?: string | null;
+    /**
+     * Typical usage (e.g., Electrical)
+     */
+    usage?: string | null;
+    /**
+     * Power scope (e.g., Electric)
+     */
+    powerScope?: string | null;
+    /**
+     * Approximate price in INR (e.g., 85000)
+     */
+    price?: number | null;
+    /**
+     * Currency (e.g., INR)
+     */
+    currency?: string | null;
+    /**
+     * Price type (e.g., fixed)
+     */
+    priceType?: string | null;
+    /**
+     * GST percentage (e.g., 0%)
+     */
+    gst?: string | null;
+    /**
+     * Current stock quantity (e.g., 5)
+     */
+    stockQuantity?: number | null;
+    /**
+     * Measurement unit (e.g., Piece/Pieces)
+     */
+    unitType?: string | null;
+    /**
+     * Product unit type (e.g., 1 Piece/Pieces)
+     */
+    productUnit?: string | null;
+    /**
+     * Pack size (e.g., 1)
+     */
+    packSize?: string | null;
+    /**
+     * Minimum order pack (e.g., 1)
+     */
+    mop?: string | null;
+    /**
+     * Minimum order quantity (e.g., 1)
+     */
+    moq?: string | null;
+    /**
+     * Minimum number of packs ordered (e.g., 1)
+     */
+    minimumOrderedPacks?: number | null;
+    /**
+     * Is the product returnable?
+     */
+    returnable?: ('Yes' | 'No') | null;
+    /**
+     * Payment terms (e.g., Cash Advance (CA))
+     */
+    paymentTerms?: string | null;
+    /**
+     * Monthly supply ability (e.g., 50 Per Month)
+     */
+    supplyAbility?: string | null;
+    /**
+     * Delivery time (e.g., 7 Days)
+     */
+    deliveryTime?: string | null;
+    /**
+     * Market coverage (e.g., All India)
+     */
+    mainDomesticMarket?: string | null;
+  };
+  ovenFields?: {
+    basicInfo: {
+      /**
+       * Brand of the oven (e.g., ALISTER)
+       */
+      brand: string;
+      /**
+       * Model number (e.g., POE0101)
+       */
+      model: string;
+      /**
+       * Stock keeping unit (e.g., POOVE0101WITHSTONE)
+       */
+      sku?: string | null;
+    };
+    /**
+     * Physical dimensions of the product in mm
+     */
+    productDimensions?: {
+      /**
+       * Length in mm (e.g., 875)
+       */
+      length?: number | null;
+      /**
+       * Width in mm (e.g., 550)
+       */
+      width?: number | null;
+      /**
+       * Height in mm (e.g., 375)
+       */
+      height?: number | null;
+      /**
+       * Net weight in kg (e.g., 35)
+       */
+      netWeight?: number | null;
+    };
+    /**
+     * Dimensions and weight of packaging
+     */
+    packagingDimensions?: {
+      /**
+       * Length in mm (e.g., 1050)
+       */
+      length?: number | null;
+      /**
+       * Width in mm (e.g., 680)
+       */
+      width?: number | null;
+      /**
+       * Height in mm (e.g., 560)
+       */
+      height?: number | null;
+      /**
+       * Packaging weight in kg (e.g., 42)
+       */
+      weight?: number | null;
+    };
+    /**
+     * Materials used in the oven
+     */
+    material?: {
+      /**
+       * Main material (e.g., Stainless Steel)
+       */
+      mainBody?: string | null;
+      /**
+       * Other components (e.g., Powder Coated Body)
+       */
+      otherComponent?: string | null;
+    };
+    /**
+     * Power and electrical specifications
+     */
+    technicalDetails?: {
+      /**
+       * Power (e.g., 4.2Kw)
+       */
+      power?: string | null;
+      /**
+       * Voltage (e.g., 220V)
+       */
+      voltage?: string | null;
+      /**
+       * Phase (e.g., SINGLE)
+       */
+      phase?: string | null;
+      /**
+       * Frequency (e.g., 50 Hz)
+       */
+      hertz?: string | null;
+    };
+    /**
+     * Operation and functionality details
+     */
+    otherDetails?: {
+      /**
+       * Capacity (e.g., 8 inch Pizza x 4pcs)
+       */
+      capacity?: string | null;
+      /**
+       * Temperature range (e.g., 0–350°C)
+       */
+      temperatureRange?: string | null;
+      /**
+       * Maximum temperature (e.g., 300°C)
+       */
+      maxTemperature?: number | null;
+      /**
+       * Operation type (e.g., ELECTRIC)
+       */
+      operationType?: string | null;
+      /**
+       * Fuel type (e.g., ELECTRICITY)
+       */
+      fuelType?: string | null;
+      /**
+       * Is the body insulated?
+       */
+      insulatedBody?: ('YES' | 'NO') | null;
+      /**
+       * Controller type (e.g., ANALOG)
+       */
+      controllerType?: string | null;
+      /**
+       * Display type (e.g., DIGITAL DISPLAY)
+       */
+      displayType?: string | null;
+      /**
+       * Does it have a timer?
+       */
+      timer?: ('YES' | 'NO') | null;
+      /**
+       * Installation type (e.g., READY TO USE)
+       */
+      installationType?: string | null;
+    };
+    /**
+     * Cooking chamber internal size
+     */
+    internalDimensions?: {
+      /**
+       * Length (e.g., 16")
+       */
+      length?: string | null;
+      /**
+       * Width/Depth (e.g., 16")
+       */
+      widthDepth?: string | null;
+      /**
+       * Height (e.g., 4.5")
+       */
+      height?: string | null;
     };
   };
   /**
@@ -2657,6 +2905,95 @@ export interface ProductsSelect<T extends boolean = true> {
               batteryLife?: T;
               chargeTime?: T;
               powerAdapter?: T;
+            };
+      };
+  transformerFields?:
+    | T
+    | {
+        brandName?: T;
+        productType?: T;
+        material?: T;
+        voltage?: T;
+        phase?: T;
+        usage?: T;
+        powerScope?: T;
+        price?: T;
+        currency?: T;
+        priceType?: T;
+        gst?: T;
+        stockQuantity?: T;
+        unitType?: T;
+        productUnit?: T;
+        packSize?: T;
+        mop?: T;
+        moq?: T;
+        minimumOrderedPacks?: T;
+        returnable?: T;
+        paymentTerms?: T;
+        supplyAbility?: T;
+        deliveryTime?: T;
+        mainDomesticMarket?: T;
+      };
+  ovenFields?:
+    | T
+    | {
+        basicInfo?:
+          | T
+          | {
+              brand?: T;
+              model?: T;
+              sku?: T;
+            };
+        productDimensions?:
+          | T
+          | {
+              length?: T;
+              width?: T;
+              height?: T;
+              netWeight?: T;
+            };
+        packagingDimensions?:
+          | T
+          | {
+              length?: T;
+              width?: T;
+              height?: T;
+              weight?: T;
+            };
+        material?:
+          | T
+          | {
+              mainBody?: T;
+              otherComponent?: T;
+            };
+        technicalDetails?:
+          | T
+          | {
+              power?: T;
+              voltage?: T;
+              phase?: T;
+              hertz?: T;
+            };
+        otherDetails?:
+          | T
+          | {
+              capacity?: T;
+              temperatureRange?: T;
+              maxTemperature?: T;
+              operationType?: T;
+              fuelType?: T;
+              insulatedBody?: T;
+              controllerType?: T;
+              displayType?: T;
+              timer?: T;
+              installationType?: T;
+            };
+        internalDimensions?:
+          | T
+          | {
+              length?: T;
+              widthDepth?: T;
+              height?: T;
             };
       };
   images?: T;
