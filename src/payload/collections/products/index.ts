@@ -8,10 +8,11 @@ import {
   revalidateProductsAfterChange,
   revalidateProductsAfterDelete,
 } from './hooks/revalidateProducts'
+import cameraTemplate from './product-templates/camera'
 import carTemplate from './product-templates/car'
 import mobileTemplate from './product-templates/mobile'
 
-const productTemplates = [carTemplate, mobileTemplate]
+const productTemplates = [carTemplate, mobileTemplate, cameraTemplate]
 export const Products: CollectionConfig = {
   slug: 'products',
   labels: {

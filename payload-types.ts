@@ -720,7 +720,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  template?: ('car' | 'mobile') | null;
+  template?: ('car' | 'mobile' | 'camera') | null;
   carFields?: {
     keySpecifications?: {
       /**
@@ -1175,6 +1175,224 @@ export interface Product {
        * Additional sensors (e.g., Accelerometer, Gyroscope, Compass)
        */
       others?: string | null;
+    };
+  };
+  cameraFields?: {
+    generalFeature?: {
+      /**
+       * Type of the camera (e.g., DSLR, Mirrorless)
+       */
+      cameraType?: string | null;
+      /**
+       * Full product name and lens kit
+       */
+      title?: string | null;
+      /**
+       * Brand of the camera
+       */
+      brand?: string | null;
+    };
+    sensor?: {
+      /**
+       * Image processor model used in the camera
+       */
+      processorModel?: string | null;
+      /**
+       * Sensor dimensions (e.g., 23.5 x 15.6 mm)
+       */
+      sensorSize?: string | null;
+      /**
+       * Sensor format (e.g., DX, Full Frame)
+       */
+      imageSensorFormat?: string | null;
+      /**
+       * Type of sensor (e.g., CMOS, CCD)
+       */
+      sensorType?: string | null;
+      /**
+       * Effective megapixel count (e.g., 24 MP)
+       */
+      effectiveResolution?: string | null;
+    };
+    lens?: {
+      /**
+       * Focal length range (e.g., 18-55 mm)
+       */
+      focalLength?: string | null;
+      /**
+       * Type of lens (e.g., Zoom, Prime)
+       */
+      lensType?: string | null;
+      /**
+       * Lens mount type (e.g., Nikon F)
+       */
+      mount?: string | null;
+      /**
+       * Maximum and minimum aperture values
+       */
+      apertureRange?: string | null;
+    };
+    video?: {
+      /**
+       * Video resolution options (e.g., 1080p, 720p)
+       */
+      resolutionAvailable?: string | null;
+      /**
+       * Format of recorded video files (e.g., MOV)
+       */
+      fileFormat?: string | null;
+      /**
+       * Frame rates supported for different resolutions
+       */
+      fps?: string | null;
+    };
+    flash?: {
+      /**
+       * Effective range of built-in flash
+       */
+      flashRange?: string | null;
+      /**
+       * Advanced flash options and controls
+       */
+      flashFeatures?: string | null;
+      /**
+       * Availability of external flash mount
+       */
+      hotShoeMount?: boolean | null;
+      /**
+       * Whether camera has a built-in flash
+       */
+      builtInFlash?: boolean | null;
+    };
+    storage?: {
+      /**
+       * File system used (e.g., DCF, EXIF)
+       */
+      fileSystem?: string | null;
+      /**
+       * Compatible memory card types
+       */
+      memoryCardType?: string | null;
+    };
+    otherFeatures?: {
+      /**
+       * Available shooting scene presets
+       */
+      sceneModes?: string | null;
+      /**
+       * Self-timer duration options
+       */
+      selfTimer?: string | null;
+      /**
+       * ISO sensitivity range
+       */
+      iso?: string | null;
+      /**
+       * White balance modes available
+       */
+      whiteBalanceType?: string | null;
+      /**
+       * Autofocus modes supported
+       */
+      autoFocus?: string | null;
+      /**
+       * Manual focus support
+       */
+      manualFocus?: boolean | null;
+      /**
+       * Touch screen focus control
+       */
+      touchFocus?: boolean | null;
+      /**
+       * Whether the camera has in-body stabilization
+       */
+      imageStabilization?: boolean | null;
+      /**
+       * Built-in microphone availability
+       */
+      microphone?: boolean | null;
+    };
+    exposure?: {
+      /**
+       * Supported exposure modes (e.g., Auto, Manual)
+       */
+      exposureModes?: string | null;
+    };
+    design?: {
+      /**
+       * Physical size of the camera
+       */
+      dimensions?: string | null;
+      /**
+       * Camera weight in grams
+       */
+      weight?: string | null;
+      /**
+       * Color variants of the camera
+       */
+      colorOptions?: string | null;
+    };
+    previewing?: {
+      /**
+       * Size of the rear LCD display
+       */
+      displaySize?: string | null;
+      /**
+       * Type of optical/electronic viewfinder
+       */
+      viewfinder?: string | null;
+      /**
+       * Brightness control levels available
+       */
+      brightnessAdjustment?: string | null;
+      /**
+       * Number of dots (resolution) on display
+       */
+      displayResolution?: string | null;
+      /**
+       * Whether display is touch-enabled
+       */
+      touchscreen?: boolean | null;
+      /**
+       * Whether the display is articulating
+       */
+      moveableDisplay?: boolean | null;
+    };
+    connectivity?: {
+      /**
+       * USB port type and version
+       */
+      usb?: string | null;
+      /**
+       * Bluetooth version
+       */
+      bluetooth?: string | null;
+      /**
+       * HDMI port type
+       */
+      hdmi?: string | null;
+      /**
+       * WiFi version or support
+       */
+      wifi?: string | null;
+      /**
+       * NFC support
+       */
+      nfc?: boolean | null;
+    };
+    battery?: {
+      /**
+       * Number of photos per charge
+       */
+      noOfShots?: string | null;
+      /**
+       * Battery type or model
+       */
+      battery?: string | null;
+      /**
+       * Type of battery (e.g., Li-ion)
+       */
+      batteryType?: string | null;
     };
   };
   /**
@@ -1958,6 +2176,106 @@ export interface ProductsSelect<T extends boolean = true> {
               fingerprint?: T;
               faceUnlock?: T;
               others?: T;
+            };
+      };
+  cameraFields?:
+    | T
+    | {
+        generalFeature?:
+          | T
+          | {
+              cameraType?: T;
+              title?: T;
+              brand?: T;
+            };
+        sensor?:
+          | T
+          | {
+              processorModel?: T;
+              sensorSize?: T;
+              imageSensorFormat?: T;
+              sensorType?: T;
+              effectiveResolution?: T;
+            };
+        lens?:
+          | T
+          | {
+              focalLength?: T;
+              lensType?: T;
+              mount?: T;
+              apertureRange?: T;
+            };
+        video?:
+          | T
+          | {
+              resolutionAvailable?: T;
+              fileFormat?: T;
+              fps?: T;
+            };
+        flash?:
+          | T
+          | {
+              flashRange?: T;
+              flashFeatures?: T;
+              hotShoeMount?: T;
+              builtInFlash?: T;
+            };
+        storage?:
+          | T
+          | {
+              fileSystem?: T;
+              memoryCardType?: T;
+            };
+        otherFeatures?:
+          | T
+          | {
+              sceneModes?: T;
+              selfTimer?: T;
+              iso?: T;
+              whiteBalanceType?: T;
+              autoFocus?: T;
+              manualFocus?: T;
+              touchFocus?: T;
+              imageStabilization?: T;
+              microphone?: T;
+            };
+        exposure?:
+          | T
+          | {
+              exposureModes?: T;
+            };
+        design?:
+          | T
+          | {
+              dimensions?: T;
+              weight?: T;
+              colorOptions?: T;
+            };
+        previewing?:
+          | T
+          | {
+              displaySize?: T;
+              viewfinder?: T;
+              brightnessAdjustment?: T;
+              displayResolution?: T;
+              touchscreen?: T;
+              moveableDisplay?: T;
+            };
+        connectivity?:
+          | T
+          | {
+              usb?: T;
+              bluetooth?: T;
+              hdmi?: T;
+              wifi?: T;
+              nfc?: T;
+            };
+        battery?:
+          | T
+          | {
+              noOfShots?: T;
+              battery?: T;
+              batteryType?: T;
             };
       };
   images?: T;
