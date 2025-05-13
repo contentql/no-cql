@@ -720,7 +720,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  template?: ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven') | null;
+  template?: ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven' | 'laptop') | null;
   carFields?: {
     keySpecifications?: {
       /**
@@ -1917,6 +1917,125 @@ export interface Product {
       height?: string | null;
     };
   };
+  laptopFields?: {
+    general?: {
+      /**
+       * Box contents (e.g., Laptop, Adaptor)
+       */
+      salesPackage?: string | null;
+      /**
+       * Model number (e.g., PHN16-72-77GZ)
+       */
+      modelNumber?: string | null;
+      /**
+       * Part number(s) (comma-separated)
+       */
+      partNumber?: string | null;
+      /**
+       * Model name (e.g., PHN16-72)
+       */
+      modelName?: string | null;
+      /**
+       * Series (e.g., Predator Helios Neo 16)
+       */
+      series?: string | null;
+      /**
+       * Color (e.g., Abyssal Black)
+       */
+      color?: string | null;
+      /**
+       * Type (e.g., Gaming Laptop)
+       */
+      type?: string | null;
+      /**
+       * Usage (e.g., Processing & Multitasking)
+       */
+      suitableFor?: string | null;
+      /**
+       * Is MS Office included?
+       */
+      msOfficeProvided?: ('Yes' | 'No') | null;
+    };
+    processorMemory?: {
+      dedicatedGraphicMemoryType?: string | null;
+      dedicatedGraphicMemoryCapacity?: string | null;
+      processorBrand?: string | null;
+      processorName?: string | null;
+      processorGeneration?: string | null;
+      processorVariant?: string | null;
+      clockSpeed?: string | null;
+      graphicProcessor?: string | null;
+      ram?: string | null;
+      ramType?: string | null;
+      ssd?: ('Yes' | 'No') | null;
+      ssdCapacity?: string | null;
+      storageType?: string | null;
+    };
+    operatingSystem?: {
+      os?: string | null;
+    };
+    ports?: {
+      /**
+       * USB Ports info
+       */
+      usbPorts?: string | null;
+      /**
+       * HDMI port info
+       */
+      hdmiPort?: string | null;
+    };
+    displayAudio?: {
+      touchscreen?: ('Yes' | 'No') | null;
+      screenSize?: string | null;
+      screenResolution?: string | null;
+      /**
+       * Full screen description
+       */
+      screenType?: string | null;
+      speakers?: ('Yes' | 'No') | null;
+      internalMic?: ('Yes' | 'No') | null;
+    };
+    connectivity?: {
+      wirelessLAN?: string | null;
+      bluetooth?: string | null;
+    };
+    dimensions?: {
+      /**
+       * e.g., 357.78 x 278.63 x 25.95 mm
+       */
+      size?: string | null;
+      /**
+       * Weight in Kg (e.g., 2.8 Kg)
+       */
+      weight?: string | null;
+    };
+    additional?: {
+      /**
+       * e.g., Not Available
+       */
+      diskDrive?: string | null;
+      /**
+       * Webcam specifications
+       */
+      webCamera?: string | null;
+      /**
+       * Keyboard description
+       */
+      keyboard?: string | null;
+    };
+    warranty?: {
+      /**
+       * e.g., 1 Year Carry-in Warranty
+       */
+      warrantySummary?: string | null;
+      /**
+       * e.g., Carry-in
+       */
+      warrantyServiceType?: string | null;
+      coveredInWarranty?: string | null;
+      notCoveredInWarranty?: string | null;
+    };
+  };
   /**
    * Upload product images.
    */
@@ -2994,6 +3113,88 @@ export interface ProductsSelect<T extends boolean = true> {
               length?: T;
               widthDepth?: T;
               height?: T;
+            };
+      };
+  laptopFields?:
+    | T
+    | {
+        general?:
+          | T
+          | {
+              salesPackage?: T;
+              modelNumber?: T;
+              partNumber?: T;
+              modelName?: T;
+              series?: T;
+              color?: T;
+              type?: T;
+              suitableFor?: T;
+              msOfficeProvided?: T;
+            };
+        processorMemory?:
+          | T
+          | {
+              dedicatedGraphicMemoryType?: T;
+              dedicatedGraphicMemoryCapacity?: T;
+              processorBrand?: T;
+              processorName?: T;
+              processorGeneration?: T;
+              processorVariant?: T;
+              clockSpeed?: T;
+              graphicProcessor?: T;
+              ram?: T;
+              ramType?: T;
+              ssd?: T;
+              ssdCapacity?: T;
+              storageType?: T;
+            };
+        operatingSystem?:
+          | T
+          | {
+              os?: T;
+            };
+        ports?:
+          | T
+          | {
+              usbPorts?: T;
+              hdmiPort?: T;
+            };
+        displayAudio?:
+          | T
+          | {
+              touchscreen?: T;
+              screenSize?: T;
+              screenResolution?: T;
+              screenType?: T;
+              speakers?: T;
+              internalMic?: T;
+            };
+        connectivity?:
+          | T
+          | {
+              wirelessLAN?: T;
+              bluetooth?: T;
+            };
+        dimensions?:
+          | T
+          | {
+              size?: T;
+              weight?: T;
+            };
+        additional?:
+          | T
+          | {
+              diskDrive?: T;
+              webCamera?: T;
+              keyboard?: T;
+            };
+        warranty?:
+          | T
+          | {
+              warrantySummary?: T;
+              warrantyServiceType?: T;
+              coveredInWarranty?: T;
+              notCoveredInWarranty?: T;
             };
       };
   images?: T;
