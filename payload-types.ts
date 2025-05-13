@@ -720,7 +720,9 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  template?: ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven' | 'laptop' | 'printer') | null;
+  template?:
+    | ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven' | 'laptop' | 'printer' | 'drilling-machine')
+    | null;
   carFields?: {
     keySpecifications?: {
       /**
@@ -2104,6 +2106,123 @@ export interface Product {
       manufacturerName?: string | null;
     };
   };
+  'drilling-machineFields'?: {
+    keyAttributes?: {
+      /**
+       * e.g., Rotary Drilling Rig
+       */
+      type?: string | null;
+      /**
+       * e.g., Diesel
+       */
+      powerType?: string | null;
+      /**
+       * e.g., Water Well
+       */
+      use?: string | null;
+      /**
+       * e.g., 380V
+       */
+      voltage?: string | null;
+      /**
+       * e.g., 130-300mm
+       */
+      drillingDiameter?: string | null;
+      /**
+       * e.g., Max. 200m or 220m
+       */
+      drillingDepth?: string | null;
+    };
+    otherAttributes?: {
+      placeOfOrigin?: string | null;
+      /**
+       * e.g., 6500 KG
+       */
+      weight?: string | null;
+      /**
+       * e.g., 1 Year
+       */
+      warranty?: string | null;
+      /**
+       * e.g., motor, pump, engine
+       */
+      coreComponents?: string | null;
+      keySellingPoints?: string | null;
+      /**
+       * e.g., Crawler type pneumatic rig
+       */
+      mobility?: string | null;
+      /**
+       * e.g., 2200r/min
+       */
+      rotateSpeed?: string | null;
+      /**
+       * e.g., 17-27m³/min
+       */
+      airConsumption?: string | null;
+      /**
+       * e.g., 3m
+       */
+      drillRodLength?: string | null;
+      /**
+       * e.g., red/yellow
+       */
+      color?: string | null;
+      /**
+       * e.g., Reliable
+       */
+      advantage?: string | null;
+    };
+    productIdentity?: {
+      /**
+       * e.g., DTH drilling machine
+       */
+      productName?: string | null;
+      /**
+       * e.g., Hengwang
+       */
+      brandName?: string | null;
+      /**
+       * e.g., dth drilling machine price
+       */
+      keyword?: string | null;
+    };
+    dimensions?: {
+      /**
+       * e.g., 3442*2200*2800mm
+       */
+      productDimensions?: string | null;
+      /**
+       * e.g., 410x190x260 cm
+       */
+      singlePackageSize?: string | null;
+      /**
+       * e.g., 6400 kg
+       */
+      singleGrossWeight?: string | null;
+    };
+    inspection?: {
+      machineryTestReport?: string | null;
+      videoOutgoingInspection?: string | null;
+    };
+    packagingDelivery?: {
+      packagingDetails?: string | null;
+      /**
+       * e.g., Qingdao/Shanghai/Tianjin
+       */
+      port?: string | null;
+      /**
+       * e.g., Single item
+       */
+      sellingUnits?: string | null;
+    };
+    supplyInfo?: {
+      /**
+       * e.g., 50 Set/Sets per Week
+       */
+      supplyAbility?: string | null;
+    };
+  };
   /**
    * Upload product images.
    */
@@ -3312,6 +3431,67 @@ export interface ProductsSelect<T extends boolean = true> {
           | {
               countryOfOrigin?: T;
               manufacturerName?: T;
+            };
+      };
+  'drilling-machineFields'?:
+    | T
+    | {
+        keyAttributes?:
+          | T
+          | {
+              type?: T;
+              powerType?: T;
+              use?: T;
+              voltage?: T;
+              drillingDiameter?: T;
+              drillingDepth?: T;
+            };
+        otherAttributes?:
+          | T
+          | {
+              placeOfOrigin?: T;
+              weight?: T;
+              warranty?: T;
+              coreComponents?: T;
+              keySellingPoints?: T;
+              mobility?: T;
+              rotateSpeed?: T;
+              airConsumption?: T;
+              drillRodLength?: T;
+              color?: T;
+              advantage?: T;
+            };
+        productIdentity?:
+          | T
+          | {
+              productName?: T;
+              brandName?: T;
+              keyword?: T;
+            };
+        dimensions?:
+          | T
+          | {
+              productDimensions?: T;
+              singlePackageSize?: T;
+              singleGrossWeight?: T;
+            };
+        inspection?:
+          | T
+          | {
+              machineryTestReport?: T;
+              videoOutgoingInspection?: T;
+            };
+        packagingDelivery?:
+          | T
+          | {
+              packagingDetails?: T;
+              port?: T;
+              sellingUnits?: T;
+            };
+        supplyInfo?:
+          | T
+          | {
+              supplyAbility?: T;
             };
       };
   images?: T;

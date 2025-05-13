@@ -10,6 +10,7 @@ import {
 } from './hooks/revalidateProducts'
 import cameraTemplate from './product-templates/camera'
 import carTemplate from './product-templates/car'
+import drillingMachineTemplate from './product-templates/drilling-machine'
 import laptopTemplate from './product-templates/laptop'
 import mobileTemplate from './product-templates/mobile'
 import ovenTemplate from './product-templates/oven'
@@ -26,6 +27,7 @@ const productTemplates = [
   ovenTemplate,
   laptopTemplate,
   printerTemplate,
+  drillingMachineTemplate,
 ]
 export const Products: CollectionConfig = {
   slug: 'products',
