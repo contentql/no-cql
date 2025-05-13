@@ -13,6 +13,7 @@ import carTemplate from './product-templates/car'
 import laptopTemplate from './product-templates/laptop'
 import mobileTemplate from './product-templates/mobile'
 import ovenTemplate from './product-templates/oven'
+import printerTemplate from './product-templates/printer'
 import transformerTemplate from './product-templates/transformer'
 import VRTemplate from './product-templates/vr'
 
@@ -24,6 +25,7 @@ const productTemplates = [
   transformerTemplate,
   ovenTemplate,
   laptopTemplate,
+  printerTemplate,
 ]
 export const Products: CollectionConfig = {
   slug: 'products',

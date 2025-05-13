@@ -720,7 +720,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  template?: ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven' | 'laptop') | null;
+  template?: ('car' | 'mobile' | 'camera' | 'vr' | 'transformer' | 'oven' | 'laptop' | 'printer') | null;
   carFields?: {
     keySpecifications?: {
       /**
@@ -2036,6 +2036,74 @@ export interface Product {
       notCoveredInWarranty?: string | null;
     };
   };
+  printerFields?: {
+    general?: {
+      /**
+       * e.g., Versalink B7125
+       */
+      modelNo?: string | null;
+      /**
+       * e.g., Multifunctional Printer
+       */
+      typeOfProduct?: string | null;
+      /**
+       * e.g., Black & White
+       */
+      output?: string | null;
+      /**
+       * e.g., Laser
+       */
+      technology?: string | null;
+      color?: string | null;
+      /**
+       * e.g., Business
+       */
+      idealFor?: string | null;
+    };
+    printDetails?: {
+      /**
+       * e.g., 1200 x 1200 dpi
+       */
+      maximumPrintResolution?: string | null;
+      /**
+       * e.g., up to 25 ppm
+       */
+      printSpeed?: string | null;
+      copyResolution?: string | null;
+      /**
+       * e.g., Cloud, Copy, Email, Print, Scan
+       */
+      function?: string | null;
+    };
+    capacity?: {
+      /**
+       * Tray capacity details
+       */
+      paperCapacity?: string | null;
+      standardPaperCapacity?: string | null;
+      maximumPaperCapacity?: string | null;
+      /**
+       * e.g., Up to 107,000 images/month
+       */
+      dutyCycle?: string | null;
+      recommendedMonthlyVolume?: string | null;
+    };
+    environment?: {
+      operatingTemperature?: string | null;
+      relativeHumidity?: string | null;
+    };
+    power?: {
+      powerSource?: string | null;
+      /**
+       * e.g., Ethernet, USB, NFC
+       */
+      connectivity?: string | null;
+    };
+    manufacturer?: {
+      countryOfOrigin?: string | null;
+      manufacturerName?: string | null;
+    };
+  };
   /**
    * Upload product images.
    */
@@ -3195,6 +3263,55 @@ export interface ProductsSelect<T extends boolean = true> {
               warrantyServiceType?: T;
               coveredInWarranty?: T;
               notCoveredInWarranty?: T;
+            };
+      };
+  printerFields?:
+    | T
+    | {
+        general?:
+          | T
+          | {
+              modelNo?: T;
+              typeOfProduct?: T;
+              output?: T;
+              technology?: T;
+              color?: T;
+              idealFor?: T;
+            };
+        printDetails?:
+          | T
+          | {
+              maximumPrintResolution?: T;
+              printSpeed?: T;
+              copyResolution?: T;
+              function?: T;
+            };
+        capacity?:
+          | T
+          | {
+              paperCapacity?: T;
+              standardPaperCapacity?: T;
+              maximumPaperCapacity?: T;
+              dutyCycle?: T;
+              recommendedMonthlyVolume?: T;
+            };
+        environment?:
+          | T
+          | {
+              operatingTemperature?: T;
+              relativeHumidity?: T;
+            };
+        power?:
+          | T
+          | {
+              powerSource?: T;
+              connectivity?: T;
+            };
+        manufacturer?:
+          | T
+          | {
+              countryOfOrigin?: T;
+              manufacturerName?: T;
             };
       };
   images?: T;
