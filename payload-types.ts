@@ -732,6 +732,7 @@ export interface Product {
         | 'printer'
         | 'drilling-machine'
         | 'hoverboard'
+        | 'electricalCurtain'
       )
     | null;
   carFields?: {
@@ -2302,6 +2303,93 @@ export interface Product {
       warranty?: string | null;
     };
   };
+  electricalCurtainFields?: {
+    /**
+     * Brand name (e.g., Quoya)
+     */
+    brand: string;
+    /**
+     * Model number (e.g., QL500)
+     */
+    model: string;
+    /**
+     * Color (e.g., Aluminum)
+     */
+    color?: string | null;
+    /**
+     * Material used (e.g., Aluminum)
+     */
+    material?: string | null;
+    /**
+     * Mounting options (e.g., Ceiling and Wall mounted)
+     */
+    mountingType?: string | null;
+    /**
+     * e.g., 25L x 25W mm
+     */
+    dimensions?: string | null;
+    /**
+     * e.g., 4 Kilograms
+     */
+    weight?: string | null;
+    /**
+     * e.g., 50 Kilograms
+     */
+    maxWeight?: string | null;
+    /**
+     * e.g., 40W
+     */
+    power?: string | null;
+    /**
+     * e.g., AC100–240V
+     */
+    voltage?: string | null;
+    /**
+     * e.g., USA US 3 Pin Plug
+     */
+    powerType?: string | null;
+    /**
+     * Track max length (e.g., 3.2 metres)
+     */
+    trackLength?: string | null;
+    /**
+     * e.g., 1.2Nm Torque
+     */
+    motorStrength?: string | null;
+    /**
+     * e.g., IP20
+     */
+    ipRating?: string | null;
+    /**
+     * List of items included in the package
+     */
+    inTheBox?:
+      | {
+          item: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Brief overview of the curtain system
+     */
+    description?: string | null;
+    /**
+     * e.g., Quoya
+     */
+    manufacturer?: string | null;
+    /**
+     * Amazon Standard Identification Number (ASIN)
+     */
+    asin?: string | null;
+    /**
+     * UPC code (e.g., 782290129929)
+     */
+    upc?: string | null;
+    /**
+     * e.g., 1.0 count
+     */
+    netQuantity?: string | null;
+  };
   /**
    * Upload product images.
    */
@@ -3606,6 +3694,35 @@ export interface ProductsSelect<T extends boolean = true> {
               deliveryTime?: T;
               warranty?: T;
             };
+      };
+  electricalCurtainFields?:
+    | T
+    | {
+        brand?: T;
+        model?: T;
+        color?: T;
+        material?: T;
+        mountingType?: T;
+        dimensions?: T;
+        weight?: T;
+        maxWeight?: T;
+        power?: T;
+        voltage?: T;
+        powerType?: T;
+        trackLength?: T;
+        motorStrength?: T;
+        ipRating?: T;
+        inTheBox?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+        description?: T;
+        manufacturer?: T;
+        asin?: T;
+        upc?: T;
+        netQuantity?: T;
       };
   images?: T;
   isFeatured?: T;

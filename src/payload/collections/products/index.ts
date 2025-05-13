@@ -11,6 +11,7 @@ import {
 import cameraTemplate from './product-templates/camera'
 import carTemplate from './product-templates/car'
 import drillingMachineTemplate from './product-templates/drilling-machine'
+import electricalCurtainTemplate from './product-templates/electrical-curtain'
 import hoverboardTemplate from './product-templates/hover-board'
 import laptopTemplate from './product-templates/laptop'
 import mobileTemplate from './product-templates/mobile'
@@ -30,6 +31,7 @@ const productTemplates = [
   printerTemplate,
   drillingMachineTemplate,
   hoverboardTemplate,
+  electricalCurtainTemplate,
 ]
 export const Products: CollectionConfig = {
   slug: 'products',
