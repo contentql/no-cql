@@ -5,15 +5,6 @@ const hoverboardTemplate = {
   value: 'hoverboard',
   fields: [
     {
-      name: 'productName',
-      type: 'text',
-      required: true,
-      admin: {
-        width: '50%',
-        description: 'Name of the hoverboard model',
-      },
-    },
-    {
       name: 'specifications',
       type: 'group',
       label: 'Specifications',

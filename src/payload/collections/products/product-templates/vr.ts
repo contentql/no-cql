@@ -13,15 +13,6 @@ const vrTemplates = {
           type: 'row',
           fields: [
             {
-              name: 'manufacturer',
-              type: 'text',
-              required: true,
-              admin: {
-                width: '50%',
-                description: 'Brand or company (e.g., Meta)',
-              },
-            },
-            {
               name: 'website',
               type: 'text',
               admin: {
@@ -29,11 +20,6 @@ const vrTemplates = {
                 description: 'Official website (e.g., https://meta.com)',
               },
             },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
             {
               name: 'deviceType',
               type: 'text',
@@ -42,6 +28,11 @@ const vrTemplates = {
                 description: 'Type of VR device (e.g., Standalone)',
               },
             },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
             {
               name: 'platform',
               type: 'text',
@@ -50,11 +41,6 @@ const vrTemplates = {
                 description: 'Software platform (e.g., Meta Quest)',
               },
             },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
             {
               name: 'announced',
               type: 'date',
@@ -63,16 +49,16 @@ const vrTemplates = {
                 description: 'Official announcement date',
               },
             },
-            {
-              name: 'releaseDate',
-              type: 'date',
-              admin: { width: '50%', description: 'Public release date' },
-            },
           ],
         },
         {
           type: 'row',
           fields: [
+            {
+              name: 'releaseDate',
+              type: 'date',
+              admin: { width: '50%', description: 'Public release date' },
+            },
             {
               name: 'retailPrice',
               type: 'text',

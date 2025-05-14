@@ -8,29 +8,6 @@ const electricalCurtainTemplate = {
       type: 'row',
       fields: [
         {
-          name: 'brand',
-          type: 'text',
-          required: true,
-          admin: {
-            width: '50%',
-            description: 'Brand name (e.g., Quoya)',
-          },
-        },
-        {
-          name: 'model',
-          type: 'text',
-          required: true,
-          admin: {
-            width: '50%',
-            description: 'Model number (e.g., QL500)',
-          },
-        },
-      ],
-    },
-    {
-      type: 'row',
-      fields: [
-        {
           name: 'color',
           type: 'text',
           admin: {

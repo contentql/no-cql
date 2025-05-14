@@ -1411,11 +1411,7 @@ export interface Product {
     };
   };
   vrFields?: {
-    info: {
-      /**
-       * Brand or company (e.g., Meta)
-       */
-      manufacturer: string;
+    info?: {
       /**
        * Official website (e.g., https://meta.com)
        */
@@ -1686,10 +1682,6 @@ export interface Product {
   };
   transformerFields?: {
     /**
-     * Brand name (e.g., SEN AND PANDIT ELECTRO SYSTEM)
-     */
-    brandName: string;
-    /**
      * Type of transformer (e.g., Other)
      */
     productType?: string | null;
@@ -1701,6 +1693,10 @@ export interface Product {
      * Voltage rating (e.g., 440 Volt)
      */
     voltage?: string | null;
+    /**
+     * Market coverage (e.g., All India)
+     */
+    mainDomesticMarket?: string | null;
     /**
      * Phase type (e.g., Three Phase)
      */
@@ -1773,21 +1769,9 @@ export interface Product {
      * Delivery time (e.g., 7 Days)
      */
     deliveryTime?: string | null;
-    /**
-     * Market coverage (e.g., All India)
-     */
-    mainDomesticMarket?: string | null;
   };
   ovenFields?: {
-    basicInfo: {
-      /**
-       * Brand of the oven (e.g., ALISTER)
-       */
-      brand: string;
-      /**
-       * Model number (e.g., POE0101)
-       */
-      model: string;
+    basicInfo?: {
       /**
        * Stock keeping unit (e.g., POOVE0101WITHSTONE)
        */
@@ -2237,10 +2221,6 @@ export interface Product {
     };
   };
   hoverboardFields?: {
-    /**
-     * Name of the hoverboard model
-     */
-    productName: string;
     specifications?: {
       /**
        * e.g., 10kg
@@ -2305,14 +2285,6 @@ export interface Product {
     };
   };
   electricalCurtainFields?: {
-    /**
-     * Brand name (e.g., Quoya)
-     */
-    brand: string;
-    /**
-     * Model number (e.g., QL500)
-     */
-    model: string;
     /**
      * Color (e.g., Aluminum)
      */
@@ -3338,7 +3310,6 @@ export interface ProductsSelect<T extends boolean = true> {
         info?:
           | T
           | {
-              manufacturer?: T;
               website?: T;
               deviceType?: T;
               platform?: T;
@@ -3442,10 +3413,10 @@ export interface ProductsSelect<T extends boolean = true> {
   transformerFields?:
     | T
     | {
-        brandName?: T;
         productType?: T;
         material?: T;
         voltage?: T;
+        mainDomesticMarket?: T;
         phase?: T;
         usage?: T;
         powerScope?: T;
@@ -3464,7 +3435,6 @@ export interface ProductsSelect<T extends boolean = true> {
         paymentTerms?: T;
         supplyAbility?: T;
         deliveryTime?: T;
-        mainDomesticMarket?: T;
       };
   ovenFields?:
     | T
@@ -3472,8 +3442,6 @@ export interface ProductsSelect<T extends boolean = true> {
         basicInfo?:
           | T
           | {
-              brand?: T;
-              model?: T;
               sku?: T;
             };
         productDimensions?:
@@ -3723,7 +3691,6 @@ export interface ProductsSelect<T extends boolean = true> {
   hoverboardFields?:
     | T
     | {
-        productName?: T;
         specifications?:
           | T
           | {
@@ -3757,8 +3724,6 @@ export interface ProductsSelect<T extends boolean = true> {
   electricalCurtainFields?:
     | T
     | {
-        brand?: T;
-        model?: T;
         color?: T;
         material?: T;
         mountingType?: T;

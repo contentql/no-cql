@@ -8,15 +8,6 @@ const transformerTemplate = {
       type: 'row',
       fields: [
         {
-          name: 'brandName',
-          type: 'text',
-          required: true,
-          admin: {
-            width: '50%',
-            description: 'Brand name (e.g., SEN AND PANDIT ELECTRO SYSTEM)',
-          },
-        },
-        {
           name: 'productType',
           type: 'text',
           admin: {
@@ -24,11 +15,6 @@ const transformerTemplate = {
             description: 'Type of transformer (e.g., Other)',
           },
         },
-      ],
-    },
-    {
-      type: 'row',
-      fields: [
         {
           name: 'material',
           type: 'text',
@@ -37,12 +23,25 @@ const transformerTemplate = {
             description: 'Primary material (e.g., Metal)',
           },
         },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
         {
           name: 'voltage',
           type: 'text',
           admin: {
             width: '50%',
             description: 'Voltage rating (e.g., 440 Volt)',
+          },
+        },
+        {
+          name: 'mainDomesticMarket',
+          type: 'text',
+          admin: {
+            width: '50%',
+            description: 'Market coverage (e.g., All India)',
           },
         },
       ],
@@ -237,19 +236,6 @@ const transformerTemplate = {
           admin: {
             width: '50%',
             description: 'Delivery time (e.g., 7 Days)',
-          },
-        },
-      ],
-    },
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'mainDomesticMarket',
-          type: 'text',
-          admin: {
-            width: '50%',
-            description: 'Market coverage (e.g., All India)',
           },
         },
       ],

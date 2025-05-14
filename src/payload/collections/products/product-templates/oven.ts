@@ -14,29 +14,6 @@ const ovenTemplate = {
           type: 'row',
           fields: [
             {
-              name: 'brand',
-              type: 'text',
-              required: true,
-              admin: {
-                width: '50%',
-                description: 'Brand of the oven (e.g., ALISTER)',
-              },
-            },
-            {
-              name: 'model',
-              type: 'text',
-              required: true,
-              admin: {
-                width: '50%',
-                description: 'Model number (e.g., POE0101)',
-              },
-            },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
-            {
               name: 'sku',
               type: 'text',
               admin: {
