@@ -733,6 +733,7 @@ export interface Product {
         | 'drilling-machine'
         | 'hoverboard'
         | 'electricalCurtain'
+        | 'drone'
       )
     | null;
   carFields?: {
@@ -2390,6 +2391,64 @@ export interface Product {
      */
     netQuantity?: string | null;
   };
+  droneFields?: {
+    /**
+     * e.g., 3368mm
+     */
+    wingspan?: string | null;
+    /**
+     * e.g., 1850mm
+     */
+    length?: string | null;
+    /**
+     * e.g., Carbon Fiber
+     */
+    material?: string | null;
+    /**
+     * Without battery and fuel (e.g., 22kg)
+     */
+    basicEmptyWeight?: string | null;
+    /**
+     * e.g., 32kg
+     */
+    maxTakeoffWeight?: string | null;
+    /**
+     * e.g., 5m/s
+     */
+    climbRate?: string | null;
+    /**
+     * e.g., 25m/s
+     */
+    cruisingSpeed?: string | null;
+    /**
+     * e.g., 16m/s
+     */
+    stallSpeed?: string | null;
+    /**
+     * Maximum wind speed drone can resist (e.g., ≤12m/s)
+     */
+    windResistance?: string | null;
+    /**
+     * Maximum operating altitude (e.g., 5000m)
+     */
+    serviceCeiling?: string | null;
+    /**
+     * e.g., VTOL
+     */
+    takeoffLanding?: string | null;
+    /**
+     * e.g., -20℃ to 50℃
+     */
+    workingTemperature?: string | null;
+    /**
+     * e.g., 205cm x 53cm x 57cm
+     */
+    carryingCaseSize?: string | null;
+    /**
+     * Optional overview or additional notes about the drone
+     */
+    description?: string | null;
+  };
   /**
    * Upload product images.
    */
@@ -3723,6 +3782,24 @@ export interface ProductsSelect<T extends boolean = true> {
         asin?: T;
         upc?: T;
         netQuantity?: T;
+      };
+  droneFields?:
+    | T
+    | {
+        wingspan?: T;
+        length?: T;
+        material?: T;
+        basicEmptyWeight?: T;
+        maxTakeoffWeight?: T;
+        climbRate?: T;
+        cruisingSpeed?: T;
+        stallSpeed?: T;
+        windResistance?: T;
+        serviceCeiling?: T;
+        takeoffLanding?: T;
+        workingTemperature?: T;
+        carryingCaseSize?: T;
+        description?: T;
       };
   images?: T;
   isFeatured?: T;
