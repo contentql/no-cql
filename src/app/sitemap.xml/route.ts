@@ -16,7 +16,6 @@ const sitemapGenerationMapping = {
   users: serverClient.author.getAllAuthors(),
   brands: serverClient.brand.getAllBrands(),
   categories: serverClient.category.getAllCategories(),
-  products: serverClient.product.getAllProducts(),
 } as const
 
 export async function GET() {

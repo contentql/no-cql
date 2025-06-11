@@ -4,10 +4,6 @@ import { CollectionConfig } from 'payload'
 
 import { slugField } from '@/payload/fields/slug'
 
-import {
-  revalidateProductsAfterChange,
-  revalidateProductsAfterDelete,
-} from './hooks/revalidateProducts'
 import cameraTemplate from './product-templates/camera'
 import carTemplate from './product-templates/car'
 import drillingMachineTemplate from './product-templates/drilling-machine'
@@ -50,8 +46,8 @@ export const Products: CollectionConfig = {
     drafts: true,
   },
   hooks: {
-    afterChange: [revalidateProductsAfterChange],
-    afterDelete: [revalidateProductsAfterDelete],
+    afterChange: [],
+    afterDelete: [],
   },
   access: {
     read: () => true,

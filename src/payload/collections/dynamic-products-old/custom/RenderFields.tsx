@@ -28,7 +28,7 @@ const RenderFields = ({ path }: { path: string }) => {
           return
         }
 
-        const formatted = templateData.fields.map(field => {
+        const formatted = templateData.fields.map((field: any) => {
           const baseField = {
             name: field.name.replace(/\s+/g, '_').toLowerCase(),
             type: field.blockType as
@@ -48,7 +48,7 @@ const RenderFields = ({ path }: { path: string }) => {
             return {
               ...baseField,
               options: Array.isArray(field.options)
-                ? field.options.map(option => ({
+                ? field.options.map((option: any) => ({
                     value: option.value,
                     label: option.label,
                   }))

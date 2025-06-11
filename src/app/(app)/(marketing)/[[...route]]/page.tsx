@@ -216,7 +216,6 @@ const staticGenerationMapping = {
   users: serverClient.author.getAllAuthors(),
   brands: serverClient.brand.getAllBrands(),
   categories: serverClient.category.getAllCategories(),
-  products: serverClient.product.getAllProducts(),
 } as const
 
 // This function generates staticParams for [[...route]]/page.tsx

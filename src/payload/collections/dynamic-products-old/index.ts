@@ -2,16 +2,15 @@ import { CollectionConfig } from 'payload'
 
 const DynamicProducts: CollectionConfig = {
   slug: 'dynamic-products',
-  admin: {
-    hidden: true,
-  },
+  admin: {},
   fields: [
-    {
-      name: 'productTemplate',
-      label: 'Product Template',
-      type: 'relationship',
-      relationTo: 'product-templates',
-    },
+    // UnComment the below field if you want to use this collection
+    // {
+    //   name: 'productTemplate',
+    //   label: 'Product Template',
+    //   type: 'relationship',
+    //   relationTo: 'product-templates',
+    // },
     {
       name: 'product',
       label: 'Product',

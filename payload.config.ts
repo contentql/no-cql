@@ -13,11 +13,8 @@ import { isAdmin } from '@/payload/access/isAdmin'
 import { Blogs } from '@/payload/collections/blogs'
 import { Brands } from '@/payload/collections/brands'
 import { Categories } from '@/payload/collections/categories'
-import DynamicProducts from '@/payload/collections/dynamic-products'
 import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
-import ProductTemplates from '@/payload/collections/product-templates'
-import { Products } from '@/payload/collections/products'
 import { Cameras } from '@/payload/collections/products-collection/cameras'
 import { Cars } from '@/payload/collections/products-collection/cars'
 import { DrillingMachines } from '@/payload/collections/products-collection/drilling-machines'
@@ -30,7 +27,6 @@ import { Ovens } from '@/payload/collections/products-collection/ovens'
 import { Printers } from '@/payload/collections/products-collection/printers'
 import { Transformers } from '@/payload/collections/products-collection/transformers'
 import { Vrs } from '@/payload/collections/products-collection/vrs'
-import StaticProducts from '@/payload/collections/static-products'
 import { Tags } from '@/payload/collections/tags'
 import { Users } from '@/payload/collections/users'
 import { siteSettings } from '@/payload/globals/siteSettings'
@@ -187,11 +183,12 @@ export default buildConfig({
     Tags,
     Brands,
     Categories,
-    Products,
-    ProductTemplates,
-    DynamicProducts,
-    StaticProducts,
-    // Products Collection
+    // Products,
+    // ProductTemplates,
+    // DynamicProducts,
+    // StaticProducts,
+
+    /* Products Collection*/
     Cameras,
     Cars,
     DrillingMachines,

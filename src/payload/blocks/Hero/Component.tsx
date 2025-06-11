@@ -112,21 +112,6 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
             content or items of interest.
           </p>
         </Link>
-
-        <Link
-          href='/products'
-          className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
-          <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
-            Products
-            <span className='transition-transform duration-300 group-hover:translate-x-2'>
-              <ArrowRight />
-            </span>
-          </p>
-          <p className='text-base-content/70'>
-            This collection holds all product entries displayed on your website
-            or store.
-          </p>
-        </Link>
       </div>
     </section>
   )

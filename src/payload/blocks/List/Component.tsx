@@ -8,7 +8,6 @@ import React from 'react'
 import AuthorsList from './components/AuthorsList'
 import BlogsList from './components/BlogsList'
 import CategoriesList from './components/CategoriesList'
-import ProductsList from './components/ProductsList'
 import TagsList from './components/TagsList'
 
 interface ListProps extends DetailsType {
@@ -86,22 +85,6 @@ export const ListBlock: React.FC<ListProps> = async ({ params, ...block }) => {
       )()
 
       return <CategoriesList categories={categories} />
-    }
-
-    case 'products': {
-      const { docs: products = [] } = await unstable_cache(
-        async () =>
-          await payload.find({
-            collection: 'products',
-            depth: 5,
-            draft: false,
-            limit: 1000,
-          }),
-        ['list', 'products'],
-        { tags: ['list-products'] },
-      )()
-
-      return <ProductsList products={products} />
     }
   }
 }
