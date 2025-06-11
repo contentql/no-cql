@@ -18,6 +18,18 @@ import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
 import ProductTemplates from '@/payload/collections/product-templates'
 import { Products } from '@/payload/collections/products'
+import { Cameras } from '@/payload/collections/products-collection/cameras'
+import { Cars } from '@/payload/collections/products-collection/cars'
+import { DrillingMachines } from '@/payload/collections/products-collection/drilling-machines'
+import { Drones } from '@/payload/collections/products-collection/drones'
+import { ElectricalCurtains } from '@/payload/collections/products-collection/electrical-curtains'
+import { HoverBoards } from '@/payload/collections/products-collection/hover-boards'
+import { Laptops } from '@/payload/collections/products-collection/laptops'
+import { Mobiles } from '@/payload/collections/products-collection/mobiles'
+import { Ovens } from '@/payload/collections/products-collection/ovens'
+import { Printers } from '@/payload/collections/products-collection/printers'
+import { Transformers } from '@/payload/collections/products-collection/transformers'
+import { Vrs } from '@/payload/collections/products-collection/vrs'
 import StaticProducts from '@/payload/collections/static-products'
 import { Tags } from '@/payload/collections/tags'
 import { Users } from '@/payload/collections/users'
@@ -179,6 +191,19 @@ export default buildConfig({
     ProductTemplates,
     DynamicProducts,
     StaticProducts,
+    // Products Collection
+    Cameras,
+    Cars,
+    DrillingMachines,
+    Drones,
+    ElectricalCurtains,
+    HoverBoards,
+    Laptops,
+    Mobiles,
+    Ovens,
+    Printers,
+    Transformers,
+    Vrs,
   ],
   globals: [siteSettings],
   db: db({
