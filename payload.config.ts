@@ -28,6 +28,7 @@ import { Printers } from '@/payload/collections/products-collection/printers'
 import { Transformers } from '@/payload/collections/products-collection/transformers'
 import { Vrs } from '@/payload/collections/products-collection/vrs'
 import { Tags } from '@/payload/collections/tags'
+import { Test } from '@/payload/collections/test'
 import { Users } from '@/payload/collections/users'
 import { siteSettings } from '@/payload/globals/siteSettings'
 import { disqusCommentsPlugin } from '@/payload/plugins/disqus-comments'
@@ -183,6 +184,7 @@ export default buildConfig({
     Tags,
     Brands,
     Categories,
+    Test,
     // Products,
     // ProductTemplates,
     // DynamicProducts,
