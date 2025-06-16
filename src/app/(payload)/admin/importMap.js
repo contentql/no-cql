@@ -57,6 +57,7 @@ import { default as default_530a4a40d073f63a62d20ecc1c48a28a } from '@/payload/f
 import { default as default_63789004f810b61bd607a5896281c096 } from '@/payload/fields/common/theme/RadiusField'
 import { default as default_fe373fe27f1063cfe032cdbcc74c397a } from '../../../../src/payload/style/icons/Icon.tsx'
 import { default as default_d04d5322bc326e90e9d559df021a5610 } from '../../../../src/payload/style/icons/Logo.tsx'
+import { default as default_295af86650e4f8685a27f6856a6139cd } from '../../../../src/payload/style/components/BeforeDashboard.tsx'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 export const importMap = {
@@ -119,5 +120,6 @@ export const importMap = {
   "@/payload/fields/common/theme/RadiusField#default": default_63789004f810b61bd607a5896281c096,
   "/src/payload/style/icons/Icon.tsx#default": default_fe373fe27f1063cfe032cdbcc74c397a,
   "/src/payload/style/icons/Logo.tsx#default": default_d04d5322bc326e90e9d559df021a5610,
+  "/src/payload/style/components/BeforeDashboard.tsx#default": default_295af86650e4f8685a27f6856a6139cd,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }

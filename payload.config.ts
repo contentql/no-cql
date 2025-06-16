@@ -170,6 +170,7 @@ export default buildConfig({
         Logo: '/src/payload/style/icons/Logo.tsx',
         Icon: '/src/payload/style/icons/Icon.tsx',
       },
+      // beforeDashboard: ['/src/payload/style/components/BeforeDashboard.tsx'],
     },
     user: 'users',
     meta: {
