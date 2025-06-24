@@ -6,7 +6,10 @@ import { slugField } from '@/payload/fields/slug/index'
 
 import { isAdminOrSelf } from './access/isAdminOrSelf'
 import { assignUserId } from './field-level-hooks/assignUserId'
-import { revalidateBlogs } from './hooks/revalidateBlogs'
+import {
+  revalidateBlogs,
+  revalidateBlogsAfterDelete,
+} from './hooks/revalidateBlogs'
 
 export const Blogs: CollectionConfig = {
   slug: 'blogs',
@@ -105,5 +108,6 @@ export const Blogs: CollectionConfig = {
   ],
   hooks: {
     afterChange: [revalidateBlogs],
+    afterDelete: [revalidateBlogsAfterDelete],
   },
 }

@@ -8,7 +8,10 @@ import type { CollectionConfig } from 'payload'
 import { blocksConfig } from '@/payload/blocks/config'
 import homeBlockConfig from '@/payload/blocks/homeBlockConfig'
 
-import { revalidatePages } from './hooks/revalidatePages'
+import {
+  revalidatePages,
+  revalidatePagesAfterDelete,
+} from './hooks/revalidatePages'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -96,5 +99,6 @@ export const Pages: CollectionConfig = {
   ],
   hooks: {
     afterChange: [revalidatePages],
+    afterDelete: [revalidatePagesAfterDelete],
   },
 }

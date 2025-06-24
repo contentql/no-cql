@@ -3,7 +3,10 @@ import { slugField } from '../../fields/slug/index'
 import { CONTENT_GROUP } from '../constants'
 import { CollectionConfig } from 'payload'
 
-import { revalidateTags } from './hooks/revalidateTags'
+import {
+  revalidateTags,
+  revalidateTagsAfterDelete,
+} from './hooks/revalidateTags'
 
 export const Tags: CollectionConfig = {
   slug: 'tags',
@@ -82,5 +85,6 @@ export const Tags: CollectionConfig = {
   ],
   hooks: {
     afterChange: [revalidateTags],
+    afterDelete: [revalidateTagsAfterDelete],
   },
 }
