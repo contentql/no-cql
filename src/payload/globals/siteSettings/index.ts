@@ -6,6 +6,8 @@ import { z } from 'zod'
 
 import { SETTINGS_GROUP } from '@/payload/collections/constants'
 
+import { revalidateSiteSettings } from './hooks/revalidateSiteSettings'
+
 const validateURL = z
   .string({
     required_error: 'Name is required',
@@ -279,6 +281,7 @@ export const siteSettings: GlobalConfig = {
   admin: {
     group: SETTINGS_GROUP,
   },
+  hooks: { afterChange: [revalidateSiteSettings] },
   fields: [
     {
       type: 'tabs',
