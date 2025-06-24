@@ -74,6 +74,7 @@ export interface Config {
     tags: Tag;
     brands: Brand;
     categories: Category;
+    test: Test;
     cameras: Camera;
     cars: Car;
     'drilling-machines': DrillingMachine;
@@ -102,6 +103,7 @@ export interface Config {
     tags: TagsSelect<false> | TagsSelect<true>;
     brands: BrandsSelect<false> | BrandsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    test: TestSelect<false> | TestSelect<true>;
     cameras: CamerasSelect<false> | CamerasSelect<true>;
     cars: CarsSelect<false> | CarsSelect<true>;
     'drilling-machines': DrillingMachinesSelect<false> | DrillingMachinesSelect<true>;
@@ -672,6 +674,19 @@ export interface Category {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "test".
+ */
+export interface Test {
+  id: string;
+  task?: string | null;
+  completed?: boolean | null;
+  completedAt?: string | null;
+  version?: ('v1' | 'v2') | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3737,6 +3752,10 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'test';
+        value: string | Test;
+      } | null)
+    | ({
         relationTo: 'cameras';
         value: string | Camera;
       } | null)
@@ -4095,6 +4114,18 @@ export interface CategoriesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "test_select".
+ */
+export interface TestSelect<T extends boolean = true> {
+  task?: T;
+  completed?: T;
+  completedAt?: T;
+  version?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
