@@ -5765,6 +5765,10 @@ export interface SiteSetting {
     measurementId?: string | null;
   };
   themeSettings: {
+    /**
+     * Check this field to enable overriding local styles with admin-panel styles
+     */
+    overrideTheme: boolean;
     lightMode: {
       background: string;
       foreground: string;
@@ -5961,6 +5965,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   themeSettings?:
     | T
     | {
+        overrideTheme?: T;
         lightMode?:
           | T
           | {

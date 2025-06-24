@@ -137,7 +137,7 @@ export default async function RootLayout({
 }>) {
   const metadata = await getCachedSiteSettings()
   const { general, themeSettings } = metadata
-  const { lightMode, darkMode, fonts, radius } = themeSettings
+  const { lightMode, darkMode, fonts, radius, overrideTheme } = themeSettings
 
   const faviconUrl =
     typeof general?.faviconUrl === 'object'
@@ -283,9 +283,10 @@ export default async function RootLayout({
         {/* following shadcn approach & generating lightMode & darkMode variables */}
         {/* Enabled a boolean to enable local css variable overridden from admin-panel */}
 
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
+        {overrideTheme ? (
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
             :root {
             ${lightModeVariables}
             }
@@ -294,8 +295,9 @@ export default async function RootLayout({
                 ${darkModeVariables}
               }
             `,
-          }}
-        />
+            }}
+          />
+        ) : null}
 
         <GoogleAdsense metadata={metadata} />
         <GoogleAnalytics metadata={metadata} />

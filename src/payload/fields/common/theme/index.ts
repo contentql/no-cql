@@ -76,6 +76,21 @@ export const themeSettingsTab: Tab = {
       type: 'row',
       fields: [
         {
+          name: 'overrideTheme',
+          type: 'checkbox',
+          required: true,
+          defaultValue: false,
+          admin: {
+            description:
+              'Check this field to enable overriding local styles with admin-panel styles',
+          },
+        },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        {
           type: 'group',
           name: 'lightMode',
           fields: [
