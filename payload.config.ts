@@ -1,4 +1,5 @@
 import { env } from '@env'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
@@ -34,7 +35,6 @@ import { siteSettings } from '@/payload/globals/siteSettings'
 import { disqusCommentsPlugin } from '@/payload/plugins/disqus-comments'
 import { scheduleDocPublishPlugin } from '@/payload/plugins/schedule-doc-publish-plugin'
 import { BeforeSyncConfig } from '@/utils/beforeSync'
-import { db } from '@/utils/databaseAdapter'
 import { generateBreadcrumbsUrl } from '@/utils/generateBreadcrumbsUrl'
 import {
   generateDescription,
@@ -206,12 +206,8 @@ export default buildConfig({
     Vrs,
   ],
   globals: [siteSettings],
-  db: db({
-    databaseURI: env.DATABASE_URI,
-    databaseSecret: env.DATABASE_SECRET,
-    useVercelPostgresAdapter: false,
-    syncDB: false,
-    syncInterval: 60,
+  db: mongooseAdapter({
+    url: env.DATABASE_URI,
   }),
   secret: 'TESTING',
   plugins: [
