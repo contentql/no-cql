@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    tenants: Tenant;
     media: Media;
     pages: Page;
     blogs: Blog;
@@ -97,6 +98,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
@@ -197,6 +199,13 @@ export interface User {
         id?: string | null;
       }[]
     | null;
+  tenants?:
+    | {
+        tenant: string | Tenant;
+        role: 'admin' | 'user';
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -216,6 +225,7 @@ export interface User {
  */
 export interface Media {
   id: string;
+  tenant?: (string | null) | Tenant;
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -257,10 +267,23 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  name: string;
+  slug: string;
+  subdomain: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: string;
+  tenant?: (string | null) | Tenant;
   title: string;
   layout?: (HeroType | DetailsType | ListType | FormType | DisqusCommentsType)[] | null;
   meta?: {
@@ -523,6 +546,7 @@ export interface DisqusCommentsType {
  */
 export interface Blog {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * Upload blog image
    */
@@ -576,6 +600,7 @@ export interface Blog {
  */
 export interface Tag {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * Upload tag image
    */
@@ -605,6 +630,7 @@ export interface Tag {
  */
 export interface Brand {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the brand. This will be displayed across the application.
    */
@@ -639,6 +665,7 @@ export interface Brand {
  */
 export interface Category {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the category. This will be displayed across the application.
    */
@@ -681,6 +708,7 @@ export interface Category {
  */
 export interface Test {
   id: string;
+  tenant?: (string | null) | Tenant;
   task?: string | null;
   completed?: boolean | null;
   completedAt?: string | null;
@@ -694,6 +722,7 @@ export interface Test {
  */
 export interface Camera {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -1021,6 +1050,7 @@ export interface Camera {
  */
 export interface Car {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -1280,6 +1310,7 @@ export interface Car {
  */
 export interface DrillingMachine {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -1506,6 +1537,7 @@ export interface DrillingMachine {
  */
 export interface Drone {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -1669,6 +1701,7 @@ export interface Drone {
  */
 export interface ElectricalCurtain {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -1853,6 +1886,7 @@ export interface ElectricalCurtain {
  */
 export interface HoverBoard {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -2026,6 +2060,7 @@ export interface HoverBoard {
  */
 export interface Laptop {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -2254,6 +2289,7 @@ export interface Laptop {
  */
 export interface Mobile {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -2669,6 +2705,7 @@ export interface Mobile {
  */
 export interface Oven {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -2924,6 +2961,7 @@ export interface Oven {
  */
 export interface Printer {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -3104,6 +3142,7 @@ export interface Printer {
  */
 export interface Transformer {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -3299,6 +3338,7 @@ export interface Transformer {
  */
 export interface Vr {
   id: string;
+  tenant?: (string | null) | Tenant;
   /**
    * The name of the product that will be displayed.
    */
@@ -3728,6 +3768,10 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'tenants';
+        value: string | Tenant;
+      } | null)
+    | ({
         relationTo: 'media';
         value: string | Media;
       } | null)
@@ -3874,6 +3918,13 @@ export interface UsersSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  tenants?:
+    | T
+    | {
+        tenant?: T;
+        role?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -3888,9 +3939,21 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants_select".
+ */
+export interface TenantsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  subdomain?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  tenant?: T;
   alt?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -3943,6 +4006,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  tenant?: T;
   title?: T;
   layout?:
     | T
@@ -4033,6 +4097,7 @@ export interface DisqusCommentsTypeSelect<T extends boolean = true> {
  * via the `definition` "blogs_select".
  */
 export interface BlogsSelect<T extends boolean = true> {
+  tenant?: T;
   blogImage?: T;
   title?: T;
   description?: T;
@@ -4057,6 +4122,7 @@ export interface BlogsSelect<T extends boolean = true> {
  * via the `definition` "tags_select".
  */
 export interface TagsSelect<T extends boolean = true> {
+  tenant?: T;
   tagImage?: T;
   title?: T;
   description?: T;
@@ -4078,6 +4144,7 @@ export interface TagsSelect<T extends boolean = true> {
  * via the `definition` "brands_select".
  */
 export interface BrandsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4098,6 +4165,7 @@ export interface BrandsSelect<T extends boolean = true> {
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4120,6 +4188,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "test_select".
  */
 export interface TestSelect<T extends boolean = true> {
+  tenant?: T;
   task?: T;
   completed?: T;
   completedAt?: T;
@@ -4132,6 +4201,7 @@ export interface TestSelect<T extends boolean = true> {
  * via the `definition` "cameras_select".
  */
 export interface CamerasSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4274,6 +4344,7 @@ export interface CamerasSelect<T extends boolean = true> {
  * via the `definition` "cars_select".
  */
 export interface CarsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4378,6 +4449,7 @@ export interface CarsSelect<T extends boolean = true> {
  * via the `definition` "drilling-machines_select".
  */
 export interface DrillingMachinesSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4481,6 +4553,7 @@ export interface DrillingMachinesSelect<T extends boolean = true> {
  * via the `definition` "drones_select".
  */
 export interface DronesSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4540,6 +4613,7 @@ export interface DronesSelect<T extends boolean = true> {
  * via the `definition` "electrical-curtains_select".
  */
 export interface ElectricalCurtainsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4608,6 +4682,7 @@ export interface ElectricalCurtainsSelect<T extends boolean = true> {
  * via the `definition` "hover-boards_select".
  */
 export interface HoverBoardsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4683,6 +4758,7 @@ export interface HoverBoardsSelect<T extends boolean = true> {
  * via the `definition` "laptops_select".
  */
 export interface LaptopsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4807,6 +4883,7 @@ export interface LaptopsSelect<T extends boolean = true> {
  * via the `definition` "mobiles_select".
  */
 export interface MobilesSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -4964,6 +5041,7 @@ export interface MobilesSelect<T extends boolean = true> {
  * via the `definition` "ovens_select".
  */
 export interface OvensSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -5066,6 +5144,7 @@ export interface OvensSelect<T extends boolean = true> {
  * via the `definition` "printers_select".
  */
 export interface PrintersSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -5157,6 +5236,7 @@ export interface PrintersSelect<T extends boolean = true> {
  * via the `definition` "transformers_select".
  */
 export interface TransformersSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;
@@ -5224,6 +5304,7 @@ export interface TransformersSelect<T extends boolean = true> {
  * via the `definition` "vrs_select".
  */
 export interface VrsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   slug?: T;
   description?: T;

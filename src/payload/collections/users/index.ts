@@ -4,6 +4,7 @@ import { isAdminFieldAccess } from '../../access/isAdminFieldAccess'
 import { slugField } from '../../fields/slug/index'
 import { AUTH_GROUP } from '../constants'
 import { env } from '@env'
+import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields'
 import { CollectionConfig } from 'payload'
 
 import { ResetPassword } from '@/emails/reset-password'
@@ -15,6 +16,33 @@ import { authorAccessAfterUpdate } from './hooks/authorAccessAfterUpdate'
 import { handleUserRoles } from './hooks/handleUserRoles'
 import { preventAdminRoleUpdate } from './hooks/preventAdminRoleUpdate'
 import { revalidateAuthors } from './hooks/revalidateAuthors'
+
+const defaultTenantArrayField = tenantsArrayField({
+  tenantsArrayFieldName: 'tenants',
+  tenantsArrayTenantFieldName: 'tenant',
+  tenantsCollectionSlug: 'tenants',
+  arrayFieldAccess: {
+    //update access controls
+    read: () => true,
+    update: () => true,
+    create: () => true,
+  },
+  tenantFieldAccess: {
+    read: () => true,
+    update: () => true,
+    create: () => true,
+  },
+  rowFields: [
+    {
+      name: 'role',
+      type: 'select',
+      options: ['admin', 'user'],
+      hasMany: false,
+      label: 'Tenant Role',
+      required: true,
+    },
+  ],
+})
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -151,6 +179,13 @@ export const Users: CollectionConfig = {
       fields: [socialLinksField],
       access: {
         update: adminOrCurrentUserFieldAccess,
+      },
+    },
+    {
+      ...defaultTenantArrayField,
+      admin: {
+        ...(defaultTenantArrayField?.admin || {}),
+        position: 'sidebar',
       },
     },
   ],

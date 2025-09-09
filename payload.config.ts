@@ -2,6 +2,7 @@ import { env } from '@env'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -11,6 +12,7 @@ import { Field, buildConfig } from 'payload'
 import sharp from 'sharp'
 
 import { isAdmin } from '@/payload/access/isAdmin'
+import { Tenants } from '@/payload/collections/Tenants'
 import { Blogs } from '@/payload/collections/blogs'
 import { Brands } from '@/payload/collections/brands'
 import { Categories } from '@/payload/collections/categories'
@@ -179,6 +181,7 @@ export default buildConfig({
   },
   collections: [
     Users,
+    Tenants,
     Media,
     Pages,
     Blogs,
@@ -267,6 +270,41 @@ export default buildConfig({
         },
         endpoint: env.S3_ENDPOINT,
         region: env.S3_REGION,
+      },
+    }),
+    multiTenantPlugin({
+      collections: {
+        tenants: {},
+        media: {},
+        pages: {},
+        blogs: {},
+        tags: {},
+        brands: {},
+        categories: {},
+        test: {},
+        // Products,
+        // ProductTemplates,
+        // DynamicProducts,
+        // StaticProducts,
+
+        /* Products Collection*/
+        cameras: {},
+        cars: {},
+        'drilling-machines': {},
+        drones: {},
+        'electrical-curtains': {},
+        'hover-boards': {},
+        laptops: {},
+        mobiles: {},
+        ovens: {},
+        printers: {},
+        transformers: {},
+        vrs: {},
+      },
+      userHasAccessToAllTenants: user => Boolean(user?.role?.includes('admin')),
+      enabled: true,
+      tenantsArrayField: {
+        includeDefaultField: false,
       },
     }),
   ],
