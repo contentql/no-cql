@@ -31,11 +31,16 @@ const SignInForm: React.FC = () => {
     result,
   } = useAction(signInAction, {
     onSuccess: ({ data: user }) => {
+      const tenants = user?.tenants ?? []
+      const tenantSlug =
+        typeof tenants?.[0]?.tenant === 'object'
+          ? tenants?.[0].tenant?.slug
+          : ''
       const userRole = user?.role ?? []
       if (userRole.includes('admin')) {
         router.push('/admin')
       } else if (userRole.includes('user')) {
-        router.push('/profile')
+        router.push(`/${tenantSlug || user?.username}`)
       }
       reset()
     },

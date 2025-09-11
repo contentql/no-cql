@@ -20,7 +20,7 @@ export const revalidate = 600
 // allows dynamic params static generation
 export const dynamicParams = true
 
-const cachedPageData = (route?: string | string[]) => {
+const cachedPageData = (route?: string | string[], organization?: string) => {
   if (!route) route = '/'
   if (Array.isArray(route)) route = route.join('/')
   if (route !== '/') route = ensurePath(route).replace(/\/$/, '')
@@ -37,9 +37,18 @@ const cachedPageData = (route?: string | string[]) => {
         overrideAccess: true,
         draft: false,
         where: {
-          path: {
-            equals: route,
-          },
+          and: [
+            {
+              path: {
+                equals: route,
+              },
+            },
+            {
+              'tenant.slug': {
+                equals: organization,
+              },
+            },
+          ],
         },
       })
 
@@ -77,17 +86,21 @@ const cachedPageData = (route?: string | string[]) => {
   )
 }
 
-const Page = async ({ params }: { params: Promise<{ route: string[] }> }) => {
-  const resolvedParams = (await params).route
-
-  const pageData = await cachedPageData(resolvedParams)()
+const Page = async ({
+  params,
+}: {
+  params: Promise<{ route: string[]; organization: string }>
+}) => {
+  const resolvedParams = await params
+  const route = resolvedParams.route
+  const organization = resolvedParams.organization
+  const pageData = await cachedPageData(route, organization)()
 
   if (!pageData) {
     return notFound()
   }
 
   const layoutData = pageData.layout ?? []
-
   return (
     <div className='relative space-y-20'>
       {layoutData?.map((block, index) => {
