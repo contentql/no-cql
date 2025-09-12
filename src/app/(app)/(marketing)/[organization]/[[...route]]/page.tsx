@@ -27,9 +27,7 @@ const cachedPageData = (route?: string | string[], organization?: string) => {
 
   return unstable_cache(
     async () => {
-      const payload = await getPayload({
-        config: configPromise,
-      })
+      const payload = await getPayload({ config: configPromise })
 
       const { docs: pageData } = await payload.find({
         collection: 'pages',
@@ -38,22 +36,14 @@ const cachedPageData = (route?: string | string[], organization?: string) => {
         draft: false,
         where: {
           and: [
-            {
-              path: {
-                equals: route,
-              },
-            },
-            {
-              'tenant.slug': {
-                equals: organization,
-              },
-            },
+            { path: { equals: route } },
+            { 'tenant.slug': { equals: organization } },
           ],
         },
       })
 
       if (pageData.length) {
-        return pageData?.[0]
+        return pageData[0]
       } else {
         const { docs: allPages } = await payload.find({
           collection: 'pages',
@@ -62,9 +52,7 @@ const cachedPageData = (route?: string | string[], organization?: string) => {
           draft: false,
         })
 
-        if (!allPages?.length) {
-          return undefined
-        }
+        if (!allPages?.length) return undefined
 
         const correctMatching = allPages.find(page => page.path === route)
 
@@ -72,16 +60,14 @@ const cachedPageData = (route?: string | string[], organization?: string) => {
           correctMatching ??
           allPages.find(page => matchNextJsPath(route, page.path!))
 
-        if (!matchingPage) {
-          return undefined
-        }
-
-        return matchingPage
+        return matchingPage ?? undefined
       }
     },
-    ['pages', route],
+    // 👇 include org in cache key
+    ['pages', route, organization!],
     {
-      tags: [`page-${route}`], // Dynamic tag based on the route
+      // 👇 include org in tag too
+      tags: [`page-${organization}-${route}`],
     },
   )
 }
@@ -93,7 +79,7 @@ const Page = async ({
 }) => {
   const resolvedParams = await params
   const route = resolvedParams.route
-  const organization = resolvedParams.organization
+  const organization = resolvedParams?.organization
   const pageData = await cachedPageData(route, organization)()
 
   if (!pageData) {
