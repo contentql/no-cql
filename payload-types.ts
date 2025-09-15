@@ -173,7 +173,7 @@ export interface User {
    */
   username: string;
   imageUrl?: (string | null) | Media;
-  role: ('admin' | 'author' | 'user')[];
+  role: ('super-admin' | 'admin' | 'author' | 'user')[];
   emailVerified?: string | null;
   socialLinks?:
     | {

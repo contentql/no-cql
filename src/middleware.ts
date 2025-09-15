@@ -45,7 +45,6 @@ function extractSubdomain(request: NextRequest): string | null {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const subdomain = extractSubdomain(request)
-  console.log({ subdomain, pathname })
 
   if (subdomain) {
     // Block access to admin page from subdomains

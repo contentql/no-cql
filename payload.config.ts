@@ -301,7 +301,8 @@ export default buildConfig({
         transformers: {},
         vrs: {},
       },
-      userHasAccessToAllTenants: user => Boolean(user?.role?.includes('admin')),
+      userHasAccessToAllTenants: user =>
+        Boolean(user?.role?.includes('super-admin')),
       enabled: true,
       tenantsArrayField: {
         includeDefaultField: false,

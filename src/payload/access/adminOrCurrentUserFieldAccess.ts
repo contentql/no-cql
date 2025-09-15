@@ -6,7 +6,7 @@ export const adminOrCurrentUserFieldAccess: FieldAccess = ({ req }) => {
     const userRole: string[] = req?.user?.role || []
 
     const hasAccess = userRole
-      .map(role => ['admin', 'author'].includes(role))
+      .map(role => ['super-admin', 'admin', 'author'].includes(role))
       .some(Boolean)
     return hasAccess
   }

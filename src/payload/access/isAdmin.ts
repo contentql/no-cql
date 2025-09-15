@@ -2,9 +2,9 @@ import { Access } from 'payload'
 
 export const isAdmin: Access = ({ req }) => {
   if (req.user) {
-    const userRole = req?.user?.role || []
+    const userRoles = req?.user?.role || []
 
-    return userRole.includes('admin')
+    return userRoles.some(role => ['super-admin', 'admin'].includes(role))
   }
 
   return false

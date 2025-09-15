@@ -89,7 +89,7 @@ export const Users: CollectionConfig = {
         const userRole: string[] = req?.user?.role || []
 
         const hasAccess = userRole.some(role =>
-          ['admin', 'author'].includes(role),
+          ['super-admin', 'admin'].includes(role),
         )
 
         return hasAccess
@@ -142,6 +142,10 @@ export const Users: CollectionConfig = {
       name: 'role',
       type: 'select',
       options: [
+        {
+          label: 'Super Admin',
+          value: 'super-admin',
+        },
         {
           label: 'Admin',
           value: 'admin',
