@@ -44,6 +44,30 @@ const defaultTenantArrayField = tenantsArrayField({
   ],
 })
 
+// export function getCookieDomain() {
+//   const rawUrl = env.PAYLOAD_URL.startsWith('http')
+//     ? env.PAYLOAD_URL
+//     : `https://${env.PAYLOAD_URL}`
+
+//   const { hostname } = new URL(rawUrl)
+
+//   // If it's localhost or *.localhost (dev)
+//   if (hostname === 'localhost' || hostname.endsWith('.localhost')) {
+//     return '.localhost'
+//   }
+
+//   // For production → always use the root domain
+//   // Example: PAYLOAD_URL = "https://charan.net" → ".charan.net"
+//   // Example: PAYLOAD_URL = "https://blog.charan.net" → ".charan.net"
+//   const parts = hostname.split('.')
+//   if (parts.length > 2) {
+//     // remove subdomain(s)
+//     return '.' + parts.slice(-2).join('.')
+//   }
+
+//   return '.' + hostname
+// }
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {

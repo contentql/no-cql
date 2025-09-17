@@ -47,23 +47,27 @@ export async function middleware(request: NextRequest) {
   const subdomain = extractSubdomain(request)
 
   if (subdomain) {
-    // Block access to admin page from subdomains
-    // if (pathname.startsWith('/admin')) {
-    //   return NextResponse.redirect(new URL('/', request.url))
-    // }
+    // Excluded routes (should not be rewritten)
+    const excludedRoutes = [
+      '/admin',
+      '/sign-in',
+      '/sign-up',
+      '/forgot-password',
+      '/reset-password',
+      '/verify-email',
+    ]
 
-    if (pathname.startsWith('/admin')) {
+    if (excludedRoutes.some(route => pathname.startsWith(route))) {
       return NextResponse.next()
     }
 
-    // For all paths on a subdomain, rewrite to include the subdomain in the path
-    // This handles both root (/) and other paths like /about, /contact, etc.
+    // Rewrite all other paths on subdomains
     return NextResponse.rewrite(
       new URL(`/${subdomain}${pathname}`, request.url),
     )
   }
 
-  // On the root domain, allow normal access
+  // Root domain → normal access
   return NextResponse.next()
 }
 
