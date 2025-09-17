@@ -48,8 +48,12 @@ export async function middleware(request: NextRequest) {
 
   if (subdomain) {
     // Block access to admin page from subdomains
+    // if (pathname.startsWith('/admin')) {
+    //   return NextResponse.redirect(new URL('/', request.url))
+    // }
+
     if (pathname.startsWith('/admin')) {
-      return NextResponse.redirect(new URL('/', request.url))
+      return NextResponse.next()
     }
 
     // For all paths on a subdomain, rewrite to include the subdomain in the path

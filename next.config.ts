@@ -10,6 +10,33 @@ const nextConfig: NextConfig = {
   },
   output: 'standalone',
   reactStrictMode: true,
+  // async rewrites() {
+  //   return [
+  //     // Localhost: http://charan.localhost:3000/...
+  //     {
+  //       source: '/:path((?!admin|api).*)',
+  //       destination: '/:tenant/:path*',
+  //       has: [
+  //         {
+  //           type: 'host',
+  //           // charan.localhost → tenant = charan
+  //           value: '^(?<tenant>[^.]+)\\.localhost(:\\d+)?$',
+  //         },
+  //       ],
+  //     },
+  //     // Production: acme.example.com → tenant = acme
+  //     {
+  //       source: '/:path((?!admin|api).*)',
+  //       destination: '/:tenant/:path*',
+  //       has: [
+  //         {
+  //           type: 'host',
+  //           value: '^(?<tenant>[^.]+)\\.example\\.com$',
+  //         },
+  //       ],
+  //     },
+  //   ]
+  // },
   images: {
     remotePatterns: [
       {
