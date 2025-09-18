@@ -1,8 +1,9 @@
-import { isAdminOrAuthor } from '../../access/isAdminOrAuthor'
 import { UPLOADS_GROUP } from '../constants'
 import path from 'path'
 import { CollectionConfig, Field } from 'payload'
 import { fileURLToPath } from 'url'
+
+import { adminOrTenantAdminAccess } from '@/payload/access/adminOrTenantAdmin'
 
 const urlField: Field = {
   name: 'url',
@@ -16,8 +17,8 @@ export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     read: () => true,
-    update: isAdminOrAuthor,
-    delete: isAdminOrAuthor,
+    update: adminOrTenantAdminAccess,
+    delete: adminOrTenantAdminAccess,
     create: () => true,
   },
   admin: {

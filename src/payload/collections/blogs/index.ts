@@ -1,10 +1,9 @@
 import { CONTENT_GROUP } from '../constants'
 import { CollectionConfig } from 'payload'
 
-import { isAdminOrAuthor } from '@/payload/access/isAdminOrAuthor'
+import { adminOrTenantAdminAccess } from '@/payload/access/adminOrTenantAdmin'
 import { slugField } from '@/payload/fields/slug/index'
 
-import { isAdminOrSelf } from './access/isAdminOrSelf'
 import { assignUserId } from './field-level-hooks/assignUserId'
 import {
   revalidateBlogs,
@@ -19,9 +18,9 @@ export const Blogs: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: isAdminOrAuthor,
-    update: isAdminOrSelf,
-    delete: isAdminOrSelf,
+    create: adminOrTenantAdminAccess,
+    update: adminOrTenantAdminAccess,
+    delete: adminOrTenantAdminAccess,
   },
   admin: {
     useAsTitle: 'title',

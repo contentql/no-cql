@@ -17,13 +17,13 @@ export const handleUserRoles: CollectionBeforeChangeHook = async ({
       collection: 'users',
       where: {
         role: {
-          equals: 'super-admin',
+          equals: 'admin',
         },
       },
     })
 
     if (totalUsers === 0) {
-      return { ...data, role: ['super-admin'] }
+      return { ...data, role: ['admin'] }
     }
   }
 

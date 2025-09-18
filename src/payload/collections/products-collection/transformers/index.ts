@@ -1,7 +1,7 @@
 import { PRODUCTS_GROUP } from '../../constants'
 import { CollectionConfig } from 'payload'
 
-import { isAdmin } from '@/payload/access/isAdmin'
+import { adminOrTenantAdminAccess } from '@/payload/access/adminOrTenantAdmin'
 import { slugField } from '@/payload/fields/slug'
 
 import {
@@ -29,9 +29,9 @@ export const Transformers: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: isAdmin,
-    update: isAdmin,
-    delete: isAdmin,
+    create: adminOrTenantAdminAccess,
+    update: adminOrTenantAdminAccess,
+    delete: adminOrTenantAdminAccess,
   },
   fields: [
     {

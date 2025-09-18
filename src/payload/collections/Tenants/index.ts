@@ -1,7 +1,9 @@
 import { AUTH_GROUP } from '../constants'
 import { CollectionConfig } from 'payload'
 
-import { isAdmin } from '@/payload/access/isAdmin'
+import { isAdminAccess } from '@/payload/access/isAdmin'
+
+import { updateAndDeleteAccess } from './access/updateAndDelete'
 
 export const Tenants: CollectionConfig = {
   slug: 'tenants',
@@ -10,10 +12,10 @@ export const Tenants: CollectionConfig = {
     group: AUTH_GROUP,
   },
   access: {
-    read: isAdmin,
-    create: isAdmin,
-    update: isAdmin,
-    delete: isAdmin,
+    create: isAdminAccess,
+    delete: updateAndDeleteAccess,
+    read: ({ req }) => Boolean(req.user),
+    update: updateAndDeleteAccess,
   },
   fields: [
     {

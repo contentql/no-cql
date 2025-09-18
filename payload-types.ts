@@ -173,7 +173,7 @@ export interface User {
    */
   username: string;
   imageUrl?: (string | null) | Media;
-  role: ('super-admin' | 'admin' | 'author' | 'user')[];
+  role?: ('admin' | 'author' | 'user')[] | null;
   emailVerified?: string | null;
   socialLinks?:
     | {
@@ -202,7 +202,7 @@ export interface User {
   tenants?:
     | {
         tenant: string | Tenant;
-        role: 'admin' | 'user';
+        roles: ('tenant-admin' | 'tenant-viewer')[];
         id?: string | null;
       }[]
     | null;
@@ -3922,7 +3922,7 @@ export interface UsersSelect<T extends boolean = true> {
     | T
     | {
         tenant?: T;
-        role?: T;
+        roles?: T;
         id?: T;
       };
   updatedAt?: T;

@@ -1,5 +1,4 @@
 import { adminOrCurrentUserFieldAccess } from '../../access/adminOrCurrentUserFieldAccess'
-import { isAdmin } from '../../access/isAdmin'
 import { isAdminFieldAccess } from '../../access/isAdminFieldAccess'
 import { slugField } from '../../fields/slug/index'
 import { AUTH_GROUP } from '../constants'
@@ -9,37 +8,46 @@ import { CollectionConfig } from 'payload'
 
 import { ResetPassword } from '@/emails/reset-password'
 import { UserAccountVerification } from '@/emails/verify-email'
+import { isAdmin } from '@/payload/access/isAdmin'
 import { socialLinksField } from '@/payload/globals/siteSettings/index'
 
-import { isAdminOrCurrentUser } from './access/isAdminOrCurrentUser'
+import { createAccess } from './access/create'
+import { readAccess } from './access/read'
+import { updateAndDeleteAccess } from './access/updateAndDelete'
 import { authorAccessAfterUpdate } from './hooks/authorAccessAfterUpdate'
 import { handleUserRoles } from './hooks/handleUserRoles'
 import { preventAdminRoleUpdate } from './hooks/preventAdminRoleUpdate'
 import { revalidateAuthors } from './hooks/revalidateAuthors'
+import { setCookieBasedOnDomain } from './hooks/setCookieBasedOnDomain'
 
 const defaultTenantArrayField = tenantsArrayField({
   tenantsArrayFieldName: 'tenants',
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
-  arrayFieldAccess: {
-    //update access controls
-    read: () => true,
-    update: () => true,
-    create: () => true,
-  },
-  tenantFieldAccess: {
-    read: () => true,
-    update: () => true,
-    create: () => true,
-  },
+  arrayFieldAccess: {},
+  tenantFieldAccess: {},
   rowFields: [
     {
-      name: 'role',
+      name: 'roles',
       type: 'select',
-      options: ['admin', 'user'],
-      hasMany: false,
-      label: 'Tenant Role',
+      defaultValue: ['tenant-viewer'],
+      hasMany: true,
+      options: ['tenant-admin', 'tenant-viewer'],
       required: true,
+      access: {
+        update: ({ req }) => {
+          const { user } = req
+          if (!user) {
+            return false
+          }
+
+          if (isAdmin(user)) {
+            return true
+          }
+
+          return true
+        },
+      },
     },
   ],
 })
@@ -98,6 +106,7 @@ export const Users: CollectionConfig = {
       },
     },
   },
+
   hooks: {
     afterChange: [revalidateAuthors],
     beforeChange: [
@@ -105,26 +114,14 @@ export const Users: CollectionConfig = {
       handleUserRoles,
       preventAdminRoleUpdate,
     ],
+    afterLogin: [setCookieBasedOnDomain],
   },
   access: {
-    admin: async ({ req }) => {
-      // added author also to access the admin-panel
-      if (req.user) {
-        const userRole: string[] = req?.user?.role || []
-
-        const hasAccess = userRole.some(role =>
-          ['super-admin', 'admin'].includes(role),
-        )
-
-        return hasAccess
-      }
-
-      return false
-    },
-    read: () => true,
-    create: isAdmin,
-    update: isAdminOrCurrentUser,
-    delete: isAdminOrCurrentUser,
+    // admin: async ({ req }) => adminOrTenantAdmin({ req }),
+    create: createAccess,
+    delete: updateAndDeleteAccess,
+    read: readAccess,
+    update: updateAndDeleteAccess,
   },
 
   fields: [
@@ -163,13 +160,14 @@ export const Users: CollectionConfig = {
     },
     // only admin can update the role field
     {
+      admin: {
+        position: 'sidebar',
+      },
       name: 'role',
       type: 'select',
+      defaultValue: ['user'],
+      hasMany: true,
       options: [
-        {
-          label: 'Super Admin',
-          value: 'super-admin',
-        },
         {
           label: 'Admin',
           value: 'admin',
@@ -183,14 +181,12 @@ export const Users: CollectionConfig = {
           value: 'user',
         },
       ],
+
       access: {
-        create: isAdminFieldAccess,
-        update: isAdminFieldAccess,
+        update: ({ req }) => {
+          return isAdmin(req.user)
+        },
       },
-      saveToJWT: true,
-      defaultValue: 'user',
-      required: true,
-      hasMany: true,
     },
     {
       name: 'emailVerified',

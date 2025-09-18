@@ -11,7 +11,8 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { Field, buildConfig } from 'payload'
 import sharp from 'sharp'
 
-import { isAdmin } from '@/payload/access/isAdmin'
+import { getUserTenantIDs } from '@/lib/getUserTenantIDs'
+import { isAdmin, isAdminAccess } from '@/payload/access/isAdmin'
 import { Tenants } from '@/payload/collections/Tenants'
 import { Blogs } from '@/payload/collections/blogs'
 import { Brands } from '@/payload/collections/brands'
@@ -254,7 +255,7 @@ export default buildConfig({
       beforeSync: BeforeSyncConfig,
       searchOverrides: {
         access: {
-          read: isAdmin,
+          read: isAdminAccess,
         },
       },
     }),
@@ -301,12 +302,21 @@ export default buildConfig({
         transformers: {},
         vrs: {},
       },
-      userHasAccessToAllTenants: user =>
-        Boolean(user?.role?.includes('super-admin')),
-      enabled: true,
+      tenantField: {
+        access: {
+          read: () => true,
+          update: ({ req }) => {
+            if (isAdmin(req.user)) {
+              return true
+            }
+            return getUserTenantIDs(req.user).length > 0
+          },
+        },
+      },
       tenantsArrayField: {
         includeDefaultField: false,
       },
+      userHasAccessToAllTenants: user => Boolean(user?.role?.includes('admin')),
     }),
   ],
   editor: slateEditor({}),
