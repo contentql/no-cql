@@ -40,7 +40,7 @@ const SignInForm: React.FC = () => {
       if (userRole.includes('admin')) {
         router.push('/admin')
       } else if (userRole.includes('user')) {
-        router.push(`/${tenantSlug || user?.username}`)
+        router.push(`/${tenantSlug}/profile`)
       }
       reset()
     },
@@ -56,14 +56,6 @@ const SignInForm: React.FC = () => {
   })
 
   const { handleSubmit, reset } = form
-
-  const userRole = result?.data?.role ?? []
-
-  if (userRole.includes('admin')) {
-    router.push('/admin')
-  } else if (userRole.includes('user')) {
-    router.push('/profile')
-  }
 
   const onSubmit = (data: z.infer<typeof signInSchema>) => {
     mutate({

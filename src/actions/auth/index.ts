@@ -62,18 +62,17 @@ export const signUpAction = publicClient
         subdomain: username,
       },
     })
-    console.log({ tenant })
+
     const response = await payload.create({
       collection: 'users',
       data: {
         username,
         email,
         password,
-        role: ['admin'],
+        role: ['user'],
         tenants: [{ tenant: tenant, roles: ['tenant-admin'] }],
       },
     })
-    console.log({ response })
 
     return response
   })
