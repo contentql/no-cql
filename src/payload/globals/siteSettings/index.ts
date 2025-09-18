@@ -1,9 +1,9 @@
-import { isAdmin } from '../../access/isAdmin'
 import { currencyField } from '../../fields/common/currency/index'
 import { themeSettingsTab } from '../../fields/common/theme/index'
 import type { Field, GlobalConfig } from 'payload'
 import { z } from 'zod'
 
+import { adminOrTenantAdminAccess } from '@/payload/access/adminOrTenantAdmin'
 import { SETTINGS_GROUP } from '@/payload/collections/constants'
 
 import { revalidateSiteSettings } from './hooks/revalidateSiteSettings'
@@ -276,7 +276,7 @@ export const siteSettings: GlobalConfig = {
   label: 'Site Settings',
   access: {
     read: () => true,
-    update: isAdmin,
+    update: adminOrTenantAdminAccess,
   },
   admin: {
     group: SETTINGS_GROUP,

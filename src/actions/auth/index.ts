@@ -70,7 +70,7 @@ export const signUpAction = publicClient
         email,
         password,
         role: ['admin'],
-        tenants: [{ tenant: tenant, role: 'admin' }],
+        tenants: [{ tenant: tenant, roles: ['tenant-admin'] }],
       },
     })
     console.log({ response })

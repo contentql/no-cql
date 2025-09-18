@@ -167,6 +167,7 @@ export const Users: CollectionConfig = {
       type: 'select',
       defaultValue: ['user'],
       hasMany: true,
+      required: true,
       options: [
         {
           label: 'Admin',
