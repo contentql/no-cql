@@ -45,11 +45,15 @@ const cachedPageData = (route?: string | string[], organization?: string) => {
       if (pageData.length) {
         return pageData[0]
       } else {
+        // If no exact match found, search for pages with the same organization and matching path patterns
         const { docs: allPages } = await payload.find({
           collection: 'pages',
           depth: 5,
           overrideAccess: true,
           draft: false,
+          where: {
+            'tenant.slug': { equals: organization }, // Only get pages for this organization
+          },
         })
 
         if (!allPages?.length) return undefined
