@@ -15,24 +15,9 @@ import { getUserTenantIDs } from '@/lib/getUserTenantIDs'
 import { isAdmin, isAdminAccess } from '@/payload/access/isAdmin'
 import { Tenants } from '@/payload/collections/Tenants'
 import { Blogs } from '@/payload/collections/blogs'
-import { Brands } from '@/payload/collections/brands'
-import { Categories } from '@/payload/collections/categories'
 import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
-import { Cameras } from '@/payload/collections/products-collection/cameras'
-import { Cars } from '@/payload/collections/products-collection/cars'
-import { DrillingMachines } from '@/payload/collections/products-collection/drilling-machines'
-import { Drones } from '@/payload/collections/products-collection/drones'
-import { ElectricalCurtains } from '@/payload/collections/products-collection/electrical-curtains'
-import { HoverBoards } from '@/payload/collections/products-collection/hover-boards'
-import { Laptops } from '@/payload/collections/products-collection/laptops'
-import { Mobiles } from '@/payload/collections/products-collection/mobiles'
-import { Ovens } from '@/payload/collections/products-collection/ovens'
-import { Printers } from '@/payload/collections/products-collection/printers'
-import { Transformers } from '@/payload/collections/products-collection/transformers'
-import { Vrs } from '@/payload/collections/products-collection/vrs'
 import { Tags } from '@/payload/collections/tags'
-import { Test } from '@/payload/collections/test'
 import { Users } from '@/payload/collections/users'
 import { siteSettings } from '@/payload/globals/siteSettings'
 import { disqusCommentsPlugin } from '@/payload/plugins/disqus-comments'
@@ -187,27 +172,6 @@ export default buildConfig({
     Pages,
     Blogs,
     Tags,
-    Brands,
-    Categories,
-    Test,
-    // Products,
-    // ProductTemplates,
-    // DynamicProducts,
-    // StaticProducts,
-
-    /* Products Collection*/
-    Cameras,
-    Cars,
-    DrillingMachines,
-    Drones,
-    ElectricalCurtains,
-    HoverBoards,
-    Laptops,
-    Mobiles,
-    Ovens,
-    Printers,
-    Transformers,
-    Vrs,
   ],
   globals: [siteSettings],
   db: mongooseAdapter({
@@ -233,9 +197,6 @@ export default buildConfig({
         'pages',
         'blogs',
         'tags',
-        'categories',
-        'products',
-        'brands',
       ],
       uploadsCollection: 'media',
       tabbedUI: true,
@@ -275,32 +236,11 @@ export default buildConfig({
     }),
     multiTenantPlugin({
       collections: {
-        tenants: {},
-        media: {},
-        pages: {},
-        blogs: {},
-        tags: {},
-        brands: {},
-        categories: {},
-        test: {},
-        // Products,
-        // ProductTemplates,
-        // DynamicProducts,
-        // StaticProducts,
-
-        /* Products Collection*/
-        cameras: {},
-        cars: {},
-        'drilling-machines': {},
-        drones: {},
-        'electrical-curtains': {},
-        'hover-boards': {},
-        laptops: {},
-        mobiles: {},
-        ovens: {},
-        printers: {},
-        transformers: {},
-        vrs: {},
+     pages:{},
+    tenants:{},
+    media:{},
+    blogs:{},
+    tags:{},
       },
       tenantField: {
         access: {

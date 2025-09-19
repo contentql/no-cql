@@ -1,13 +1,12 @@
-import { Params } from '../types'
 import configPromise from '@payload-config'
 import { DetailsType } from '@payload-types'
 import { unstable_cache } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
+import { Params } from '../types'
 
 import AuthorDetails from './components/AuthorDetails'
 import BlogDetails from './components/BlogDetails'
-import CategoryDetails from './components/CategoryDetails'
 import TagDetails from './components/TagDetails'
 
 interface DetailsProps extends DetailsType {
@@ -130,34 +129,6 @@ export const DetailsBlock: React.FC<DetailsProps> = async ({
       )()
 
       return <AuthorDetails author={author} blogsData={blogs} />
-    }
-
-    case 'categories': {
-      const slug = params?.route?.at(-1) ?? ''
-
-      const { docs } = await unstable_cache(
-        async () =>
-          await payload.find({
-            collection: 'categories',
-            draft: false,
-            where: {
-              slug: {
-                equals: slug,
-              },
-            },
-          }),
-        ['details', 'categories', slug],
-        { tags: [`details-categories-${slug}`] },
-      )()
-
-      const category = docs.at(0)
-
-      // if category not found showing 404
-      if (!category) {
-        return notFound()
-      }
-
-      return <CategoryDetails category={category} />
     }
   }
 }

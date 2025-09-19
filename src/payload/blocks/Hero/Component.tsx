@@ -1,8 +1,8 @@
-import { Params } from '../types'
 import { HeroType } from '@payload-types'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Params } from '../types'
 
 interface HeroProps extends HeroType {
   params: Params
@@ -94,22 +94,6 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
           </p>
           <p className='text-base-content/70'>
             Dive deeper into our blog topics using our convenient tags page.
-          </p>
-        </Link>
-
-        <Link
-          href='/categories'
-          className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
-          <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
-            Categories
-            <span className='transition-transform duration-300 group-hover:translate-x-2'>
-              <ArrowRight />
-            </span>
-          </p>
-          <p className='text-base-content/70'>
-            Organize your content or products into logical groups using
-            categories. Categories help users easily navigate and discover
-            content or items of interest.
           </p>
         </Link>
       </div>

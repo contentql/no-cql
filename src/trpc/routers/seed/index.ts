@@ -9,10 +9,6 @@ import { seedAuthorsPage } from '@/seed/authors-page'
 import { seedBlogDetailsPage } from '@/seed/blog-details-page'
 import { seedBlogs } from '@/seed/blogs'
 import { seedBlogsPage } from '@/seed/blogs-page'
-import { seedBrands } from '@/seed/brands'
-import { seedCategories } from '@/seed/categories'
-import { seedCategoriesPage } from '@/seed/categories-page'
-import { seedCategoryDetailsPage } from '@/seed/category-details-page'
 import { seedContactPage } from '@/seed/contact-page'
 import { seedForm } from '@/seed/forms'
 import { seedHomePage } from '@/seed/home-page'
@@ -41,10 +37,6 @@ export const seedRouter = router({
       if (pages.totalDocs >= 1) {
         return
       }
-      await seedBrands(spinner)
-      await seedCategories(spinner)
-      const categoriesPage = await seedCategoriesPage(spinner)
-      await seedCategoryDetailsPage({ spinner, id: categoriesPage?.id })
       const tags = await seedTags(spinner)
       const tagsPage = await seedTagsPage(spinner)
       const tagsDetailsPage = await seedTagDetailsPage({
