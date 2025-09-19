@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAction } from 'next-safe-action/hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -20,9 +21,18 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { extractSubdomain } from '@/utils/extractSubdomain'
 
 const SignInForm: React.FC = () => {
   const router = useRouter()
+  const [subdomain, setSubdomain] = useState<string | null>(null)
+
+  // Run only in the browser
+  useEffect(() => {
+    const sub = extractSubdomain({ hostname: window.location.hostname })
+    setSubdomain(sub)
+  }, [])
+
   const {
     execute: mutate,
     isPending,
@@ -40,7 +50,11 @@ const SignInForm: React.FC = () => {
       if (userRole.includes('admin')) {
         router.push('/admin')
       } else if (userRole.includes('user')) {
-        router.push(`/${tenantSlug}/profile`)
+        if (subdomain) {
+          router.push('/profile')
+        } else {
+          router.push(`/${tenantSlug}/profile`)
+        }
       }
       reset()
     },

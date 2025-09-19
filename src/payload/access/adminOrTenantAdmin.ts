@@ -25,8 +25,6 @@ export const adminOrTenantAdminAccess: Access = ({ req }) => {
     getCollectionIDType({ payload: req.payload, collectionSlug: 'tenants' }),
   )
 
-  console.log({ selectedTenant, adminTenantAccessIDs })
-
   if (
     selectedTenant &&
     adminTenantAccessIDs.includes(selectedTenant as string)
@@ -52,8 +50,6 @@ export const adminOrTenantAdmin = async ({ req }: { req: any }) => {
     req.headers,
     getCollectionIDType({ payload: req.payload, collectionSlug: 'tenants' }),
   )
-
-  console.log({ selectedTenant, adminTenantAccessIDs })
 
   if (
     selectedTenant &&

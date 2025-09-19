@@ -7,7 +7,6 @@ export const setCookieBasedOnDomain: CollectionAfterLoginHook = async ({
 }) => {
   const domain = req.headers.get('host')
   const subdomain = domain?.split('.').at(0)
-  console.log({ domain, subdomain })
   const relatedOrg = await req.payload.find({
     collection: 'tenants',
     depth: 0,
@@ -18,7 +17,6 @@ export const setCookieBasedOnDomain: CollectionAfterLoginHook = async ({
       },
     },
   })
-  console.log({ relatedOrg })
   // If a matching tenant is found, set the 'payload-tenant' cookie
   if (relatedOrg && relatedOrg.docs.length > 0) {
     const tenantCookie = generateCookie({
