@@ -5,7 +5,6 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import { Toaster } from 'sonner'
 
-import '@/app/(app)/globals.css'
 import GoogleAdsense from '@/components/GoogleAdsense'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Branding from '@/components/common/Branding'
