@@ -17,9 +17,9 @@ import { Tenants } from '@/payload/collections/Tenants'
 import { Blogs } from '@/payload/collections/blogs'
 import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
+import { SiteSettings } from '@/payload/collections/site-settings'
 import { Tags } from '@/payload/collections/tags'
 import { Users } from '@/payload/collections/users'
-import { siteSettings } from '@/payload/globals/siteSettings'
 import { disqusCommentsPlugin } from '@/payload/plugins/disqus-comments'
 import { scheduleDocPublishPlugin } from '@/payload/plugins/schedule-doc-publish-plugin'
 import { BeforeSyncConfig } from '@/utils/beforeSync'
@@ -165,15 +165,7 @@ export default buildConfig({
       titleSuffix: '- ContentQL',
     },
   },
-  collections: [
-    Users,
-    Tenants,
-    Media,
-    Pages,
-    Blogs,
-    Tags,
-  ],
-  globals: [siteSettings],
+  collections: [Users, Tenants, Media, Pages, Blogs, Tags, SiteSettings],
   db: mongooseAdapter({
     url: env.DATABASE_URI,
   }),
@@ -193,11 +185,7 @@ export default buildConfig({
       enabled: true,
     }),
     seoPlugin({
-      collections: [
-        'pages',
-        'blogs',
-        'tags',
-      ],
+      collections: ['pages', 'blogs', 'tags'],
       uploadsCollection: 'media',
       tabbedUI: true,
       generateURL: data =>
@@ -236,11 +224,12 @@ export default buildConfig({
     }),
     multiTenantPlugin({
       collections: {
-     pages:{},
-    tenants:{},
-    media:{},
-    blogs:{},
-    tags:{},
+        pages: {},
+        tenants: {},
+        media: {},
+        blogs: {},
+        tags: {},
+        SiteSettings: { isGlobal: true },
       },
       tenantField: {
         access: {

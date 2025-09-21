@@ -1,6 +1,6 @@
 import { currencyField } from '../../fields/common/currency/index'
 import { themeSettingsTab } from '../../fields/common/theme/index'
-import type { Field, GlobalConfig } from 'payload'
+import type { CollectionConfig, Field } from 'payload'
 import { z } from 'zod'
 
 import { adminOrTenantAdminAccess } from '@/payload/access/adminOrTenantAdmin'
@@ -271,12 +271,13 @@ export const socialLinksField: Field = {
   ],
 }
 
-export const siteSettings: GlobalConfig = {
-  slug: 'site-settings',
-  label: 'Site Settings',
+export const SiteSettings: CollectionConfig = {
+  slug: 'SiteSettings',
   access: {
     read: () => true,
     update: adminOrTenantAdminAccess,
+    create: adminOrTenantAdminAccess,
+    delete: adminOrTenantAdminAccess,
   },
   admin: {
     group: SETTINGS_GROUP,

@@ -73,6 +73,7 @@ export interface Config {
     pages: Page;
     blogs: Blog;
     tags: Tag;
+    SiteSettings: SiteSetting;
     forms: Form;
     'form-submissions': FormSubmission;
     search: Search;
@@ -88,6 +89,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    SiteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -98,12 +100,8 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {
-    'site-settings': SiteSetting;
-  };
-  globalsSelect: {
-    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
-  };
+  globals: {};
+  globalsSelect: {};
   locale: null;
   user: User & {
     collection: 'users';
@@ -596,6 +594,294 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SiteSettings".
+ */
+export interface SiteSetting {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  general: {
+    title: string;
+    description: string;
+    /**
+     * We recommend a maximum size of 256 * 256 pixels
+     */
+    faviconUrl: string | Media;
+    /**
+     * We recommend a maximum size of 1200 * 630 pixels
+     */
+    ogImageUrl: string | Media;
+    keywords?: string[] | null;
+    /**
+     * This field is used to format currency values & used as default currency for ecommerce-theme
+     */
+    currency:
+      | 'usd'
+      | 'eur'
+      | 'inr'
+      | 'gbp'
+      | 'jpy'
+      | 'cad'
+      | 'aud'
+      | 'chf'
+      | 'cny'
+      | 'hkd'
+      | 'sgd'
+      | 'mxn'
+      | 'brl'
+      | 'rub'
+      | 'krw'
+      | 'zar'
+      | 'try'
+      | 'sar'
+      | 'aed'
+      | 'pln';
+  };
+  navbar: {
+    logo: BrandLogo;
+    menuLinks?:
+      | {
+          /**
+           * Check to create group of links
+           */
+          group?: boolean | null;
+          menuLink?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            /**
+             * Upload an svg or logo to be displayed with link
+             */
+            icon?: (string | null) | Media;
+            label: string;
+            page?: {
+              relationTo: 'pages';
+              value: string | Page;
+            } | null;
+            url?: string | null;
+            id?: string | null;
+          };
+          menuLinkGroup?: {
+            groupTitle: string;
+            groupLinks?:
+              | {
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  /**
+                   * Upload an svg or logo to be displayed with link
+                   */
+                  icon?: (string | null) | Media;
+                  label: string;
+                  page?: {
+                    relationTo: 'pages';
+                    value: string | Page;
+                  } | null;
+                  url?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  footer: {
+    logo: BrandLogo;
+    footerLinks?:
+      | {
+          /**
+           * Check to create group of links
+           */
+          group?: boolean | null;
+          menuLink?: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            /**
+             * Upload an svg or logo to be displayed with link
+             */
+            icon?: (string | null) | Media;
+            label: string;
+            page?: {
+              relationTo: 'pages';
+              value: string | Page;
+            } | null;
+            url?: string | null;
+            id?: string | null;
+          };
+          menuLinkGroup?: {
+            groupTitle: string;
+            groupLinks?:
+              | {
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  /**
+                   * Upload an svg or logo to be displayed with link
+                   */
+                  icon?: (string | null) | Media;
+                  label: string;
+                  page?: {
+                    relationTo: 'pages';
+                    value: string | Page;
+                  } | null;
+                  url?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    socialLinks?:
+      | {
+          platform:
+            | 'website'
+            | 'facebook'
+            | 'instagram'
+            | 'twitter'
+            | 'linkedin'
+            | 'youtube'
+            | 'tiktok'
+            | 'pinterest'
+            | 'snapchat'
+            | 'reddit'
+            | 'tumblr'
+            | 'whatsapp'
+            | 'telegram'
+            | 'github'
+            | 'medium'
+            | 'quora'
+            | 'discord';
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+    copyright?: string | null;
+  };
+  redirectionLinks?: {
+    /**
+     * This redirects to a blog details page
+     */
+    blogLink?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    /**
+     * This redirect to a product details page
+     */
+    productLink?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    /**
+     * This redirects to a author details page
+     */
+    authorLink?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    /**
+     * This redirects to a tag details page
+     */
+    tagLink?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+  };
+  monetization?: {
+    /**
+     * Add the publisher-id from Google AdSense Console
+     */
+    adSenseId?: string | null;
+    /**
+     * Add the measurement id from Google Analytics dashboard
+     */
+    measurementId?: string | null;
+  };
+  themeSettings: {
+    /**
+     * Check this field to enable overriding local styles with admin-panel styles
+     */
+    overrideTheme: boolean;
+    lightMode: {
+      background: string;
+      foreground: string;
+      primary: string;
+      primaryForeground: string;
+      card: string;
+      cardForeground: string;
+      popover: string;
+      popoverForeground: string;
+      secondary: string;
+      secondaryForeground: string;
+      muted: string;
+      mutedForeground: string;
+      accent: string;
+      accentForeground: string;
+      destructive: string;
+      destructiveForeground: string;
+      border: string;
+      input: string;
+      ring: string;
+    };
+    darkMode: {
+      background: string;
+      foreground: string;
+      primary: string;
+      primaryForeground: string;
+      card: string;
+      cardForeground: string;
+      popover: string;
+      popoverForeground: string;
+      secondary: string;
+      secondaryForeground: string;
+      muted: string;
+      mutedForeground: string;
+      accent: string;
+      accentForeground: string;
+      destructive: string;
+      destructiveForeground: string;
+      border: string;
+      input: string;
+      ring: string;
+    };
+    fonts: {
+      display: {
+        type: 'customFont' | 'googleFont';
+        customFont?: (string | null) | Media;
+        remoteFont?: string | null;
+        fontName?: string | null;
+      };
+      body: {
+        type: 'customFont' | 'googleFont';
+        customFont?: (string | null) | Media;
+        remoteFont?: string | null;
+        fontName?: string | null;
+      };
+    };
+    radius: 'none' | 'small' | 'medium' | 'large' | 'full';
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BrandLogo".
+ */
+export interface BrandLogo {
+  imageUrl: string | Media;
+  /**
+   * Adjust to the height of the logo
+   */
+  height?: number | null;
+  /**
+   * Adjust to the width of the logo
+   */
+  width?: number | null;
+  /**
+   * This text appears below the footer image
+   */
+  description?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -668,6 +954,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tags';
         value: string | Tag;
+      } | null)
+    | ({
+        relationTo: 'SiteSettings';
+        value: string | SiteSetting;
       } | null)
     | ({
         relationTo: 'forms';
@@ -963,6 +1253,205 @@ export interface TagsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SiteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  tenant?: T;
+  general?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        faviconUrl?: T;
+        ogImageUrl?: T;
+        keywords?: T;
+        currency?: T;
+      };
+  navbar?:
+    | T
+    | {
+        logo?: T | BrandLogoSelect<T>;
+        menuLinks?:
+          | T
+          | {
+              group?: T;
+              menuLink?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    icon?: T;
+                    label?: T;
+                    page?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              menuLinkGroup?:
+                | T
+                | {
+                    groupTitle?: T;
+                    groupLinks?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          icon?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+            };
+      };
+  footer?:
+    | T
+    | {
+        logo?: T | BrandLogoSelect<T>;
+        footerLinks?:
+          | T
+          | {
+              group?: T;
+              menuLink?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    icon?: T;
+                    label?: T;
+                    page?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              menuLinkGroup?:
+                | T
+                | {
+                    groupTitle?: T;
+                    groupLinks?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          icon?: T;
+                          label?: T;
+                          page?: T;
+                          url?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+            };
+        socialLinks?:
+          | T
+          | {
+              platform?: T;
+              value?: T;
+              id?: T;
+            };
+        copyright?: T;
+      };
+  redirectionLinks?:
+    | T
+    | {
+        blogLink?: T;
+        productLink?: T;
+        authorLink?: T;
+        tagLink?: T;
+      };
+  monetization?:
+    | T
+    | {
+        adSenseId?: T;
+        measurementId?: T;
+      };
+  themeSettings?:
+    | T
+    | {
+        overrideTheme?: T;
+        lightMode?:
+          | T
+          | {
+              background?: T;
+              foreground?: T;
+              primary?: T;
+              primaryForeground?: T;
+              card?: T;
+              cardForeground?: T;
+              popover?: T;
+              popoverForeground?: T;
+              secondary?: T;
+              secondaryForeground?: T;
+              muted?: T;
+              mutedForeground?: T;
+              accent?: T;
+              accentForeground?: T;
+              destructive?: T;
+              destructiveForeground?: T;
+              border?: T;
+              input?: T;
+              ring?: T;
+            };
+        darkMode?:
+          | T
+          | {
+              background?: T;
+              foreground?: T;
+              primary?: T;
+              primaryForeground?: T;
+              card?: T;
+              cardForeground?: T;
+              popover?: T;
+              popoverForeground?: T;
+              secondary?: T;
+              secondaryForeground?: T;
+              muted?: T;
+              mutedForeground?: T;
+              accent?: T;
+              accentForeground?: T;
+              destructive?: T;
+              destructiveForeground?: T;
+              border?: T;
+              input?: T;
+              ring?: T;
+            };
+        fonts?:
+          | T
+          | {
+              display?:
+                | T
+                | {
+                    type?: T;
+                    customFont?: T;
+                    remoteFont?: T;
+                    fontName?: T;
+                  };
+              body?:
+                | T
+                | {
+                    type?: T;
+                    customFont?: T;
+                    remoteFont?: T;
+                    fontName?: T;
+                  };
+            };
+        radius?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BrandLogo_select".
+ */
+export interface BrandLogoSelect<T extends boolean = true> {
+  imageUrl?: T;
+  height?: T;
+  width?: T;
+  description?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "forms_select".
  */
 export interface FormsSelect<T extends boolean = true> {
@@ -1155,492 +1644,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-settings".
- */
-export interface SiteSetting {
-  id: string;
-  general: {
-    title: string;
-    description: string;
-    /**
-     * We recommend a maximum size of 256 * 256 pixels
-     */
-    faviconUrl: string | Media;
-    /**
-     * We recommend a maximum size of 1200 * 630 pixels
-     */
-    ogImageUrl: string | Media;
-    keywords?: string[] | null;
-    /**
-     * This field is used to format currency values & used as default currency for ecommerce-theme
-     */
-    currency:
-      | 'usd'
-      | 'eur'
-      | 'inr'
-      | 'gbp'
-      | 'jpy'
-      | 'cad'
-      | 'aud'
-      | 'chf'
-      | 'cny'
-      | 'hkd'
-      | 'sgd'
-      | 'mxn'
-      | 'brl'
-      | 'rub'
-      | 'krw'
-      | 'zar'
-      | 'try'
-      | 'sar'
-      | 'aed'
-      | 'pln';
-  };
-  navbar: {
-    logo: BrandLogo;
-    menuLinks?:
-      | {
-          /**
-           * Check to create group of links
-           */
-          group?: boolean | null;
-          menuLink?: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            /**
-             * Upload an svg or logo to be displayed with link
-             */
-            icon?: (string | null) | Media;
-            label: string;
-            page?: {
-              relationTo: 'pages';
-              value: string | Page;
-            } | null;
-            url?: string | null;
-            id?: string | null;
-          };
-          menuLinkGroup?: {
-            groupTitle: string;
-            groupLinks?:
-              | {
-                  type?: ('reference' | 'custom') | null;
-                  newTab?: boolean | null;
-                  /**
-                   * Upload an svg or logo to be displayed with link
-                   */
-                  icon?: (string | null) | Media;
-                  label: string;
-                  page?: {
-                    relationTo: 'pages';
-                    value: string | Page;
-                  } | null;
-                  url?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  footer: {
-    logo: BrandLogo;
-    footerLinks?:
-      | {
-          /**
-           * Check to create group of links
-           */
-          group?: boolean | null;
-          menuLink?: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            /**
-             * Upload an svg or logo to be displayed with link
-             */
-            icon?: (string | null) | Media;
-            label: string;
-            page?: {
-              relationTo: 'pages';
-              value: string | Page;
-            } | null;
-            url?: string | null;
-            id?: string | null;
-          };
-          menuLinkGroup?: {
-            groupTitle: string;
-            groupLinks?:
-              | {
-                  type?: ('reference' | 'custom') | null;
-                  newTab?: boolean | null;
-                  /**
-                   * Upload an svg or logo to be displayed with link
-                   */
-                  icon?: (string | null) | Media;
-                  label: string;
-                  page?: {
-                    relationTo: 'pages';
-                    value: string | Page;
-                  } | null;
-                  url?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    socialLinks?:
-      | {
-          platform:
-            | 'website'
-            | 'facebook'
-            | 'instagram'
-            | 'twitter'
-            | 'linkedin'
-            | 'youtube'
-            | 'tiktok'
-            | 'pinterest'
-            | 'snapchat'
-            | 'reddit'
-            | 'tumblr'
-            | 'whatsapp'
-            | 'telegram'
-            | 'github'
-            | 'medium'
-            | 'quora'
-            | 'discord';
-          value: string;
-          id?: string | null;
-        }[]
-      | null;
-    copyright?: string | null;
-  };
-  redirectionLinks?: {
-    /**
-     * This redirects to a blog details page
-     */
-    blogLink?: {
-      relationTo: 'pages';
-      value: string | Page;
-    } | null;
-    /**
-     * This redirect to a product details page
-     */
-    productLink?: {
-      relationTo: 'pages';
-      value: string | Page;
-    } | null;
-    /**
-     * This redirects to a author details page
-     */
-    authorLink?: {
-      relationTo: 'pages';
-      value: string | Page;
-    } | null;
-    /**
-     * This redirects to a tag details page
-     */
-    tagLink?: {
-      relationTo: 'pages';
-      value: string | Page;
-    } | null;
-  };
-  monetization?: {
-    /**
-     * Add the publisher-id from Google AdSense Console
-     */
-    adSenseId?: string | null;
-    /**
-     * Add the measurement id from Google Analytics dashboard
-     */
-    measurementId?: string | null;
-  };
-  themeSettings: {
-    /**
-     * Check this field to enable overriding local styles with admin-panel styles
-     */
-    overrideTheme: boolean;
-    lightMode: {
-      background: string;
-      foreground: string;
-      primary: string;
-      primaryForeground: string;
-      card: string;
-      cardForeground: string;
-      popover: string;
-      popoverForeground: string;
-      secondary: string;
-      secondaryForeground: string;
-      muted: string;
-      mutedForeground: string;
-      accent: string;
-      accentForeground: string;
-      destructive: string;
-      destructiveForeground: string;
-      border: string;
-      input: string;
-      ring: string;
-    };
-    darkMode: {
-      background: string;
-      foreground: string;
-      primary: string;
-      primaryForeground: string;
-      card: string;
-      cardForeground: string;
-      popover: string;
-      popoverForeground: string;
-      secondary: string;
-      secondaryForeground: string;
-      muted: string;
-      mutedForeground: string;
-      accent: string;
-      accentForeground: string;
-      destructive: string;
-      destructiveForeground: string;
-      border: string;
-      input: string;
-      ring: string;
-    };
-    fonts: {
-      display: {
-        type: 'customFont' | 'googleFont';
-        customFont?: (string | null) | Media;
-        remoteFont?: string | null;
-        fontName?: string | null;
-      };
-      body: {
-        type: 'customFont' | 'googleFont';
-        customFont?: (string | null) | Media;
-        remoteFont?: string | null;
-        fontName?: string | null;
-      };
-    };
-    radius: 'none' | 'small' | 'medium' | 'large' | 'full';
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BrandLogo".
- */
-export interface BrandLogo {
-  imageUrl: string | Media;
-  /**
-   * Adjust to the height of the logo
-   */
-  height?: number | null;
-  /**
-   * Adjust to the width of the logo
-   */
-  width?: number | null;
-  /**
-   * This text appears below the footer image
-   */
-  description?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-settings_select".
- */
-export interface SiteSettingsSelect<T extends boolean = true> {
-  general?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        faviconUrl?: T;
-        ogImageUrl?: T;
-        keywords?: T;
-        currency?: T;
-      };
-  navbar?:
-    | T
-    | {
-        logo?: T | BrandLogoSelect<T>;
-        menuLinks?:
-          | T
-          | {
-              group?: T;
-              menuLink?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    icon?: T;
-                    label?: T;
-                    page?: T;
-                    url?: T;
-                    id?: T;
-                  };
-              menuLinkGroup?:
-                | T
-                | {
-                    groupTitle?: T;
-                    groupLinks?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          icon?: T;
-                          label?: T;
-                          page?: T;
-                          url?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-            };
-      };
-  footer?:
-    | T
-    | {
-        logo?: T | BrandLogoSelect<T>;
-        footerLinks?:
-          | T
-          | {
-              group?: T;
-              menuLink?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    icon?: T;
-                    label?: T;
-                    page?: T;
-                    url?: T;
-                    id?: T;
-                  };
-              menuLinkGroup?:
-                | T
-                | {
-                    groupTitle?: T;
-                    groupLinks?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          icon?: T;
-                          label?: T;
-                          page?: T;
-                          url?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-            };
-        socialLinks?:
-          | T
-          | {
-              platform?: T;
-              value?: T;
-              id?: T;
-            };
-        copyright?: T;
-      };
-  redirectionLinks?:
-    | T
-    | {
-        blogLink?: T;
-        productLink?: T;
-        authorLink?: T;
-        tagLink?: T;
-      };
-  monetization?:
-    | T
-    | {
-        adSenseId?: T;
-        measurementId?: T;
-      };
-  themeSettings?:
-    | T
-    | {
-        overrideTheme?: T;
-        lightMode?:
-          | T
-          | {
-              background?: T;
-              foreground?: T;
-              primary?: T;
-              primaryForeground?: T;
-              card?: T;
-              cardForeground?: T;
-              popover?: T;
-              popoverForeground?: T;
-              secondary?: T;
-              secondaryForeground?: T;
-              muted?: T;
-              mutedForeground?: T;
-              accent?: T;
-              accentForeground?: T;
-              destructive?: T;
-              destructiveForeground?: T;
-              border?: T;
-              input?: T;
-              ring?: T;
-            };
-        darkMode?:
-          | T
-          | {
-              background?: T;
-              foreground?: T;
-              primary?: T;
-              primaryForeground?: T;
-              card?: T;
-              cardForeground?: T;
-              popover?: T;
-              popoverForeground?: T;
-              secondary?: T;
-              secondaryForeground?: T;
-              muted?: T;
-              mutedForeground?: T;
-              accent?: T;
-              accentForeground?: T;
-              destructive?: T;
-              destructiveForeground?: T;
-              border?: T;
-              input?: T;
-              ring?: T;
-            };
-        fonts?:
-          | T
-          | {
-              display?:
-                | T
-                | {
-                    type?: T;
-                    customFont?: T;
-                    remoteFont?: T;
-                    fontName?: T;
-                  };
-              body?:
-                | T
-                | {
-                    type?: T;
-                    customFont?: T;
-                    remoteFont?: T;
-                    fontName?: T;
-                  };
-            };
-        radius?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BrandLogo_select".
- */
-export interface BrandLogoSelect<T extends boolean = true> {
-  imageUrl?: T;
-  height?: T;
-  width?: T;
-  description?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -10,12 +10,13 @@ const payload = await getPayload({
 export const siteSettingsRouter = router({
   getSiteSettings: publicProcedure.query(async () => {
     try {
-      const data = await payload.findGlobal({
-        slug: 'site-settings',
+      const data = await payload.find({
+        collection: 'SiteSettings',
         draft: false,
+        limit: 1,
       })
 
-      return data
+      return data.docs.at(0)
     } catch (error: any) {
       console.log({ error })
       throw new Error(error.message)
