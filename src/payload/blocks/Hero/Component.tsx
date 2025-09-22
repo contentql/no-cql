@@ -1,14 +1,18 @@
+'use client'
+
+import { Params } from '../types'
 import { HeroType } from '@payload-types'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Params } from '../types'
+import { usePathname } from 'next/navigation'
 
 interface HeroProps extends HeroType {
   params: Params
 }
 
 export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
+  const pathname = usePathname()
   return (
     <section className='relative flex min-h-screen w-full flex-col items-center gap-36 py-4'>
       <div className='hidden w-full items-center justify-between md:flex'>
@@ -54,7 +58,7 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
         </Link>
 
         <Link
-          href='/authors'
+          href={`${pathname === '/' ? '' : pathname}/authors`}
           className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
           <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Authors
@@ -67,9 +71,8 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
             author brings expertise.
           </p>
         </Link>
-
         <Link
-          href='/blogs'
+          href={`${pathname === '/' ? '' : pathname}/blogs`}
           className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
           <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Blogs
@@ -82,9 +85,8 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
             blog collection.
           </p>
         </Link>
-
         <Link
-          href='/tags'
+          href={`${pathname === '/' ? '' : pathname}/tags`}
           className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
           <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Tags

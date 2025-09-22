@@ -1,8 +1,11 @@
+'use client'
+
 import CommandBar from '../../../components/CommandBar'
 import type { SiteSetting } from '@payload-types'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Fragment } from 'react'
 
 import {
@@ -23,6 +26,8 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
     url: '',
     alt: '',
   }
+
+  const pathname = usePathname()
 
   const navLinks = menuLinks?.length ? generateMenuLinks(menuLinks) : []
 
@@ -79,7 +84,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
                           {children.map(item => (
                             <DropdownMenuItem key={item.label}>
                               <Link
-                                href={item.href}
+                                href={`${pathname === '/' ? '' : pathname}${item.href}`}
                                 target={item.newTab ? '_blank' : '_self'}>
                                 {item.label}
                               </Link>
@@ -88,7 +93,9 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     ) : (
-                      <Link href={href} target={newTab ? '_blank' : '_self'}>
+                      <Link
+                        href={`${pathname === '/' ? '' : pathname}${href}`}
+                        target={newTab ? '_blank' : '_self'}>
                         {label}
                       </Link>
                     )}
