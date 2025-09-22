@@ -7,7 +7,6 @@ import { tagRouter } from '@/trpc/routers/tag'
 
 import { formRouter } from './form'
 import { searchRouter } from './search'
-import { seedRouter } from './seed'
 
 export const appRouter = router({
   page: pageRouter,
@@ -15,7 +14,6 @@ export const appRouter = router({
   siteSettings: siteSettingsRouter,
   tag: tagRouter,
   author: authorRouter,
-  seed: seedRouter,
   search: searchRouter,
   form: formRouter,
 })
