@@ -135,7 +135,8 @@ export default async function RootLayout({
           <MetadataProvider metadata={metadata}>
             <div className='grid min-h-screen w-full grid-rows-[1fr_auto]'>
               {metadata && <Navbar metadata={metadata} />}
-              {children}
+              {/* Add top padding when navbar exists */}
+              <main className={metadata ? 'pt-14' : ''}>{children}</main>
               {metadata && <Footer metadata={metadata} />}
             </div>
           </MetadataProvider>
