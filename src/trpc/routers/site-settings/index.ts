@@ -11,12 +11,16 @@ const payload = await getPayload({
 export const siteSettingsRouter = router({
   getSiteSettings: publicProcedure
     .input(z.object({ organization: z.string() }))
-    .query(async () => {
+    .query(async ({ input }) => {
+      const { organization } = input
       try {
         const data = await payload.find({
           collection: 'SiteSettings',
           draft: false,
           limit: 1,
+          where: {
+            'tenant.slug': { equals: organization },
+          },
         })
 
         return data.docs.at(0)

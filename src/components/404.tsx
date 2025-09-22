@@ -2,42 +2,8 @@
 
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-
-import { trpc } from '@/trpc/client'
 
 const PageNotFound: React.FC = () => {
-  const pathname = usePathname()
-
-  const { mutate: runSeedMutation, isPending } = trpc.seed.runSeed.useMutation({
-    onSuccess: () => {
-      window.location.reload()
-    },
-  })
-
-  if (pathname === '/') {
-    return (
-      <section className='flex min-h-screen flex-col items-center justify-center'>
-        <h1 className='text-4xl font-semibold'>Welcome to ContentQL</h1>
-
-        <p className='my-4 p-2 text-center'>
-          {isPending
-            ? '⏰please hold-on this process might take some time'
-            : 'Click below👇 to instantly load demo content-blogs, authors, tags, and pages'}
-        </p>
-
-        <button
-          className='rounded border border-[#45a6e9] bg-transparent px-4 py-2 text-[#45a6e9] shadow hover:border-transparent hover:bg-[#45a6e9] hover:text-white hover:shadow-lg'
-          disabled={isPending}
-          onClick={() => {
-            runSeedMutation()
-          }}>
-          {isPending ? 'Loading Demo Data...' : 'Load Demo Data'}
-        </button>
-      </section>
-    )
-  }
-
   return (
     <section className='flex min-h-screen flex-col items-center justify-center'>
       <h1 className='text-4xl font-semibold'>404</h1>
