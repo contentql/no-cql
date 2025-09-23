@@ -1,12 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server'
+
 import { extractSubdomain } from './utils/extractSubdomain'
-
-
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const subdomain = extractSubdomain({request})
-
+  const subdomain = extractSubdomain({ request })
+  console.log({ pathname, subdomain })
   if (subdomain) {
     // Excluded routes (should not be rewritten)
     const excludedRoutes = [
@@ -22,15 +21,13 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next()
     }
 
-    const redirectionRoutes = [{old: `/${subdomain}/profile`, new: 'profile'}]
+    const redirectionRoutes = [{ old: `/${subdomain}/profile`, new: 'profile' }]
 
     // Handle specific redirection routes
     if (redirectionRoutes.some(route => pathname === route.old)) {
       const route = redirectionRoutes.find(route => pathname === route.old)
       if (route) {
-        return NextResponse.redirect(
-          new URL(`/${route.new}`, request.url),
-        )
+        return NextResponse.redirect(new URL(`/${route.new}`, request.url))
       }
     }
 
