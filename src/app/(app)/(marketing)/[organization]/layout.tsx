@@ -105,7 +105,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
-export default async function RootLayout({
+export default async function InnerLayout({
   children,
   params,
 }: Readonly<{
@@ -116,35 +116,31 @@ export default async function RootLayout({
   const metadata = await getCachedSiteSettings(resolvedParams.organization)
 
   return (
-    <html lang='en' suppressHydrationWarning>
-      <head>
-        {metadata && metadata.themeSettings && (
-          <Branding theme={metadata.themeSettings} />
-        )}
+    <>
+      {/* These components should be moved to body or handled differently */}
+      {metadata && metadata.themeSettings && (
+        <Branding theme={metadata.themeSettings} />
+      )}
 
-        {metadata && metadata?.monetization && (
-          <GoogleAdsense monetization={metadata?.monetization} />
-        )}
-        {metadata && metadata?.monetization && (
-          <GoogleAnalytics monetization={metadata?.monetization} />
-        )}
-      </head>
+      {metadata && metadata?.monetization && (
+        <GoogleAdsense monetization={metadata?.monetization} />
+      )}
+      {metadata && metadata?.monetization && (
+        <GoogleAnalytics monetization={metadata?.monetization} />
+      )}
+      <Provider>
+        <MetadataProvider metadata={metadata}>
+          <div className='grid min-h-screen w-full grid-rows-[1fr_auto]'>
+            {metadata && <Navbar metadata={metadata} />}
+            {/* Add top padding when navbar exists */}
+            <main className={metadata ? 'pt-14' : ''}>{children}</main>
+            {metadata && <Footer metadata={metadata} />}
+          </div>
+        </MetadataProvider>
+      </Provider>
 
-      <body className='antialiased'>
-        <Provider>
-          <MetadataProvider metadata={metadata}>
-            <div className='grid min-h-screen w-full grid-rows-[1fr_auto]'>
-              {metadata && <Navbar metadata={metadata} />}
-              {/* Add top padding when navbar exists */}
-              <main className={metadata ? 'pt-14' : ''}>{children}</main>
-              {metadata && <Footer metadata={metadata} />}
-            </div>
-          </MetadataProvider>
-        </Provider>
-
-        {/* Sonnar toast library */}
-        <Toaster richColors theme='dark' />
-      </body>
-    </html>
+      {/* Sonnar toast library */}
+      <Toaster richColors theme='dark' />
+    </>
   )
 }
