@@ -13,6 +13,17 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
   const { logo, socialLinks, footerLinks } = footer
   const pathname = usePathname()
 
+  // Detect if we're using subdomain-based or path-based tenant URLs
+  const isSubdomainBased =
+    typeof window !== 'undefined' &&
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname.includes('localhost')
+
+  // Extract tenant slug from pathname for path-based URLs (e.g., /charan/about -> charan)
+  const pathSegments = pathname.split('/').filter(Boolean)
+  const tenantSlug =
+    !isSubdomainBased && pathSegments.length > 0 ? `/${pathSegments[0]}` : ''
+
   let logoDetails = {
     url: '',
     alt: '',
@@ -50,7 +61,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
       <div className='container sm:flex sm:justify-between'>
         <div className='space-y-4'>
           {logoDetails.url && (
-            <Link href='/'>
+            <Link href={isSubdomainBased ? '/' : tenantSlug || '/'}>
               <Image
                 src={logoDetails.url}
                 alt={logoDetails.alt}
@@ -66,32 +77,38 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
         </div>
 
         <div className='mt-8 flex flex-wrap gap-8 sm:mt-0'>
-          {menuLinks.map(({ children, label, href, newTab }, index) => {
+          {menuLinks.map(({ children, label, href = '', newTab }, index) => {
             if (children) {
               return (
                 <div className='text-sm' key={index}>
                   <p className='mb-4 text-muted-foreground'>{label}</p>
                   <div className='space-y-2'>
-                    {children.map(details => (
-                      <Link
-                        href={`${pathname === '/' ? '' : pathname}${
-                          details.href
-                        }`}
-                        key={details.label}
-                        className='block'
-                        target={details.newTab ? '_blank' : '_self'}>
-                        {details.label}
-                      </Link>
-                    ))}
+                    {children.map(details => {
+                      const childHref = details.href || '/'
+                      return (
+                        <Link
+                          href={
+                            isSubdomainBased
+                              ? childHref
+                              : `${tenantSlug}${childHref}`
+                          }
+                          key={details.label}
+                          className='block'
+                          target={details.newTab ? '_blank' : '_self'}>
+                          {details.label}
+                        </Link>
+                      )
+                    })}
                   </div>
                 </div>
               )
             }
 
+            const linkHref = href || '/'
             return (
               <Link
                 key={index}
-                href={`${pathname === '/' ? '' : pathname}${href}`}
+                href={isSubdomainBased ? linkHref : `${tenantSlug}${linkHref}`}
                 target={newTab ? '_blank' : '_self'}>
                 {label}
               </Link>

@@ -31,6 +31,17 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
 
   const navLinks = menuLinks?.length ? generateMenuLinks(menuLinks) : []
 
+  // Detect if we're using subdomain-based or path-based tenant URLs
+  const isSubdomainBased =
+    typeof window !== 'undefined' &&
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname.includes('localhost')
+
+  // Extract tenant slug from pathname for path-based URLs (e.g., /charan/about -> charan)
+  const pathSegments = pathname.split('/').filter(Boolean)
+  const tenantSlug =
+    !isSubdomainBased && pathSegments.length > 0 ? `/${pathSegments[0]}` : ''
+
   if (Object.keys(logo).length && typeof logo?.imageUrl === 'string') {
     logoDetails = {
       url: logo?.imageUrl,
@@ -56,7 +67,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
     <header className='fixed left-0 top-0 z-10 w-full bg-secondary/30 backdrop-blur-xl'>
       <div className='container flex h-14 items-center justify-between'>
         {logoDetails.url && (
-          <Link href='/'>
+          <Link href={isSubdomainBased ? '/' : tenantSlug || '/'}>
             <Image
               src={logoDetails.url}
               alt={logoDetails.alt}
@@ -84,7 +95,11 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
                           {children.map(item => (
                             <DropdownMenuItem key={item.label}>
                               <Link
-                                href={`${pathname === '/' ? '' : pathname}${item.href}`}
+                                href={
+                                  isSubdomainBased
+                                    ? item.href
+                                    : `${tenantSlug}${item.href}`
+                                }
                                 target={item.newTab ? '_blank' : '_self'}>
                                 {item.label}
                               </Link>
@@ -94,7 +109,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
                       </DropdownMenu>
                     ) : (
                       <Link
-                        href={`${pathname === '/' ? '' : pathname}${href}`}
+                        href={isSubdomainBased ? href : `${tenantSlug}${href}`}
                         target={newTab ? '_blank' : '_self'}>
                         {label}
                       </Link>

@@ -13,6 +13,18 @@ interface HeroProps extends HeroType {
 
 export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
   const pathname = usePathname()
+
+  // Detect if we're using subdomain-based or path-based tenant URLs
+  const isSubdomainBased =
+    typeof window !== 'undefined' &&
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname.includes('localhost')
+
+  // Extract tenant slug from pathname for path-based URLs (e.g., /charan/about -> charan)
+  const pathSegments = pathname.split('/').filter(Boolean)
+  const tenantSlug =
+    !isSubdomainBased && pathSegments.length > 0 ? `/${pathSegments[0]}` : ''
+
   return (
     <section className='relative flex min-h-screen w-full flex-col items-center gap-36 py-4'>
       <div className='hidden w-full items-center justify-between md:flex'>
@@ -58,7 +70,7 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
         </Link>
 
         <Link
-          href={`${pathname === '/' ? '' : pathname}/authors`}
+          href={isSubdomainBased ? '/authors' : `${tenantSlug}/authors`}
           className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
           <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Authors
@@ -72,7 +84,7 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
           </p>
         </Link>
         <Link
-          href={`${pathname === '/' ? '' : pathname}/blogs`}
+          href={isSubdomainBased ? '/blogs' : `${tenantSlug}/blogs`}
           className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
           <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Blogs
@@ -86,7 +98,7 @@ export const HeroBlock: React.FC<HeroProps> = ({ params, ...block }) => {
           </p>
         </Link>
         <Link
-          href={`${pathname === '/' ? '' : pathname}/tags`}
+          href={isSubdomainBased ? '/tags' : `${tenantSlug}/tags`}
           className='group w-full space-y-4 rounded  px-6  py-3 transition-colors duration-300 hover:bg-secondary/30'>
           <p className='inline-flex items-center gap-x-4 font-display text-2xl font-bold'>
             Tags
