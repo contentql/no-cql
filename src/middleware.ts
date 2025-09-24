@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // --- Configuration ---
 // Add your production domain here
-const MAIN_DOMAIN = 'yourdomain.com'
+const MAIN_DOMAIN = 'deepflow.sh'
 
 // Paths that should be accessible on the main domain and not treated as tenants
 const RESERVED_PATHS = [
