@@ -21,12 +21,17 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl.clone()
   const { pathname } = url
   const hostname = req.headers.get('host')
-
+  console.log({ hostname, pathname })
   if (!hostname) {
     return new Response(null, {
       status: 400,
       statusText: 'No hostname provided',
     })
+  }
+
+  if (hostname === 'manikanta.net') {
+    url.pathname = `/${'charan'}${pathname}`
+    return NextResponse.rewrite(url)
   }
 
   // Allow reserved paths to pass through without changes
