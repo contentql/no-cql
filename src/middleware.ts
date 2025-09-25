@@ -27,6 +27,8 @@ export async function middleware(req: NextRequest) {
   const { pathname } = url
   const hostname = req.headers.get('host')
 
+  console.log({ hostname, pathname, MAIN_DOMAIN })
+
   if (!hostname) {
     return new Response(null, {
       status: 400,
@@ -68,6 +70,8 @@ export async function middleware(req: NextRequest) {
   const tenantFromSubdomain = currentHost.split('.')[0]
   const isSubdomain = currentHost !== `localhost` && currentHost !== MAIN_DOMAIN
 
+  console.log({ tenantFromSubdomain, isSubdomain })
+
   if (!isSubdomain) {
     const { docs } = await payload.find({
       collection: 'customDomains',
@@ -77,7 +81,10 @@ export async function middleware(req: NextRequest) {
       depth: 1,
     })
 
+    console.dir({ domainDocs: docs }, { depth: null })
+
     const domain = docs.find(doc => doc.hostname === currentHost)
+
     if (domain) {
       const tenant = domain?.tenant
       if (tenant && typeof tenant === 'object' && tenant.slug) {
@@ -97,6 +104,8 @@ export async function middleware(req: NextRequest) {
       },
       depth: 1,
     })
+
+    console.dir({ subdomainDocs: docs }, { depth: null })
 
     const domain = docs.find(doc => doc.hostname === currentHost)
     if (domain) {

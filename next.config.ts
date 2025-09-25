@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
   },
-  output: 'standalone',
+  // output: 'standalone',
   reactStrictMode: true,
 
   // async redirects() {
