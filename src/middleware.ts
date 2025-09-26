@@ -18,11 +18,44 @@ const RESERVED_PATHS = [
   '/verify-email',
   '/api',
   '/.next',
+  '/_next',
+  '/favicon.ico',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/images',
+  '/assets',
+  '/public',
 ]
+
+// Static file extensions that should always pass through
+const STATIC_EXTENSIONS = [
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.webp',
+  '.svg',
+  '.ico',
+  '.css',
+  '.js',
+  '.woff',
+  '.woff2',
+  '.ttf',
+  '.eot',
+  '.pdf',
+  '.zip',
+  '.mp4',
+  '.webm',
+]
+
+// Check if the path is a static file
+function isStaticFile(pathname: string): boolean {
+  return STATIC_EXTENSIONS.some(ext => pathname.toLowerCase().endsWith(ext))
+}
+
 // --- End Configuration ---
 
 export async function middleware(req: NextRequest) {
-  const payload = await getPayload({ config: payloadConfig })
   const url = req.nextUrl.clone()
   const { pathname } = url
   const hostname = req.headers.get('host')
@@ -34,6 +67,11 @@ export async function middleware(req: NextRequest) {
       status: 400,
       statusText: 'No hostname provided',
     })
+  }
+
+  // Allow static files to pass through immediately
+  if (isStaticFile(pathname)) {
+    return NextResponse.next()
   }
 
   // Allow reserved paths to pass through without changes
@@ -71,6 +109,9 @@ export async function middleware(req: NextRequest) {
   const isSubdomain = currentHost !== `localhost` && currentHost !== MAIN_DOMAIN
 
   console.log({ tenantFromSubdomain, isSubdomain })
+
+  // Initialize payload only when needed (not for static files)
+  const payload = await getPayload({ config: payloadConfig })
 
   if (!isSubdomain) {
     const { docs } = await payload.find({
@@ -125,6 +166,15 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   runtime: 'nodejs',
-  // Match all paths except for static files, images, and other assets.
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // More specific matcher that excludes static assets and Next.js internals
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - Images and other static assets
+     */
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|woff|woff2|ttf|eot|pdf|zip|mp4|webm)$).*)',
+  ],
 }
