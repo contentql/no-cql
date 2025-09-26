@@ -73,6 +73,7 @@ export interface Config {
     pages: Page;
     blogs: Blog;
     tags: Tag;
+    customDomains: CustomDomain;
     SiteSettings: SiteSetting;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -89,6 +90,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    customDomains: CustomDomainsSelect<false> | CustomDomainsSelect<true>;
     SiteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -185,6 +187,13 @@ export interface User {
   _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -594,6 +603,21 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customDomains".
+ */
+export interface CustomDomain {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  /**
+   * The custom domain hostname (e.g., example.com)
+   */
+  hostname: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SiteSettings".
  */
 export interface SiteSetting {
@@ -956,6 +980,10 @@ export interface PayloadLockedDocument {
         value: string | Tag;
       } | null)
     | ({
+        relationTo: 'customDomains';
+        value: string | CustomDomain;
+      } | null)
+    | ({
         relationTo: 'SiteSettings';
         value: string | SiteSetting;
       } | null)
@@ -1048,6 +1076,13 @@ export interface UsersSelect<T extends boolean = true> {
   _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1247,6 +1282,17 @@ export interface TagsSelect<T extends boolean = true> {
         image?: T;
       };
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customDomains_select".
+ */
+export interface CustomDomainsSelect<T extends boolean = true> {
+  tenant?: T;
+  hostname?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

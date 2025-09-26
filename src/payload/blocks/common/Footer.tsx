@@ -3,7 +3,6 @@
 import type { SiteSetting } from '@payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 import { generateMenuLinks } from '@/utils/generateMenuLinks'
 import { logoMapping } from '@/utils/logoMapping'
@@ -11,18 +10,6 @@ import { logoMapping } from '@/utils/logoMapping'
 const Footer = ({ metadata }: { metadata: SiteSetting }) => {
   const { footer } = metadata
   const { logo, socialLinks, footerLinks } = footer
-  const pathname = usePathname()
-
-  // Detect if we're using subdomain-based or path-based tenant URLs
-  const isSubdomainBased =
-    typeof window !== 'undefined' &&
-    window.location.hostname !== 'localhost' &&
-    window.location.hostname.includes('localhost')
-
-  // Extract tenant slug from pathname for path-based URLs (e.g., /charan/about -> charan)
-  const pathSegments = pathname.split('/').filter(Boolean)
-  const tenantSlug =
-    !isSubdomainBased && pathSegments.length > 0 ? `/${pathSegments[0]}` : ''
 
   let logoDetails = {
     url: '',
@@ -61,7 +48,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
       <div className='container sm:flex sm:justify-between'>
         <div className='space-y-4'>
           {logoDetails.url && (
-            <Link href={isSubdomainBased ? '/' : tenantSlug || '/'}>
+            <Link href='/'>
               <Image
                 src={logoDetails.url}
                 alt={logoDetails.alt}
@@ -87,11 +74,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
                       const childHref = details.href || '/'
                       return (
                         <Link
-                          href={
-                            isSubdomainBased
-                              ? childHref
-                              : `${tenantSlug}${childHref}`
-                          }
+                          href={childHref}
                           key={details.label}
                           className='block'
                           target={details.newTab ? '_blank' : '_self'}>
@@ -108,7 +91,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
             return (
               <Link
                 key={index}
-                href={isSubdomainBased ? linkHref : `${tenantSlug}${linkHref}`}
+                href={linkHref}
                 target={newTab ? '_blank' : '_self'}>
                 {label}
               </Link>

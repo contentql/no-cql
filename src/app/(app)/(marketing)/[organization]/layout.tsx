@@ -110,7 +110,7 @@ export default async function InnerLayout({
   params,
 }: Readonly<{
   children: React.ReactNode
-  params: Promise<{ route: string[]; organization: string }>
+  params: Promise<{ organization: string }> // Removed 'route: string[]' from here
 }>) {
   const resolvedParams = await params
   const metadata = await getCachedSiteSettings(resolvedParams.organization)

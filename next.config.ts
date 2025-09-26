@@ -8,35 +8,92 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
   },
-  output: 'standalone',
+  // output: 'standalone',
   reactStrictMode: true,
+
+  // async redirects() {
+  //   return [
+  //     // Handle specific redirection routes for subdomains
+  //     {
+  //       source: '/:tenant/profile',
+  //       destination: '/profile',
+  //       has: [
+  //         {
+  //           type: 'host',
+  //           // Match any subdomain (excluding root domain)
+  //           value: '^(?<tenant>[^.]+)\\..+$',
+  //         },
+  //       ],
+  //       permanent: false,
+  //     },
+  //   ]
+  // },
+
   // async rewrites() {
   //   return [
-  //     // Localhost: http://charan.localhost:3000/...
+  //     // Localhost development: subdomain.localhost:3000
   //     {
-  //       source: '/:path((?!admin|api).*)',
+  //       source:
+  //         '/:path((?!admin|sign-in|sign-up|forgot-password|reset-password|verify-email|api|_next).*)',
   //       destination: '/:tenant/:path*',
   //       has: [
   //         {
   //           type: 'host',
-  //           // charan.localhost → tenant = charan
   //           value: '^(?<tenant>[^.]+)\\.localhost(:\\d+)?$',
   //         },
   //       ],
   //     },
-  //     // Production: acme.example.com → tenant = acme
+  //     // Root paths for localhost (catch-all for non-matching paths)
   //     {
-  //       source: '/:path((?!admin|api).*)',
+  //       source:
+  //         '/:path((?!admin|sign-in|sign-up|forgot-password|reset-password|verify-email|api|_next).*)',
+  //       destination: '/:tenant',
+  //       has: [
+  //         {
+  //           type: 'host',
+  //           value: '^(?<tenant>[^.]+)\\.localhost(:\\d+)?$',
+  //         },
+  //         {
+  //           type: 'query',
+  //           key: 'path',
+  //           value: '^$',
+  //         },
+  //       ],
+  //     },
+
+  //     // Production: subdomain.yourdomain.com
+  //     {
+  //       source:
+  //         '/:path((?!admin|sign-in|sign-up|forgot-password|reset-password|verify-email|api|_next).*)',
   //       destination: '/:tenant/:path*',
   //       has: [
   //         {
   //           type: 'host',
-  //           value: '^(?<tenant>[^.]+)\\.example\\.com$',
+  //           // Replace 'yourdomain.com' with your actual domain
+  //           value: '^(?<tenant>[^.]+)\\.yourdomain\\.com$',
+  //         },
+  //       ],
+  //     },
+  //     // Root paths for production
+  //     {
+  //       source:
+  //         '/:path((?!admin|sign-in|sign-up|forgot-password|reset-password|verify-email|api|_next).*)',
+  //       destination: '/:tenant',
+  //       has: [
+  //         {
+  //           type: 'host',
+  //           value: '^(?<tenant>[^.]+)\\.yourdomain\\.com$',
+  //         },
+  //         {
+  //           type: 'query',
+  //           key: 'path',
+  //           value: '^$',
   //         },
   //       ],
   //     },
   //   ]
   // },
+
   images: {
     remotePatterns: [
       {

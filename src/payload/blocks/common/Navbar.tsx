@@ -5,7 +5,6 @@ import type { SiteSetting } from '@payload-types'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { Fragment } from 'react'
 
 import {
@@ -27,20 +26,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
     alt: '',
   }
 
-  const pathname = usePathname()
-
   const navLinks = menuLinks?.length ? generateMenuLinks(menuLinks) : []
-
-  // Detect if we're using subdomain-based or path-based tenant URLs
-  const isSubdomainBased =
-    typeof window !== 'undefined' &&
-    window.location.hostname !== 'localhost' &&
-    window.location.hostname.includes('localhost')
-
-  // Extract tenant slug from pathname for path-based URLs (e.g., /charan/about -> charan)
-  const pathSegments = pathname.split('/').filter(Boolean)
-  const tenantSlug =
-    !isSubdomainBased && pathSegments.length > 0 ? `/${pathSegments[0]}` : ''
 
   if (Object.keys(logo).length && typeof logo?.imageUrl === 'string') {
     logoDetails = {
@@ -67,7 +53,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
     <header className='fixed left-0 top-0 z-10 w-full bg-secondary/30 backdrop-blur-xl'>
       <div className='container flex h-14 items-center justify-between'>
         {logoDetails.url && (
-          <Link href={isSubdomainBased ? '/' : tenantSlug || '/'}>
+          <Link href='/'>
             <Image
               src={logoDetails.url}
               alt={logoDetails.alt}
@@ -95,11 +81,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
                           {children.map(item => (
                             <DropdownMenuItem key={item.label}>
                               <Link
-                                href={
-                                  isSubdomainBased
-                                    ? item.href
-                                    : `${tenantSlug}${item.href}`
-                                }
+                                href={item.href}
                                 target={item.newTab ? '_blank' : '_self'}>
                                 {item.label}
                               </Link>
@@ -108,9 +90,7 @@ const Navbar = ({ metadata }: { metadata: SiteSetting }) => {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     ) : (
-                      <Link
-                        href={isSubdomainBased ? href : `${tenantSlug}${href}`}
-                        target={newTab ? '_blank' : '_self'}>
+                      <Link href={href} target={newTab ? '_blank' : '_self'}>
                         {label}
                       </Link>
                     )}

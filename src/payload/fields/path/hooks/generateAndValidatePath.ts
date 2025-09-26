@@ -30,6 +30,10 @@ export const generateAndValidatePath: FieldHook = async ({
     return value
   }
 
+  if (!collection) {
+    throw new APIError('Collection configuration is missing.', 500)
+  }
+
   const docs = await getParents(
     req,
     // @ts-ignore
