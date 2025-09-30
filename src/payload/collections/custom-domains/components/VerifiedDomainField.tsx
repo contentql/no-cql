@@ -1,6 +1,7 @@
 'use client'
 
 import { env } from '@env'
+import { useTenantSelection } from '@payloadcms/plugin-multi-tenant/client'
 import {
   Button,
   useDocumentInfo,
@@ -15,9 +16,14 @@ import { checkDNSConfigAction } from './checkDNSConfigAction'
 
 const VerifiedDomainField: React.FC<any> = props => {
   const { path } = props
+  const tenant = useTenantSelection()
+  const tenantSlug = tenant.options.find(
+    opt => opt.value === tenant.selectedTenantID,
+  )?.label
 
   const MAIN_DOMAIN =
     env.NEXT_PUBLIC_WEBSITE_URL?.replace(/^https?:\/\//, '') || ''
+  const TENANT_DOMAIN = `${tenantSlug}.${MAIN_DOMAIN}`
 
   const { value, setValue } = useField<boolean>({ path })
   const { id } = useDocumentInfo()
@@ -45,7 +51,7 @@ const VerifiedDomainField: React.FC<any> = props => {
 
     setLoading(true)
     try {
-      const res = await checkDNSConfigAction(hostname, 'CNAME', MAIN_DOMAIN)
+      const res = await checkDNSConfigAction(hostname, 'CNAME', TENANT_DOMAIN)
 
       if (isMountedRef.current) {
         if (res.success !== undefined) {
@@ -74,7 +80,7 @@ const VerifiedDomainField: React.FC<any> = props => {
         setLoading(false)
       }
     }
-  }, [hostname, setValue, MAIN_DOMAIN, value, id])
+  }, [hostname, setValue, TENANT_DOMAIN, value, id])
 
   useEffect(() => {
     isMountedRef.current = true
@@ -211,7 +217,7 @@ const VerifiedDomainField: React.FC<any> = props => {
               backgroundColor: 'var(--theme-elevation-50)',
               borderRadius: '4px',
             }}>
-            {hostname} → {MAIN_DOMAIN}
+            {hostname} → {TENANT_DOMAIN}
           </code>
         </div>
       )}
