@@ -1,11 +1,19 @@
 'use client'
 
 import { env } from '@env'
+import { useTenantSelection } from '@payloadcms/plugin-multi-tenant/client'
 import { useFormFields } from '@payloadcms/ui'
 import React, { useMemo } from 'react'
 
 const CustomDomainInstructions: React.FC = () => {
-  const MAIN_DOMAIN = env.NEXT_PUBLIC_WEBSITE_URL?.replace(/^https?:\/\//, '')
+  const tenant = useTenantSelection()
+  const tenantSlug = tenant.options.find(
+    opt => opt.value === tenant.selectedTenantID,
+  )?.label
+
+  const MAIN_DOMAIN =
+    env.NEXT_PUBLIC_WEBSITE_URL?.replace(/^https?:\/\//, '') || ''
+  const TENANT_DOMAIN = `${tenantSlug}.${MAIN_DOMAIN}`
 
   const { hostname, verified } = useFormFields(([fields]) => ({
     hostname: fields?.hostname?.value as string | undefined,
@@ -114,7 +122,7 @@ const CustomDomainInstructions: React.FC = () => {
                   <td className='py-1.5 pr-4 font-semibold'>Target/Content:</td>
                   <td className='py-1.5'>
                     <code className='rounded bg-gray-100 px-2 py-0.5'>
-                      {MAIN_DOMAIN}
+                      {TENANT_DOMAIN}
                     </code>
                   </td>
                 </tr>
@@ -171,7 +179,7 @@ const CustomDomainInstructions: React.FC = () => {
                   <td className='py-1.5 pr-4 font-semibold'>Target/Content:</td>
                   <td className='py-1.5'>
                     <code className='rounded bg-gray-100 px-2 py-0.5'>
-                      {MAIN_DOMAIN}
+                      {TENANT_DOMAIN}
                     </code>
                   </td>
                 </tr>
