@@ -9,6 +9,7 @@ import { CollectionConfig } from 'payload'
 
 import { ResetPassword } from '@/emails/reset-password'
 import { UserAccountVerification } from '@/emails/verify-email'
+import { adminOrTenantAdminFieldAccess } from '@/payload/access/adminOrTenantAdmin'
 import { isAdmin } from '@/payload/access/isAdmin'
 
 import { createAccess } from './access/create'
@@ -24,8 +25,12 @@ const defaultTenantArrayField = tenantsArrayField({
   tenantsArrayFieldName: 'tenants',
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
-  arrayFieldAccess: {},
-  tenantFieldAccess: {},
+  arrayFieldAccess: {
+    update: adminOrTenantAdminFieldAccess,
+  },
+  tenantFieldAccess: {
+    update: adminOrTenantAdminFieldAccess,
+  },
   rowFields: [
     {
       name: 'roles',
@@ -35,18 +40,8 @@ const defaultTenantArrayField = tenantsArrayField({
       options: ['tenant-admin', 'tenant-viewer'],
       required: true,
       access: {
-        update: ({ req }) => {
-          const { user } = req
-          if (!user) {
-            return false
-          }
-
-          if (isAdmin(user)) {
-            return true
-          }
-
-          return true
-        },
+        update: adminOrTenantAdminFieldAccess,
+        create: adminOrTenantAdminFieldAccess,
       },
     },
   ],
