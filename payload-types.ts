@@ -609,6 +609,10 @@ export interface CustomDomain {
   id: string;
   tenant?: (string | null) | Tenant;
   /**
+   * Indicates whether the custom domain has been verified
+   */
+  verified?: boolean | null;
+  /**
    * The custom domain hostname (e.g., example.com)
    */
   hostname: string;
@@ -1292,6 +1296,7 @@ export interface TagsSelect<T extends boolean = true> {
  */
 export interface CustomDomainsSelect<T extends boolean = true> {
   tenant?: T;
+  verified?: T;
   hostname?: T;
   updatedAt?: T;
   createdAt?: T;
