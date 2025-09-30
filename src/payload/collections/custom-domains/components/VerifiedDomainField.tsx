@@ -1,12 +1,16 @@
 'use client'
 
+import { env } from '@env'
 import { Button, useField, useFormFields } from '@payloadcms/ui'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
-import { checkDNSConfigAction } from './checkDNSConfigAction'
+import { CheckDNSConfigAction } from './CheckDNSConfigAction'
 
 const VerifiedDomainField: React.FC<any> = props => {
   const { path } = props
+
+  const MAIN_DOMAIN =
+    env.NEXT_PUBLIC_WEBSITE_URL?.replace(/^https?:\/\//, '') || ''
 
   const { value, setValue } = useField<boolean>({ path })
 
@@ -16,62 +20,187 @@ const VerifiedDomainField: React.FC<any> = props => {
 
   const [loading, setLoading] = useState(false)
   const [dnsDetails, setDnsDetails] = useState<any>(null)
+  const [lastChecked, setLastChecked] = useState<Date | null>(null)
+
+  // Use ref to track if component is mounted
+  const isMountedRef = useRef(true)
 
   const checkDNS = useCallback(async () => {
-    if (!hostname) return
+    if (!hostname) {
+      setDnsDetails({
+        success: false,
+        verified: false,
+        message: 'No hostname provided',
+      })
+      return
+    }
+
     setLoading(true)
     try {
-      const res = await checkDNSConfigAction(
-        hostname,
-        'CNAME',
-        'charan.deepflow.sh',
-      )
-      if (res.success) {
-        setValue(res.verified)
+      const res = await CheckDNSConfigAction(hostname, 'CNAME', MAIN_DOMAIN)
+
+      if (isMountedRef.current) {
+        if (res.success !== undefined) {
+          setValue(res.verified)
+        }
+        setDnsDetails(res)
+        setLastChecked(new Date())
       }
-      setDnsDetails(res)
+    } catch (error) {
+      console.error('DNS check failed:', error)
+      if (isMountedRef.current) {
+        setDnsDetails({
+          success: false,
+          verified: false,
+          message: 'Failed to check DNS',
+          error: String(error),
+        })
+      }
     } finally {
-      setLoading(false)
+      if (isMountedRef.current) {
+        setLoading(false)
+      }
     }
-  }, [hostname, setValue])
+  }, [hostname, setValue, MAIN_DOMAIN])
 
   useEffect(() => {
+    isMountedRef.current = true
+
+    // Initial check
     checkDNS()
-    const interval = setInterval(checkDNS, 10000)
-    return () => clearInterval(interval)
+
+    // Auto-refresh every 30 seconds (reduced from 10 to avoid excessive calls)
+    const interval = setInterval(checkDNS, 30000)
+
+    return () => {
+      isMountedRef.current = false
+      clearInterval(interval)
+    }
   }, [checkDNS])
+
+  const getStatusIcon = () => {
+    if (loading) return '⏳'
+    if (value) return '✅'
+    return '❌'
+  }
+
+  const getStatusText = () => {
+    if (loading) return 'Checking...'
+    if (value) return 'Verified'
+    return 'Not verified'
+  }
 
   return (
     <div
       style={{
         padding: '1rem',
         border: '1px solid var(--theme-elevation-100)',
+        borderRadius: '4px',
+        backgroundColor: 'var(--theme-elevation-0)',
       }}>
-      <strong>Domain Verification</strong>
-      <p>Hostname: {hostname || '-'}</p>
+      <div style={{ marginBottom: '1rem' }}>
+        <strong style={{ fontSize: '1rem' }}>Domain Verification</strong>
+      </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <p>Status: {value ? '✅ Verified' : '❌ Not verified'}</p>
-      )}
+      <div style={{ marginBottom: '0.75rem' }}>
+        <div style={{ marginBottom: '0.5rem' }}>
+          <strong>Hostname:</strong> {hostname || <em>Not set</em>}
+        </div>
 
-      <Button onClick={checkDNS} size='small' disabled={loading}>
-        Refresh DNS
-      </Button>
+        <div style={{ marginBottom: '0.5rem' }}>
+          <strong>Status:</strong>{' '}
+          <span style={{ fontSize: '1rem' }}>
+            {getStatusIcon()} {getStatusText()}
+          </span>
+        </div>
+
+        {lastChecked && (
+          <div
+            style={{
+              fontSize: '0.85rem',
+              color: 'var(--theme-text-secondary)',
+            }}>
+            Last checked: {lastChecked.toLocaleTimeString()}
+          </div>
+        )}
+      </div>
+
+      <div style={{ marginBottom: '1rem' }}>
+        <Button onClick={checkDNS} size='small' disabled={loading || !hostname}>
+          {loading ? 'Checking...' : 'Refresh DNS'}
+        </Button>
+      </div>
 
       {dnsDetails && (
-        <pre
+        <div style={{ marginTop: '1rem' }}>
+          <div
+            style={{
+              padding: '0.75rem',
+              backgroundColor: 'var(--theme-elevation-50)',
+              borderRadius: '4px',
+              marginBottom: '0.5rem',
+            }}>
+            <strong>DNS Details:</strong>
+            {dnsDetails.message && (
+              <div
+                style={{
+                  marginTop: '0.5rem',
+                  padding: '0.5rem',
+                  backgroundColor: dnsDetails.verified
+                    ? 'rgba(0, 200, 0, 0.1)'
+                    : 'rgba(255, 165, 0, 0.1)',
+                  borderRadius: '4px',
+                  fontSize: '0.9rem',
+                }}>
+                {dnsDetails.message}
+              </div>
+            )}
+          </div>
+
+          <details style={{ fontSize: '0.85rem' }}>
+            <summary style={{ cursor: 'pointer', marginBottom: '0.5rem' }}>
+              View raw DNS response
+            </summary>
+            <pre
+              style={{
+                background: 'var(--theme-elevation-50)',
+                padding: '0.75rem',
+                borderRadius: '4px',
+                fontSize: '0.75rem',
+                overflowX: 'auto',
+                margin: 0,
+              }}>
+              {JSON.stringify(dnsDetails, null, 2)}
+            </pre>
+          </details>
+        </div>
+      )}
+
+      {!value && hostname && (
+        <div
           style={{
             marginTop: '1rem',
-            background: 'var(--theme-elevation-50)',
-            padding: '0.5rem',
+            padding: '0.75rem',
+            backgroundColor: 'rgba(255, 165, 0, 0.1)',
+            borderLeft: '3px solid orange',
             borderRadius: '4px',
-            fontSize: '0.8rem',
-            overflowX: 'auto',
+            fontSize: '0.9rem',
           }}>
-          {JSON.stringify(dnsDetails, null, 2)}
-        </pre>
+          <strong>Instructions:</strong>
+          <br />
+          Add a CNAME record in your DNS settings:
+          <br />
+          <code
+            style={{
+              display: 'block',
+              marginTop: '0.5rem',
+              padding: '0.5rem',
+              backgroundColor: 'var(--theme-elevation-50)',
+              borderRadius: '4px',
+            }}>
+            {hostname} → {MAIN_DOMAIN}
+          </code>
+        </div>
       )}
     </div>
   )

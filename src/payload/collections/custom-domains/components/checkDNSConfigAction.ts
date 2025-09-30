@@ -2,7 +2,7 @@
 
 import dns from 'dns/promises'
 
-export async function checkDNSConfigAction(
+export async function CheckDNSConfigAction(
   domain: string,
   type: string,
   target: string,
