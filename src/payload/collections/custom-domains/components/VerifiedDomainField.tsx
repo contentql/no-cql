@@ -1,10 +1,17 @@
 'use client'
 
 import { env } from '@env'
-import { Button, useField, useFormFields } from '@payloadcms/ui'
+import {
+  Button,
+  useDocumentInfo,
+  useField,
+  useFormFields,
+} from '@payloadcms/ui'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
-import { CheckDNSConfigAction } from './CheckDNSConfigAction'
+import { updateVerificationStatus } from '@/actions/updateVerificationStatus'
+
+import { checkDNSConfigAction } from './checkDNSConfigAction'
 
 const VerifiedDomainField: React.FC<any> = props => {
   const { path } = props
@@ -13,6 +20,7 @@ const VerifiedDomainField: React.FC<any> = props => {
     env.NEXT_PUBLIC_WEBSITE_URL?.replace(/^https?:\/\//, '') || ''
 
   const { value, setValue } = useField<boolean>({ path })
+  const { id } = useDocumentInfo()
 
   const { hostname } = useFormFields(([fields]) => ({
     hostname: fields?.hostname?.value as string | undefined,
@@ -37,11 +45,16 @@ const VerifiedDomainField: React.FC<any> = props => {
 
     setLoading(true)
     try {
-      const res = await CheckDNSConfigAction(hostname, 'CNAME', MAIN_DOMAIN)
+      const res = await checkDNSConfigAction(hostname, 'CNAME', MAIN_DOMAIN)
 
       if (isMountedRef.current) {
         if (res.success !== undefined) {
           setValue(res.verified)
+
+          // Update the record in the database if verification status changed
+          if (res.verified !== value && id) {
+            await updateVerificationStatus(id as string, res.verified)
+          }
         }
         setDnsDetails(res)
         setLastChecked(new Date())
@@ -61,7 +74,7 @@ const VerifiedDomainField: React.FC<any> = props => {
         setLoading(false)
       }
     }
-  }, [hostname, setValue, MAIN_DOMAIN])
+  }, [hostname, setValue, MAIN_DOMAIN, value, id])
 
   useEffect(() => {
     isMountedRef.current = true

@@ -618,7 +618,6 @@ export interface CustomDomain {
   hostname: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1300,7 +1299,6 @@ export interface CustomDomainsSelect<T extends boolean = true> {
   hostname?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

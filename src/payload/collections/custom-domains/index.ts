@@ -19,9 +19,6 @@ export const CustomDomains: CollectionConfig = {
     useAsTitle: 'hostname',
     group: AUTH_GROUP,
   },
-  versions: {
-    drafts: true,
-  },
   fields: [
     {
       name: 'verified',
