@@ -2,6 +2,7 @@ import { AUTH_GROUP } from '../constants'
 import { CollectionConfig } from 'payload'
 
 import { updateAndDeleteAccess } from './access/updateAndDelete'
+import { afterTenantDeleteRemoveFromCookie } from './hooks/afterTenantDeleteRemoveFromCookie'
 import { assignToTenantAdmin } from './hooks/assignToTenantAdmin'
 
 export const Tenants: CollectionConfig = {
@@ -19,6 +20,7 @@ export const Tenants: CollectionConfig = {
 
   hooks: {
     afterChange: [assignToTenantAdmin],
+    afterDelete: [afterTenantDeleteRemoveFromCookie],
   },
 
   fields: [
