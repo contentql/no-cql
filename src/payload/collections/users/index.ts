@@ -26,10 +26,12 @@ const defaultTenantArrayField = tenantsArrayField({
   tenantsArrayTenantFieldName: 'tenant',
   tenantsCollectionSlug: 'tenants',
   arrayFieldAccess: {
-    update: adminOrTenantAdminFieldAccess,
+    update: isAdminFieldAccess,
+    create: isAdminFieldAccess,
   },
   tenantFieldAccess: {
-    update: adminOrTenantAdminFieldAccess,
+    update: isAdminFieldAccess,
+    create: isAdminFieldAccess,
   },
   rowFields: [
     {
