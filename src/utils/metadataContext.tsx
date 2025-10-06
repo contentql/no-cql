@@ -3,7 +3,7 @@
 import { SiteSetting } from '@payload-types'
 import React, { createContext, use, useState } from 'react'
 
-const MetadataContext = createContext<SiteSetting | null | undefined>(null)
+const MetadataContext = createContext<SiteSetting | null>(null)
 
 export const useMetadata = () => {
   const context = use(MetadataContext)
@@ -17,7 +17,7 @@ export const MetadataProvider = ({
   metadata,
   children,
 }: {
-  metadata: SiteSetting | undefined
+  metadata: SiteSetting
   children: React.ReactNode
 }) => {
   const [metaState] = useState(metadata)

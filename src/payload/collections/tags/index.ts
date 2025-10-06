@@ -1,8 +1,7 @@
+import { isAdminOrAuthor } from '../../access/isAdminOrAuthor'
 import { slugField } from '../../fields/slug/index'
 import { CONTENT_GROUP } from '../constants'
 import { CollectionConfig } from 'payload'
-
-import { adminOrTenantAdminAccess } from '@/payload/access/adminOrTenantAdmin'
 
 import {
   revalidateTags,
@@ -17,9 +16,9 @@ export const Tags: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: adminOrTenantAdminAccess,
-    update: adminOrTenantAdminAccess,
-    delete: adminOrTenantAdminAccess,
+    update: isAdminOrAuthor,
+    delete: isAdminOrAuthor,
+    create: isAdminOrAuthor,
   },
   admin: {
     useAsTitle: 'title',

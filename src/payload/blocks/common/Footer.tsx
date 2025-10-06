@@ -1,5 +1,3 @@
-'use client'
-
 import type { SiteSetting } from '@payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -64,38 +62,28 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
         </div>
 
         <div className='mt-8 flex flex-wrap gap-8 sm:mt-0'>
-          {menuLinks.map(({ children, label, href = '', newTab }, index) => {
+          {menuLinks.map(({ children, label }, index) => {
             if (children) {
               return (
                 <div className='text-sm' key={index}>
                   <p className='mb-4 text-muted-foreground'>{label}</p>
+
                   <div className='space-y-2'>
-                    {children.map(details => {
-                      const childHref = details.href || '/'
-                      return (
-                        <Link
-                          href={childHref}
-                          key={details.label}
-                          className='block'
-                          target={details.newTab ? '_blank' : '_self'}>
-                          {details.label}
-                        </Link>
-                      )
-                    })}
+                    {children.map(details => (
+                      <Link
+                        href={details.href}
+                        key={details.label}
+                        className='block'
+                        target={details.newTab ? '_blank' : '_self'}>
+                        {details.label}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               )
             }
 
-            const linkHref = href || '/'
-            return (
-              <Link
-                key={index}
-                href={linkHref}
-                target={newTab ? '_blank' : '_self'}>
-                {label}
-              </Link>
-            )
+            return null
           })}
         </div>
       </div>
@@ -108,6 +96,7 @@ const Footer = ({ metadata }: { metadata: SiteSetting }) => {
             <ul className='flex gap-8'>
               {socialLinks.map(({ platform, value, id }) => {
                 const Component = logoMapping[platform]
+
                 return Component ? (
                   <Link href={value} target='_blank' key={id}>
                     <li className='flex list-none items-center gap-1'>

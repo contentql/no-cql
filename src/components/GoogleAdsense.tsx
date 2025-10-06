@@ -2,19 +2,18 @@
 
 import { SiteSetting } from '@payload-types'
 
-const GoogleAdsense = ({
-  monetization,
-}: {
-  monetization: SiteSetting['monetization']
-}) => {
-  if (monetization?.adSenseId && process.env.NODE_ENV !== 'production') {
+const GoogleAdsense = ({ metadata }: { metadata: SiteSetting }) => {
+  if (
+    !metadata?.monetization?.adSenseId &&
+    process.env.NODE_ENV !== 'production'
+  ) {
     return null
   }
 
   return (
     <script
       async
-      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${monetization?.adSenseId}`}
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${metadata?.monetization?.adSenseId}`}
       crossOrigin='anonymous'
     />
   )

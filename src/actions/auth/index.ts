@@ -53,19 +53,6 @@ export const signUpAction = publicClient
   .schema(signUpSchema)
   .action(async ({ clientInput }) => {
     const { email, username, password } = clientInput
-
-    const tenant = await payload.create({
-      collection: 'tenants',
-      data: {
-        name: username,
-        slug: username,
-        subdomain: username,
-      },
-      context: {
-        skipAssignToTenantAdmin: true,
-      },
-    })
-
     const response = await payload.create({
       collection: 'users',
       data: {
@@ -73,7 +60,6 @@ export const signUpAction = publicClient
         email,
         password,
         role: ['user'],
-        tenants: [{ tenant: tenant, roles: ['tenant-admin'] }],
       },
     })
 

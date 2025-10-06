@@ -2,7 +2,6 @@ import { env } from '@env'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
-import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -11,16 +10,28 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { Field, buildConfig } from 'payload'
 import sharp from 'sharp'
 
-import { getUserTenantIDs } from '@/lib/getUserTenantIDs'
-import { isAdmin, isAdminAccess } from '@/payload/access/isAdmin'
-import { Tenants } from '@/payload/collections/Tenants'
+import { isAdmin } from '@/payload/access/isAdmin'
 import { Blogs } from '@/payload/collections/blogs'
-import { CustomDomains } from '@/payload/collections/custom-domains'
+import { Brands } from '@/payload/collections/brands'
+import { Categories } from '@/payload/collections/categories'
 import { Media } from '@/payload/collections/media'
 import { Pages } from '@/payload/collections/pages'
-import { SiteSettings } from '@/payload/collections/site-settings'
+import { Cameras } from '@/payload/collections/products-collection/cameras'
+import { Cars } from '@/payload/collections/products-collection/cars'
+import { DrillingMachines } from '@/payload/collections/products-collection/drilling-machines'
+import { Drones } from '@/payload/collections/products-collection/drones'
+import { ElectricalCurtains } from '@/payload/collections/products-collection/electrical-curtains'
+import { HoverBoards } from '@/payload/collections/products-collection/hover-boards'
+import { Laptops } from '@/payload/collections/products-collection/laptops'
+import { Mobiles } from '@/payload/collections/products-collection/mobiles'
+import { Ovens } from '@/payload/collections/products-collection/ovens'
+import { Printers } from '@/payload/collections/products-collection/printers'
+import { Transformers } from '@/payload/collections/products-collection/transformers'
+import { Vrs } from '@/payload/collections/products-collection/vrs'
 import { Tags } from '@/payload/collections/tags'
+import { Test } from '@/payload/collections/test'
 import { Users } from '@/payload/collections/users'
+import { siteSettings } from '@/payload/globals/siteSettings'
 import { disqusCommentsPlugin } from '@/payload/plugins/disqus-comments'
 import { scheduleDocPublishPlugin } from '@/payload/plugins/schedule-doc-publish-plugin'
 import { BeforeSyncConfig } from '@/utils/beforeSync'
@@ -168,14 +179,33 @@ export default buildConfig({
   },
   collections: [
     Users,
-    Tenants,
     Media,
     Pages,
     Blogs,
     Tags,
-    CustomDomains,
-    SiteSettings,
+    Brands,
+    Categories,
+    Test,
+    // Products,
+    // ProductTemplates,
+    // DynamicProducts,
+    // StaticProducts,
+
+    /* Products Collection*/
+    Cameras,
+    Cars,
+    DrillingMachines,
+    Drones,
+    ElectricalCurtains,
+    HoverBoards,
+    Laptops,
+    Mobiles,
+    Ovens,
+    Printers,
+    Transformers,
+    Vrs,
   ],
+  globals: [siteSettings],
   db: mongooseAdapter({
     url: env.DATABASE_URI,
   }),
@@ -195,7 +225,14 @@ export default buildConfig({
       enabled: true,
     }),
     seoPlugin({
-      collections: ['pages', 'blogs', 'tags'],
+      collections: [
+        'pages',
+        'blogs',
+        'tags',
+        'categories',
+        'products',
+        'brands',
+      ],
       uploadsCollection: 'media',
       tabbedUI: true,
       generateURL: data =>
@@ -214,7 +251,7 @@ export default buildConfig({
       beforeSync: BeforeSyncConfig,
       searchOverrides: {
         access: {
-          read: isAdminAccess,
+          read: isAdmin,
         },
       },
     }),
@@ -231,35 +268,6 @@ export default buildConfig({
         endpoint: env.S3_ENDPOINT,
         region: env.S3_REGION,
       },
-    }),
-    multiTenantPlugin({
-      collections: {
-        pages: {},
-        media: {},
-        blogs: {},
-        tags: {},
-        customDomains: {},
-        SiteSettings: { isGlobal: true },
-        // tenants: {},
-      },
-      tenantField: {
-        access: {
-          read: () => true,
-          update: ({ req }) => {
-            if (isAdmin(req.user)) {
-              return true
-            }
-            return getUserTenantIDs(req.user).length > 0
-          },
-        },
-      },
-      tenantsSlug: 'tenants',
-      enabled: true,
-      cleanupAfterTenantDelete: true,
-      tenantsArrayField: {
-        includeDefaultField: false,
-      },
-      userHasAccessToAllTenants: user => Boolean(user?.role?.includes('admin')),
     }),
   ],
   editor: slateEditor({}),

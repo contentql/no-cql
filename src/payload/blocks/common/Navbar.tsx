@@ -1,5 +1,3 @@
-'use client'
-
 import CommandBar from '../../../components/CommandBar'
 import type { SiteSetting } from '@payload-types'
 import { ChevronDown } from 'lucide-react'
