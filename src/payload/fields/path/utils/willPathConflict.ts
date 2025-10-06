@@ -6,20 +6,31 @@ export const willPathConflict = async ({
   currentDocId,
   currentCollection,
   collectionsToCheck = [],
+  tenantId,
 }: {
   payload: Payload
   path: string
   currentDocId?: string
   currentCollection: string
   collectionsToCheck?: string[]
+  tenantId?: string
 }) => {
   if (!payload || collectionsToCheck.length === 0) return false
 
   const queries = collectionsToCheck.map(collection => {
     const whereCondition: any = {
-      path: {
-        equals: path,
-      },
+      and: [
+        {
+          path: {
+            equals: path,
+          },
+        },
+        {
+          tenant: {
+            equals: tenantId,
+          },
+        },
+      ],
     }
     if (currentDocId && currentCollection === collection) {
       whereCondition.id = { not_equals: currentDocId }

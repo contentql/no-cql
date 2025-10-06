@@ -88,7 +88,7 @@ const ProfileForm = ({ user }: { user: User }) => {
           }
         : undefined,
     name: displayName || username,
-    isAdmin: role.includes('admin'),
+    isAdmin: role?.includes('admin'),
   }
 
   const initials = getInitials(userDetails.name!)

@@ -1,11 +1,10 @@
+import { User } from '@payload-types'
 import { Access } from 'payload'
 
-export const isAdmin: Access = ({ req }) => {
-  if (req.user) {
-    const userRole = req?.user?.role || []
+export const isAdminAccess: Access = ({ req }): boolean => {
+  return isAdmin(req.user)
+}
 
-    return userRole.includes('admin')
-  }
-
-  return false
+export const isAdmin = (user: User | null): boolean => {
+  return Boolean(user?.role?.includes('admin'))
 }

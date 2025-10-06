@@ -20,7 +20,7 @@ export const generateAndValidatePath: FieldHook = async ({
   )
     return value
 
-  const { payload } = req
+  const { payload, user } = req
 
   if (!payload) return value // If not server side exist
 
@@ -28,6 +28,10 @@ export const generateAndValidatePath: FieldHook = async ({
 
   if (siblingData?.pathMode && siblingData?.pathMode === 'custom') {
     return value
+  }
+
+  if (!collection) {
+    throw new APIError('Collection configuration is missing.', 500)
   }
 
   const docs = await getParents(
@@ -46,6 +50,7 @@ export const generateAndValidatePath: FieldHook = async ({
     currentDocId: currentDoc.id,
     currentCollection: collection ? collection.slug : 'pages',
     collectionsToCheck: ['pages'], // Add more collections as needed
+    tenantId: user?.tenants?.at(0)?.id || undefined,
   })
 
   if (isNewPathConflicting) {

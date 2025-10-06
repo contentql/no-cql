@@ -34,7 +34,7 @@ const pathField: PathField = (overrides = {}) =>
     {
       type: 'text',
       name: 'path',
-      unique: true,
+      // unique: true,
       index: true,
       label: 'Path',
       hooks: {

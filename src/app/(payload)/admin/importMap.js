@@ -1,4 +1,6 @@
 import { default as default_f6a74c27e1379d8aaf27d978b59e7c62 } from '@/payload/fields/slug/components/CustomSlugField'
+import { WatchTenantCollection as WatchTenantCollection_1d0591e3cf4f332c83a86da13a0de59a } from '@payloadcms/plugin-multi-tenant/client'
+import { TenantField as TenantField_1d0591e3cf4f332c83a86da13a0de59a } from '@payloadcms/plugin-multi-tenant/client'
 import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -51,16 +53,23 @@ import { UploadElement as UploadElement_0b388c087d9de8c4f011dd323a130cfb } from 
 import { WithUpload as WithUpload_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { default as default_98c0f4abadca2c088b1f10febe84908a } from '@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnFieldLabel'
 import { default as default_695e6fdd1491837f16025ec4015b207f } from '@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnField'
-import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
-import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
+import { default as default_f36c1c1e530c3a27a694041e1f51a226 } from '@/payload/collections/custom-domains/components/VerifiedDomainField'
+import { default as default_4e43c91c649f26dd3a178285997b6d97 } from '@/payload/collections/custom-domains/components/CustomDomainInstructions'
 import { default as default_530a4a40d073f63a62d20ecc1c48a28a } from '@/payload/fields/common/theme/ColorField'
 import { default as default_63789004f810b61bd607a5896281c096 } from '@/payload/fields/common/theme/RadiusField'
+import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
+import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { default as default_fe373fe27f1063cfe032cdbcc74c397a } from '../../../../src/payload/style/icons/Icon.tsx'
 import { default as default_d04d5322bc326e90e9d559df021a5610 } from '../../../../src/payload/style/icons/Logo.tsx'
+import { GlobalViewRedirect as GlobalViewRedirect_d6d5f193a167989e2ee7d14202901e62 } from '@payloadcms/plugin-multi-tenant/rsc'
+import { TenantSelector as TenantSelector_d6d5f193a167989e2ee7d14202901e62 } from '@payloadcms/plugin-multi-tenant/rsc'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
+import { TenantSelectionProvider as TenantSelectionProvider_d6d5f193a167989e2ee7d14202901e62 } from '@payloadcms/plugin-multi-tenant/rsc'
 
 export const importMap = {
   "@/payload/fields/slug/components/CustomSlugField#default": default_f6a74c27e1379d8aaf27d978b59e7c62,
+  "@payloadcms/plugin-multi-tenant/client#WatchTenantCollection": WatchTenantCollection_1d0591e3cf4f332c83a86da13a0de59a,
+  "@payloadcms/plugin-multi-tenant/client#TenantField": TenantField_1d0591e3cf4f332c83a86da13a0de59a,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
@@ -113,11 +122,16 @@ export const importMap = {
   "@payloadcms/richtext-slate/client#WithUpload": WithUpload_0b388c087d9de8c4f011dd323a130cfb,
   "@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnFieldLabel#default": default_98c0f4abadca2c088b1f10febe84908a,
   "@/payload/plugins/schedule-doc-publish-plugin/fields/publishOn/components/CustomPublishOnField#default": default_695e6fdd1491837f16025ec4015b207f,
-  "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
-  "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
+  "@/payload/collections/custom-domains/components/VerifiedDomainField#default": default_f36c1c1e530c3a27a694041e1f51a226,
+  "@/payload/collections/custom-domains/components/CustomDomainInstructions#default": default_4e43c91c649f26dd3a178285997b6d97,
   "@/payload/fields/common/theme/ColorField#default": default_530a4a40d073f63a62d20ecc1c48a28a,
   "@/payload/fields/common/theme/RadiusField#default": default_63789004f810b61bd607a5896281c096,
+  "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
+  "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "/src/payload/style/icons/Icon.tsx#default": default_fe373fe27f1063cfe032cdbcc74c397a,
   "/src/payload/style/icons/Logo.tsx#default": default_d04d5322bc326e90e9d559df021a5610,
-  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
+  "@payloadcms/plugin-multi-tenant/rsc#GlobalViewRedirect": GlobalViewRedirect_d6d5f193a167989e2ee7d14202901e62,
+  "@payloadcms/plugin-multi-tenant/rsc#TenantSelector": TenantSelector_d6d5f193a167989e2ee7d14202901e62,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
+  "@payloadcms/plugin-multi-tenant/rsc#TenantSelectionProvider": TenantSelectionProvider_d6d5f193a167989e2ee7d14202901e62
 }

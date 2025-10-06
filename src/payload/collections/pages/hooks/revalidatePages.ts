@@ -14,10 +14,22 @@ export const revalidatePages: CollectionAfterChangeHook<Page> = async ({
     block => block.blockType === 'DetailsBlock' && block.collectionSlug,
   ) as DetailsType | undefined
 
+  let tenantId
+  if (typeof doc.tenant === 'string') {
+    tenantId = doc.tenant
+  } else if (typeof doc.tenant === 'object' && doc.tenant?.id) {
+    tenantId = doc.tenant.id
+  }
+  const { slug } = await payload.findByID({
+    collection: 'tenants',
+    id: tenantId!,
+  })
   // if page is published & their is no dynamic block directly revalidating the page
   if (doc._status === 'published' && !dynamicBlock) {
-    revalidateTag(`page-${doc?.path}`)
-    console.log(`revalidated page-${doc?.path} at ${new Date().getTime()}`)
+    revalidateTag(`page-${slug}-${doc?.path}`)
+    console.log(
+      `revalidated page-${slug}-${doc?.path} at ${new Date().getTime()}`,
+    )
   }
   // else fetching the records of that dynamic-block
   else if (dynamicBlock) {
@@ -51,9 +63,9 @@ export const revalidatePages: CollectionAfterChangeHook<Page> = async ({
           }
 
           if (modifiedPath) {
-            revalidateTag(`page-${modifiedPath}`)
+            revalidateTag(`page-${slug}-${modifiedPath}`)
             console.log(
-              `revalidated page-${modifiedPath} at ${new Date().getTime()}`,
+              `revalidated page-${slug}-${modifiedPath} at ${new Date().getTime()}`,
             )
           }
         })
@@ -70,10 +82,23 @@ export const revalidatePagesAfterDelete: CollectionAfterDeleteHook<
     block => block.blockType === 'DetailsBlock' && block.collectionSlug,
   ) as DetailsType | undefined
 
+  let tenantId
+  if (typeof doc.tenant === 'string') {
+    tenantId = doc.tenant
+  } else if (typeof doc.tenant === 'object' && doc.tenant?.id) {
+    tenantId = doc.tenant.id
+  }
+  const { slug } = await payload.findByID({
+    collection: 'tenants',
+    id: tenantId!,
+  })
+
   // if page is published & their is no dynamic block directly revalidating the page
   if (doc._status === 'published' && !dynamicBlock) {
-    revalidateTag(`page-${doc?.path}`)
-    console.log(`revalidated page-${doc?.path} at ${new Date().getTime()}`)
+    revalidateTag(`page-${slug}-${doc?.path}`)
+    console.log(
+      `revalidated page-${slug}-${doc?.path} at ${new Date().getTime()}`,
+    )
   }
   // else fetching the records of that dynamic-block
   else if (dynamicBlock) {
@@ -107,9 +132,9 @@ export const revalidatePagesAfterDelete: CollectionAfterDeleteHook<
           }
 
           if (modifiedPath) {
-            revalidateTag(`page-${modifiedPath}`)
+            revalidateTag(`page-${slug}-${modifiedPath}`)
             console.log(
-              `revalidated page-${modifiedPath} at ${new Date().getTime()}`,
+              `revalidated page-${slug}-${modifiedPath} at ${new Date().getTime()}`,
             )
           }
         })

@@ -1,7 +1,7 @@
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { TRPCError, initTRPC } from '@trpc/server'
 import { NextRequest } from 'next/server'
+import { getPayload } from 'payload'
 
 export const createTRPCContext = (req: NextRequest) => {
   return {
@@ -48,7 +48,7 @@ export const userProcedure = t.procedure.use(isAuthenticated)
 export const adminProcedure = t.procedure
   .use(isAuthenticated)
   .use(async ({ ctx, next }) => {
-    if (ctx.user.role.includes('admin')) {
+    if (ctx?.user?.role?.includes('admin')) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'you are not an admin',

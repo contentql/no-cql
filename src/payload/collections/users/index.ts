@@ -1,20 +1,77 @@
 import { adminOrCurrentUserFieldAccess } from '../../access/adminOrCurrentUserFieldAccess'
-import { isAdmin } from '../../access/isAdmin'
 import { isAdminFieldAccess } from '../../access/isAdminFieldAccess'
 import { slugField } from '../../fields/slug/index'
 import { AUTH_GROUP } from '../constants'
+import { socialLinksField } from '../site-settings'
 import { env } from '@env'
+import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields'
 import { CollectionConfig } from 'payload'
 
 import { ResetPassword } from '@/emails/reset-password'
 import { UserAccountVerification } from '@/emails/verify-email'
-import { socialLinksField } from '@/payload/globals/siteSettings/index'
+import { adminOrTenantAdminFieldAccess } from '@/payload/access/adminOrTenantAdmin'
+import { isAdmin } from '@/payload/access/isAdmin'
 
-import { isAdminOrCurrentUser } from './access/isAdminOrCurrentUser'
+import { createAccess } from './access/create'
+import { readAccess } from './access/read'
+import { updateAndDeleteAccess } from './access/updateAndDelete'
 import { authorAccessAfterUpdate } from './hooks/authorAccessAfterUpdate'
 import { handleUserRoles } from './hooks/handleUserRoles'
 import { preventAdminRoleUpdate } from './hooks/preventAdminRoleUpdate'
 import { revalidateAuthors } from './hooks/revalidateAuthors'
+import { setCookieBasedOnDomain } from './hooks/setCookieBasedOnDomain'
+
+const defaultTenantArrayField = tenantsArrayField({
+  tenantsArrayFieldName: 'tenants',
+  tenantsArrayTenantFieldName: 'tenant',
+  tenantsCollectionSlug: 'tenants',
+  arrayFieldAccess: {
+    update: isAdminFieldAccess,
+    create: isAdminFieldAccess,
+  },
+  tenantFieldAccess: {
+    update: isAdminFieldAccess,
+    create: isAdminFieldAccess,
+  },
+  rowFields: [
+    {
+      name: 'roles',
+      type: 'select',
+      defaultValue: ['tenant-viewer'],
+      hasMany: true,
+      options: ['tenant-admin', 'tenant-viewer'],
+      required: true,
+      access: {
+        update: adminOrTenantAdminFieldAccess,
+        create: adminOrTenantAdminFieldAccess,
+      },
+    },
+  ],
+})
+
+// export function getCookieDomain() {
+//   const rawUrl = env.PAYLOAD_URL.startsWith('http')
+//     ? env.PAYLOAD_URL
+//     : `https://${env.PAYLOAD_URL}`
+
+//   const { hostname } = new URL(rawUrl)
+
+//   // If it's localhost or *.localhost (dev)
+//   if (hostname === 'localhost' || hostname.endsWith('.localhost')) {
+//     return '.localhost'
+//   }
+
+//   // For production → always use the root domain
+//   // Example: PAYLOAD_URL = "https://charan.net" → ".charan.net"
+//   // Example: PAYLOAD_URL = "https://blog.charan.net" → ".charan.net"
+//   const parts = hostname.split('.')
+//   if (parts.length > 2) {
+//     // remove subdomain(s)
+//     return '.' + parts.slice(-2).join('.')
+//   }
+
+//   return '.' + hostname
+// }
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -46,6 +103,7 @@ export const Users: CollectionConfig = {
       },
     },
   },
+
   hooks: {
     afterChange: [revalidateAuthors],
     beforeChange: [
@@ -53,26 +111,14 @@ export const Users: CollectionConfig = {
       handleUserRoles,
       preventAdminRoleUpdate,
     ],
+    afterLogin: [setCookieBasedOnDomain],
   },
   access: {
-    admin: async ({ req }) => {
-      // added author also to access the admin-panel
-      if (req.user) {
-        const userRole: string[] = req?.user?.role || []
-
-        const hasAccess = userRole.some(role =>
-          ['admin', 'author'].includes(role),
-        )
-
-        return hasAccess
-      }
-
-      return false
-    },
-    read: () => true,
-    create: isAdmin,
-    update: isAdminOrCurrentUser,
-    delete: isAdminOrCurrentUser,
+    // admin: async ({ req }) => adminOrTenantAdmin({ req }),
+    create: createAccess,
+    delete: updateAndDeleteAccess,
+    read: readAccess,
+    update: updateAndDeleteAccess,
   },
 
   fields: [
@@ -111,8 +157,14 @@ export const Users: CollectionConfig = {
     },
     // only admin can update the role field
     {
+      admin: {
+        position: 'sidebar',
+      },
       name: 'role',
       type: 'select',
+      defaultValue: ['user'],
+      hasMany: true,
+      required: true,
       options: [
         {
           label: 'Admin',
@@ -127,14 +179,12 @@ export const Users: CollectionConfig = {
           value: 'user',
         },
       ],
+
       access: {
-        create: isAdminFieldAccess,
-        update: isAdminFieldAccess,
+        update: ({ req }) => {
+          return isAdmin(req.user)
+        },
       },
-      saveToJWT: true,
-      defaultValue: 'user',
-      required: true,
-      hasMany: true,
     },
     {
       name: 'emailVerified',
@@ -151,6 +201,13 @@ export const Users: CollectionConfig = {
       fields: [socialLinksField],
       access: {
         update: adminOrCurrentUserFieldAccess,
+      },
+    },
+    {
+      ...defaultTenantArrayField,
+      admin: {
+        ...(defaultTenantArrayField?.admin || {}),
+        position: 'sidebar',
       },
     },
   ],

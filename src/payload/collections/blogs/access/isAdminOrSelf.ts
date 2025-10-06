@@ -4,7 +4,7 @@ export const isAdminOrSelf: Access = ({ req, data }) => {
   const { user } = req
 
   if (user) {
-    if (user?.role?.includes('admin')) {
+    if (user?.role?.some(role => ['admin'].includes(role))) {
       return true
     }
 

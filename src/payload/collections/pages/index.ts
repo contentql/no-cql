@@ -1,10 +1,10 @@
-import { isAdmin } from '../../access/isAdmin'
 import { layoutField } from '../../fields/layout/index'
 import { pathField, pathModeField } from '../../fields/path/index'
 import { slugField, slugModeField } from '../../fields/slug/index'
 import { CONTENT_GROUP } from '../constants'
 import type { CollectionConfig } from 'payload'
 
+import { adminOrTenantAdminAccess } from '@/payload/access/adminOrTenantAdmin'
 import { blocksConfig } from '@/payload/blocks/config'
 import homeBlockConfig from '@/payload/blocks/homeBlockConfig'
 
@@ -21,9 +21,9 @@ export const Pages: CollectionConfig = {
   },
   access: {
     read: () => true,
-    update: isAdmin,
-    create: isAdmin,
-    delete: isAdmin,
+    update: adminOrTenantAdminAccess,
+    create: adminOrTenantAdminAccess,
+    delete: adminOrTenantAdminAccess,
   },
   admin: {
     useAsTitle: 'title',
@@ -47,7 +47,7 @@ export const Pages: CollectionConfig = {
               name: 'title',
               type: 'text',
               required: true,
-              unique: true,
+              // unique: true,
             },
             layoutField({
               blocks: blocksConfig.length ? blocksConfig : [homeBlockConfig],
