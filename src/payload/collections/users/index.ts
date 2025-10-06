@@ -4,7 +4,6 @@ import { slugField } from '../../fields/slug/index'
 import { AUTH_GROUP } from '../constants'
 import { socialLinksField } from '../site-settings'
 import { env } from '@env'
-import { Tenant } from '@payload-types'
 import { tenantsArrayField } from '@payloadcms/plugin-multi-tenant/fields'
 import { CollectionConfig } from 'payload'
 
@@ -85,33 +84,13 @@ export const Users: CollectionConfig = {
       secure: true,
     },
     verify: {
-      generateEmailHTML: async ({ token, user, req }) => {
-        const { payload } = req
-
-        // Fetch full user data including tenants
-        const userData = await payload.findByID({
-          collection: 'users',
-          id: user.id,
-          depth: 10,
-        })
-
-        // Extract tenant slug (adjust depending on your schema)
-        const tenantSlug = (userData?.tenants?.at(0)?.tenant as Tenant)?.slug
-
-        // Build tenant-specific URL
-        let baseUrl = env.PAYLOAD_URL
-        if (tenantSlug) {
-          const url = new URL(env.PAYLOAD_URL)
-          // Insert tenant slug as subdomain
-          url.hostname = `${tenantSlug}.${url.hostname}`
-          baseUrl = url.toString().replace(/\/$/, '') // Remove trailing slash if present
-        }
+      generateEmailHTML: ({ token, user }) => {
         return UserAccountVerification({
           actionLabel: 'verify your account',
           buttonText: 'Verify Account',
           userName: user.username,
           image: user.avatar,
-          href: `${baseUrl}/verify-email?token=${token}&id=${user.id}`,
+          href: `${env.PAYLOAD_URL}/verify-email?token=${token}&id=${user.id}`,
         })
       },
     },
