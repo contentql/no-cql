@@ -1,12 +1,13 @@
+import { Params } from '../types'
 import configPromise from '@payload-config'
 import { DetailsType } from '@payload-types'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import React from 'react'
-import { Params } from '../types'
 
 import AuthorsList from './components/AuthorsList'
 import BlogsList from './components/BlogsList'
+import CategoriesList from './components/CategoriesList'
 import TagsList from './components/TagsList'
 
 interface ListProps extends DetailsType {
@@ -68,6 +69,22 @@ export const ListBlock: React.FC<ListProps> = async ({ params, ...block }) => {
       )()
 
       return <AuthorsList authors={authors} />
+    }
+
+    case 'categories': {
+      const { docs: categories = [] } = await unstable_cache(
+        async () =>
+          await payload.find({
+            collection: 'categories',
+            depth: 5,
+            draft: false,
+            limit: 1000,
+          }),
+        ['list', 'categories'],
+        { tags: ['list-categories'] },
+      )()
+
+      return <CategoriesList categories={categories} />
     }
   }
 }

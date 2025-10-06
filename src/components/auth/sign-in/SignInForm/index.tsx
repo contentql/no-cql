@@ -23,7 +23,6 @@ import { Input } from '@/components/ui/input'
 
 const SignInForm: React.FC = () => {
   const router = useRouter()
-
   const {
     execute: mutate,
     isPending,
@@ -33,7 +32,6 @@ const SignInForm: React.FC = () => {
   } = useAction(signInAction, {
     onSuccess: ({ data: user }) => {
       const userRole = user?.role ?? []
-
       if (userRole.includes('admin')) {
         router.push('/admin')
       } else if (userRole.includes('user')) {
@@ -53,6 +51,14 @@ const SignInForm: React.FC = () => {
   })
 
   const { handleSubmit, reset } = form
+
+  const userRole = result?.data?.role ?? []
+
+  if (userRole.includes('admin')) {
+    router.push('/admin')
+  } else if (userRole.includes('user')) {
+    router.push('/profile')
+  }
 
   const onSubmit = (data: z.infer<typeof signInSchema>) => {
     mutate({

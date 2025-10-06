@@ -9,7 +9,7 @@ export const revalidateAuthors: CollectionAfterChangeHook<User> = async ({
   doc,
 }) => {
   // if page is published & their is no dynamic block directly revalidating the page
-  if (doc?.role?.includes('author')) {
+  if (doc.role.includes('author')) {
     revalidateTag('list-authors')
     revalidateTag(`details-author-${doc.username}`)
     revalidateTag(`details-blogs-by-author-${doc.username}`)
@@ -21,7 +21,7 @@ export const revalidateAuthorsAfterDelete: CollectionAfterDeleteHook<
   User
 > = async ({ doc }) => {
   // if page is published & their is no dynamic block directly revalidating the page
-  if (doc?.role?.includes('author')) {
+  if (doc.role.includes('author')) {
     revalidateTag('list-authors')
     revalidateTag(`details-author-${doc.username}`)
     revalidateTag(`details-blogs-by-author-${doc.username}`)
